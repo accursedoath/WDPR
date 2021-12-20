@@ -1,5 +1,20 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.navbar {
+  background-color: #517664;
+  color: #fff;
+  padding: 20px 20px !important; 
+}
+
+.navbar a {
+  color: #fff;
+}
+
+.nav-item {
+  color: #fff !important;
+}
 
 a.navbar-brand {
   white-space: normal;
@@ -8,10 +23,6 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -38,12 +49,9 @@ html {
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
@@ -54,18 +62,36 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
+  margin: 0;
   min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  position: sticky;
+  top: 100%;
+  background-color: #517664;
+  color: #fff;
+}
+
+.footer a {
+  color: #fff;
+}
+
+/* Wrappers
+-------------------------------------------------- */
+#imageWrapper {
+  background-image: url('https://www.ambion.nl/images/cache/1280/640/1/center/90/26-432-obs-it-oerset-mg-3718.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 350px;
+}
+
+#cardsWrapper {
+  padding: 50px 0 50px 0;
 }
