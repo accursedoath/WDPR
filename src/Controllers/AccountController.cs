@@ -24,7 +24,7 @@ namespace src.Controllers
         }
 
         // GET: Account/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -52,7 +52,7 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Voornaam,Achternaam,Adres,Woonplaats,Postcode,Email")] Account account)
+        public async Task<IActionResult> Create([Bind("Voornaam,Achternaam,Adres,Woonplaats,Postcode,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Account account)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace src.Controllers
         }
 
         // GET: Account/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -84,7 +84,7 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Voornaam,Achternaam,Adres,Woonplaats,Postcode,Email")] Account account)
+        public async Task<IActionResult> Edit(string id, [Bind("Voornaam,Achternaam,Adres,Woonplaats,Postcode,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Account account)
         {
             if (id != account.Id)
             {
@@ -115,7 +115,7 @@ namespace src.Controllers
         }
 
         // GET: Account/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -135,7 +135,7 @@ namespace src.Controllers
         // POST: Account/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var account = await _context.Account.FindAsync(id);
             _context.Account.Remove(account);
@@ -143,7 +143,7 @@ namespace src.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AccountExists(int id)
+        private bool AccountExists(string id)
         {
             return _context.Account.Any(e => e.Id == id);
         }

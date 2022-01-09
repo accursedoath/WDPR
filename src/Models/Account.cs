@@ -1,12 +1,12 @@
-public class Account
+using Microsoft.AspNetCore.Identity;
+
+public class Account : IdentityUser
 {
-    public int Id {get; set;}
     public string Voornaam {get; set;}
     public string Achternaam {get; set;}
     public string Adres {get; set;}
     public string Woonplaats {get; set;}
     public string Postcode {get; set;}
-    public string Email {get; set;}
 
     public Account(string voornaam, string achternaam, string adres, string woonplaats, string postcode, string email)
     {

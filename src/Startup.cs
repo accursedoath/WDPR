@@ -25,7 +25,7 @@ namespace src
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddRazorPages();
             services.AddDbContext<DatabaseContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("DatabaseContext")));
         }
@@ -47,7 +47,7 @@ namespace src
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -55,6 +55,7 @@ namespace src
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
