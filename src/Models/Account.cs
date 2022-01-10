@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using System;
 
 public class Account : IdentityUser
 {
@@ -7,7 +8,7 @@ public class Account : IdentityUser
     public string Adres {get; set;}
     public string Woonplaats {get; set;}
     public string Postcode {get; set;}
-
+   
     public Account(string voornaam, string achternaam, string adres, string woonplaats, string postcode, string email)
     {
         Voornaam = voornaam;
