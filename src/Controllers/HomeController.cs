@@ -23,6 +23,11 @@ namespace src.Controllers
             return View();
         }
 
+        public IActionResult Aanmelden()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
