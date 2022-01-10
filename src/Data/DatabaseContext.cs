@@ -15,4 +15,5 @@ using src.Models;
 
         public DbSet<Account> Account { get; set; }
         public DbSet<Bericht> Berichten {get; set;}
+        public DbSet<Moderator> Moderator { get; set; }
     }
