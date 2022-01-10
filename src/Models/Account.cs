@@ -18,6 +18,8 @@ public class Account : IdentityUser
         Email = email;
     }
 
+    public Account() {}
+
     public Account WijzigAccount(int Id, string voornaam, string achternaam, string adres, string woonplaats, string postcode, string email)
     {
         Account OriginalAccount = null;// where account id = id
