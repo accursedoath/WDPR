@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace src
 {
@@ -26,6 +27,10 @@ namespace src
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<DatabaseContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
             services.AddDbContext<DatabaseContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("DatabaseContext")));
         }
