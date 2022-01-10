@@ -1,7 +1,26 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+
+/* imports */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+/* html and body */
+html {
+  margin: 0;
+  min-height: 100%;
+  font-size: 14px;
+}
+body {
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* navbar */
 .navbar {
   background-color: #517664;
   color: #fff;
@@ -22,30 +41,7 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
+/* Borders */
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
@@ -59,18 +55,7 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  margin: 0;
-  min-height: 100%;
-}
-
-body {
-  min-height: 100vh;
-  font-family: 'Montserrat', sans-serif;
-}
-
+/* Sticky footer */
 .footer {
   position: sticky;
   top: 100%;
@@ -82,8 +67,7 @@ body {
   color: #fff;
 }
 
-/* Wrappers
--------------------------------------------------- */
+/* Wrappers */
 #imageWrapper {
   background-image: url('https://www.ambion.nl/images/cache/1280/640/1/center/90/26-432-obs-it-oerset-mg-3718.jpg');
   background-size: contain;
@@ -94,4 +78,11 @@ body {
 
 #cardsWrapper {
   padding: 50px 0 50px 0;
+}
+
+/* #signupWrapper{} */
+
+.form-box {
+  padding: 20px 20px;
+  background-color: #D6E5E3;
 }
