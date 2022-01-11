@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220111140526_Hulpverlener2")]
+    partial class Hulpverlener2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,16 +257,6 @@ namespace src.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("Account");
-                });
-
-            modelBuilder.Entity("Client", b =>
-                {
-                    b.HasBaseType("Account");
-
-                    b.Property<bool>("magChatten")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue("Client");
                 });
 
             modelBuilder.Entity("Hulpverlener", b =>

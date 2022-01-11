@@ -60,6 +60,10 @@ namespace src.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Functie")]
+            public string Functie { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -79,6 +83,11 @@ namespace src.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    if(Input.Functie == "1") await _userManager.AddToRoleAsync(user, "Moderator");
+                    if(Input.Functie == "2") await _userManager.AddToRoleAsync(user, "Hulpverlener");
+                    if(Input.Functie == "3") await _userManager.AddToRoleAsync(user, "Client");
+                    if(Input.Functie == "4") await _userManager.AddToRoleAsync(user, "Voogd");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

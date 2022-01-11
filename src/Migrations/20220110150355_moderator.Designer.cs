@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220110150355_moderator")]
+    partial class moderator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,26 +257,6 @@ namespace src.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("Account");
-                });
-
-            modelBuilder.Entity("Client", b =>
-                {
-                    b.HasBaseType("Account");
-
-                    b.Property<bool>("magChatten")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue("Client");
-                });
-
-            modelBuilder.Entity("Hulpverlener", b =>
-                {
-                    b.HasBaseType("Account");
-
-                    b.Property<string>("Beschrijving")
-                        .HasColumnType("TEXT");
-
-                    b.HasDiscriminator().HasValue("Hulpverlener");
                 });
 
             modelBuilder.Entity("Moderator", b =>
