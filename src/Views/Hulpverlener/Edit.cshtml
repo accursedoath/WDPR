@@ -1,4 +1,7 @@
 @model Hulpverlener
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Edit";
@@ -121,6 +124,13 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @if(SignInManager.IsSignedIn(User) && User.IsInRole("Moderator"))
+    {
+        <a asp-controller="Moderator" asp-action="Hulpverlener">Back to List</a>
+    }
+    else
+    {
+        <a asp-action="Index">Back to List</a>
+    }
 </div>
 
