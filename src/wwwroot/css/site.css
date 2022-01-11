@@ -68,17 +68,15 @@ button.accept-policy {
 }
 
 /* Wrappers */
-#imageWrapper {
-  background-image: url('https://www.ambion.nl/images/cache/1280/640/1/center/90/26-432-obs-it-oerset-mg-3718.jpg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 350px;
-}
-
 #cardsWrapper {
   padding: 50px 0 50px 0;
 }
+
+/* #imageWrapper {} */
+
+/* #opWrapper {} */
+
+/* #aboutmeWrapper {} */
 
 /* #signupWrapper{} */
 
