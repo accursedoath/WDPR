@@ -1,16 +1,12 @@
 @page
 @model RegisterModel
 @{
-<<<<<<< HEAD
     ViewData["Title"] = "Registreer";
-=======
-    ViewData["Title"] = "Register";
     var list = new List<SelectListItem> {  new SelectListItem { Text = "Moderator", Value = "1", Selected=true},
                                     new SelectListItem { Text = "Hulpverlener", Value = "2"},
                                     new SelectListItem { Text = "Client", Value = "3"},
                                     new SelectListItem { Text = "Voogd", Value = "4"}
                                    };
->>>>>>> toon-feature-backend
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -36,16 +32,12 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-<<<<<<< HEAD
-            <button type="submit" class="btn btn-primary">Registreer</button>
-=======
             <div class="form-group">
                <label asp-for="Input.Functie"></label>
                <select asp-for="Input.Functie" asp-items="@list"></select>
                <span asp-validation-for="Input.Functie" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
->>>>>>> toon-feature-backend
+            <button type="submit" class="btn btn-primary">Registreer</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
