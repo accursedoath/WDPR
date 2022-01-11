@@ -34,6 +34,12 @@ namespace src.Controllers
             return View(await _context.Hulpverleners.ToListAsync());
         }
 
+        // GET: Hulpverleners
+        public async Task<IActionResult> Client()
+        {
+            return View(await _context.Clienten.ToListAsync());
+        }
+
         // GET: Moderator/Details/5
         public async Task<IActionResult> Details(string id)
         {

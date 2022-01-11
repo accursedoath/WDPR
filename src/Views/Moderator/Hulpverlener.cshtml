@@ -1,7 +1,7 @@
 @model IEnumerable<Hulpverlener>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Hulpverleners";
 }
 
 <h1>Hulpverleners</h1>
@@ -44,9 +44,9 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="Hulpverlener" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Hulpverlener" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Hulpverlener" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
