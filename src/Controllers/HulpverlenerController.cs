@@ -2,39 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace src.Controllers
 {
-    //[Authorize(Roles = "Moderator")]
-    public class ModeratorController : Controller
+    public class HulpverlenerController : Controller
     {
         private readonly DatabaseContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public ModeratorController(DatabaseContext context, UserManager<IdentityUser> userManager)
+        public HulpverlenerController(DatabaseContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // GET: Moderator
+        // GET: Hulpverlener
         public async Task<IActionResult> Index()
-        {
-            return View(await _context.Moderator.ToListAsync());
-        }
-
-        // GET: Hulpverleners
-        public async Task<IActionResult> Hulpverlener()
         {
             return View(await _context.Hulpverleners.ToListAsync());
         }
 
-        // GET: Moderator/Details/5
+        // GET: Hulpverlener/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -42,39 +31,39 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var moderator = await _context.Moderator
+            var hulpverlener = await _context.Hulpverleners
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (moderator == null)
+            if (hulpverlener == null)
             {
                 return NotFound();
             }
 
-            return View(moderator);
+            return View(hulpverlener);
         }
 
-        // GET: Moderator/Create
+        // GET: Hulpverlener/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Moderator/Create
+        // POST: Hulpverlener/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Voornaam,Achternaam,Adres,Woonplaats,Postcode,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Moderator moderator)
+        public async Task<IActionResult> Create([Bind("Beschrijving,Voornaam,Achternaam,Adres,Woonplaats,Postcode,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Hulpverlener hulpverlener)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(moderator);
+                _context.Add(hulpverlener);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(moderator);
+            return View(hulpverlener);
         }
 
-        // GET: Moderator/Edit/5
+        // GET: Hulpverlener/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -82,22 +71,22 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var moderator = await _context.Moderator.FindAsync(id);
-            if (moderator == null)
+            var hulpverlener = await _context.Hulpverleners.FindAsync(id);
+            if (hulpverlener == null)
             {
                 return NotFound();
             }
-            return View(moderator);
+            return View(hulpverlener);
         }
 
-        // POST: Moderator/Edit/5
+        // POST: Hulpverlener/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Voornaam,Achternaam,Adres,Woonplaats,Postcode,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Moderator moderator)
+        public async Task<IActionResult> Edit(string id, [Bind("Beschrijving,Voornaam,Achternaam,Adres,Woonplaats,Postcode,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Hulpverlener hulpverlener)
         {
-            if (id != moderator.Id)
+            if (id != hulpverlener.Id)
             {
                 return NotFound();
             }
@@ -106,12 +95,12 @@ namespace src.Controllers
             {
                 try
                 {
-                    _context.Update(moderator);
+                    _context.Update(hulpverlener);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ModeratorExists(moderator.Id))
+                    if (!HulpverlenerExists(hulpverlener.Id))
                     {
                         return NotFound();
                     }
@@ -122,10 +111,10 @@ namespace src.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(moderator);
+            return View(hulpverlener);
         }
 
-        // GET: Moderator/Delete/5
+        // GET: Hulpverlener/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -133,30 +122,30 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var moderator = await _context.Moderator
+            var hulpverlener = await _context.Hulpverleners
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (moderator == null)
+            if (hulpverlener == null)
             {
                 return NotFound();
             }
 
-            return View(moderator);
+            return View(hulpverlener);
         }
 
-        // POST: Moderator/Delete/5
+        // POST: Hulpverlener/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var moderator = await _context.Moderator.FindAsync(id);
-            _context.Moderator.Remove(moderator);
+            var hulpverlener = await _context.Hulpverleners.FindAsync(id);
+            _context.Hulpverleners.Remove(hulpverlener);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ModeratorExists(string id)
+        private bool HulpverlenerExists(string id)
         {
-            return _context.Moderator.Any(e => e.Id == id);
+            return _context.Hulpverleners.Any(e => e.Id == id);
         }
     }
 }
