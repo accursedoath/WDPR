@@ -28,6 +28,16 @@ namespace src.Controllers
             return View();
         }
 
+        public IActionResult Orthopedagogen()
+        {
+            return View();
+        }
+
+        public IActionResult Ricco()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
