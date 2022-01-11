@@ -17,4 +17,5 @@ using src.Models;
         public DbSet<Bericht> Berichten {get; set;}
         public DbSet<Moderator> Moderator { get; set; }
         public DbSet<Hulpverlener> Hulpverleners { get; set; }
+        public DbSet<Client> Clienten { get; set; }
     }
