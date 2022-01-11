@@ -2,19 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace src.Controllers
 {
+    [Authorize(Roles = "Moderator")]
     public class ModeratorController : Controller
     {
         private readonly DatabaseContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ModeratorController(DatabaseContext context)
+        public ModeratorController(DatabaseContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Moderator
