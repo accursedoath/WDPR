@@ -40,6 +40,22 @@ namespace src.Controllers
             return View(await _context.Clienten.ToListAsync());
         }
 
+        public IActionResult Blokkeer(string id)
+        {
+           var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+           client.magChatten = false;
+           _context.SaveChanges();
+           return RedirectToAction("Client");
+        }
+
+        public IActionResult Deblokkeer(string id)
+        {
+           var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+           client.magChatten = true;
+           _context.SaveChanges();
+           return RedirectToAction("Client");
+        }
+
         // GET: Moderator/Details/5
         public async Task<IActionResult> Details(string id)
         {

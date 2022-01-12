@@ -23,44 +23,32 @@
                 </button>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Aanmelden">Aanmelden</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Orthopedagogen">Orthopedagogen</a>
-                        </li>
-                    </ul>
-                        @* @if(SignInManager.IsSignedIn(User) && User.IsInRole("Moderator"))
+                        @if(SignInManager.IsSignedIn(User) && User.IsInRole("Moderator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Moderator" asp-action="Hulpverlener">Hulpverleners</a>
+                                <a class="nav-link" asp-area="" asp-controller="Moderator" asp-action="Hulpverlener">Hulpverleners</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Moderator" asp-action="Client">Clienten</a>
+                                <a class="nav-link" asp-area="" asp-controller="Moderator" asp-action="Client">Clienten</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Aanmelden">Aanmelden</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Aanmelden">Aanmelden</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="">Orthopedagogen</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Orthopedagogen">Orthopedagogen</a>
                             </li>
-                        } *@
+                        } 
                     </ul>
                     <partial name="_LoginPartial"></partial>
-
                 </div>
             </div>
         </nav>
