@@ -36,7 +36,7 @@ namespace src.Controllers
                 var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 //var usa = _context.Account.Where
                 ViewBag.UserName = _context.Users.Where(x => x.Id == userId).Single().Email;
-                ViewBag.Account = _context.Account.Where(x => x.Voornaam == "David").Single().Achternaam;
+                //ViewBag.Account = _context.Account.Where(x => x.Voornaam == "David").Single().Achternaam
             return View();
         }
     }

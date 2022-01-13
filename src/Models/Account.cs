@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Identity;
 
 public class Account
 {
-    [Key]
-    public int Id {get; set;}
     public string Voornaam {get; set;}
     public string Achternaam {get; set;}
     public Woonplaats woonplaats {get; set;}
+
     public Account(string voornaam, string achternaam, Woonplaats Woonplaats)
     {
         Voornaam = voornaam;

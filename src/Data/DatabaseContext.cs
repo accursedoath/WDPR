@@ -12,8 +12,6 @@ using src.Models;
             : base(options)
         {
         }
-
-        public DbSet<Account> Account { get; set; }
         public DbSet<Bericht> Berichten {get; set;}
         public DbSet<Moderator> Moderator { get; set; }
         public DbSet<Hulpverlener> Hulpverleners { get; set; }
