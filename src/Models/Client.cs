@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class Client : Account
 {
-    [Key]
-    public int Id {get; set;}
     public bool magChatten {get; set;}
 
     [ForeignKey("ApplicatieGebruiker")]

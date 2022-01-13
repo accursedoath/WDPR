@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class Hulpverlener : Account
 {
-    [Key]
-    public int Id {get; set;}
     public string Beschrijving {get; set;}
 
     [ForeignKey("ApplicatieGebruiker")]

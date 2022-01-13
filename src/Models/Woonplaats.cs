@@ -17,4 +17,6 @@ public class Woonplaats
         plaats = woonplaats;
         Postcode = postcode;
     }
+
+    public Woonplaats(){}
 }
