@@ -22,8 +22,8 @@ namespace src.Controllers
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly UserManager<IdentityUser> _userManager;
-        public ChatController(ILogger<HomeController> logger, DatabaseContext context, IHttpContextAccessor httpContextAccessor, UserManager<IdentityUser> userManager)
+        private readonly UserManager<ApplicatieGebruiker> _userManager;
+        public ChatController(ILogger<HomeController> logger, DatabaseContext context, IHttpContextAccessor httpContextAccessor, UserManager<ApplicatieGebruiker> userManager)
         {
             _logger = logger;
             _context = context;

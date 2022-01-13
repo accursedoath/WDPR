@@ -28,7 +28,7 @@ namespace src
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicatieGebruiker, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders()
                 .AddRoles<IdentityRole>()
