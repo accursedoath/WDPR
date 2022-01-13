@@ -9,6 +9,8 @@ public class Woonplaats
     public string plaats {get; set;}
     public string Postcode {get; set;}
 
+    public Account account {get; set;}
+
     public Woonplaats(string adres, string woonplaats, string postcode)
     {
         Adres = adres;
