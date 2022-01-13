@@ -1,21 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-public class Account : IdentityUser
+public class Account
 {
+    [Key]
+    public int Id {get; set;}
     public string Voornaam {get; set;}
     public string Achternaam {get; set;}
-    public string Adres {get; set;}
-    public string Woonplaats {get; set;}
-    public string Postcode {get; set;}
 
-    public Account(string voornaam, string achternaam, string adres, string woonplaats, string postcode, string email)
+    [ForeignKey("Woonplaats")]
+    public Woonplaats woonplaats {get; set;}
+
+    public Account(string voornaam, string achternaam, Woonplaats Woonplaats)
     {
         Voornaam = voornaam;
         Achternaam = achternaam;
-        Adres = adres;
-        Woonplaats = woonplaats;
-        Postcode = postcode;
-        Email = email;
+        woonplaats = Woonplaats;
     }
 
     public Account() {}

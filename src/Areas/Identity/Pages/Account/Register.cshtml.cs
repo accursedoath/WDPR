@@ -19,14 +19,14 @@ namespace src.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicatieGebruiker> _signInManager;
+        private readonly UserManager<ApplicatieGebruiker> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicatieGebruiker> userManager,
+            SignInManager<ApplicatieGebruiker> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -64,6 +64,10 @@ namespace src.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Functie")]
             public string Functie { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Voornaam")]
+            public string Voornaam { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -78,16 +82,43 @@ namespace src.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicatieGebruiker { UserName = Input.Email, Email = Input.Email };
+                    if(Input.Functie == "1") {
+                        user.moderator = new Moderator(){Voornaam = Input.Voornaam};
+                        }
+
+                    if(Input.Functie == "2") {
+                        user.hulpverlener = new Hulpverlener(){Voornaam = Input.Voornaam};
+                        }
+                    if(Input.Functie == "3") {
+                        user.client = new Client(){Voornaam = Input.Voornaam};
+                        }
+                    if(Input.Functie == "4") {
+                        user.voogd = new Voogd(){Voornaam = Input.Voornaam};
+                        }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if(Input.Functie == "1") await _userManager.AddToRoleAsync(user, "Moderator");
-                    if(Input.Functie == "2") await _userManager.AddToRoleAsync(user, "Hulpverlener");
-                    if(Input.Functie == "3") await _userManager.AddToRoleAsync(user, "Client");
-                    if(Input.Functie == "4") await _userManager.AddToRoleAsync(user, "Voogd");
+                    if(Input.Functie == "1") {
+                        await _userManager.AddToRoleAsync(user, "Moderator");
+                        user.moderator = new Moderator(){Voornaam = "OMIN HARD GELUKT!"};
+                        }
+
+                    if(Input.Functie == "2") {
+                        await _userManager.AddToRoleAsync(user, "Hulpverlener");
+                        user.hulpverlener = new Hulpverlener();
+                        }
+                    if(Input.Functie == "3") {
+                        await _userManager.AddToRoleAsync(user, "Client");
+                        user.client = new Client();
+                        }
+                    if(Input.Functie == "4") {
+                        await _userManager.AddToRoleAsync(user, "Voogd");
+                        user.voogd = new Voogd();
+                        }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

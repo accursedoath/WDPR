@@ -12,10 +12,10 @@ namespace src.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicatieGebruiker> _userManager;
         private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<ApplicatieGebruiker> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;
