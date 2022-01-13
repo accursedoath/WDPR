@@ -45,6 +45,7 @@ namespace src.Controllers
            var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
            client.magChatten = false;
            _context.SaveChanges();
+           // maak melding naar hulpverlener
            return RedirectToAction("Client");
         }
 
