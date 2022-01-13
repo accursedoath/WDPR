@@ -34,10 +34,16 @@ namespace src.Controllers
         public IActionResult Index()
         {
                 var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                //var usa = _context.Account.Where
-                ViewBag.UserName = _context.Users.Where(x => x.Id == userId).Single().Email;
-                //ViewBag.Account = _context.Account.Where(x => x.Voornaam == "David").Single().Achternaam
-            return View();
+                var client = _context.Clienten.Any(x => x.User.Id == userId);
+                if(client){
+                    _context.Clienten.Include(x => x.User);
+                    ViewBag.UserName = _context.Clienten.Where(x => x.User.Id == userId).FirstOrDefault().Voornaam;
+                }
+                else {
+                    _context.Hulpverleners.Include(x => x.User);
+                    ViewBag.UserName = _context.Hulpverleners.Where(x => x.User.Id == userId).FirstOrDefault().Voornaam;
+                }
+                return View();
         }
     }
 }
