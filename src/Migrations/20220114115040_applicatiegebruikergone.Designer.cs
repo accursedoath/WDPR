@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220114115040_applicatiegebruikergone")]
+    partial class applicatiegebruikergone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,8 +299,8 @@ namespace src.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("VerzenderId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("VerzenderId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("text")
                         .HasColumnType("TEXT");
@@ -440,7 +442,7 @@ namespace src.Migrations
 
             modelBuilder.Entity("src.Models.Bericht", b =>
                 {
-                    b.HasOne("Account", "Verzender")
+                    b.HasOne("ApplicatieGebruiker", "Verzender")
                         .WithMany()
                         .HasForeignKey("VerzenderId");
 

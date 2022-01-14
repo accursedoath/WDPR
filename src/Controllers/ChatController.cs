@@ -34,6 +34,7 @@ namespace src.Controllers
         public IActionResult Index()
         {
                 var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ViewBag.uId = userId;
                 var client = _context.Clienten.Any(x => x.User.Id == userId);
                 if(client){
                     _context.Clienten.Include(x => x.User);
