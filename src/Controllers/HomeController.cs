@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 using src.Models;
 
 namespace src.Controllers
@@ -12,14 +13,23 @@ namespace src.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
+            _roleManager = roleManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+             if(_roleManager.Roles.Count() == 0)
+            {
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Hulpverlener"});
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Voogd"});
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Moderator"});
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Client"});
+            }
             return View();
         }
 
