@@ -12,10 +12,12 @@ namespace src.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DatabaseContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DatabaseContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -31,6 +33,19 @@ namespace src.Controllers
         public IActionResult Orthopedagogen()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie")] Aanmelding aanmelding)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(aanmelding);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(aanmelding);
         }
 
         public IActionResult Ricco()

@@ -42,8 +42,9 @@ namespace src.Controllers
         }
 
         // GET: Aanmelding/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["Hulpverlener"] = await _context.Hulpverleners.ToListAsync();
             return View();
         }
 
@@ -52,7 +53,7 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie")] Aanmelding aanmelding)
+        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie,Hulpverlener")] Aanmelding aanmelding)
         {
             if (ModelState.IsValid)
             {
