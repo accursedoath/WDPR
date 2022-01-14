@@ -10,13 +10,19 @@ namespace test
         [Fact]
         public void BerichtText()
         {
-            var text = "hoe gaat het?";
-            var bericht = new Bericht(){Datum = DateTime.Now, text = text };
-            Assert.Equal(text, bericht.text);
+            //Arrange
+            var berichtMock = new Mock<Bericht>();
+            berichtMock.SetupProperty(m => m.text, "Testbericht!");
+
+            //Assert
+            Assert.Equal("Testbericht!", berichtMock.Object.text);
         }
 
         [Fact]
         public void Datum_Check(){
+            //Arrange
+            //Act
+            //Assert
             var nu = DateTime.Now;
             var bericht = new Bericht(){Datum = nu, text = null};
             Assert.Equal(nu, bericht.Datum);
@@ -24,6 +30,9 @@ namespace test
 
         [Fact]
         public void Verzender_Check(){
+            //Arrange
+            //Act
+            //Assert
             var verzender = new Account("David",null,null);       
             var nu = DateTime.Now;
             var bericht = new Bericht(){Datum = nu, text = null, Verzender = verzender};
