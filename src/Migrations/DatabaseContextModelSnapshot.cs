@@ -297,7 +297,7 @@ namespace src.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("VerzenderId")
+                    b.Property<int>("VerzenderId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("text")
@@ -442,7 +442,9 @@ namespace src.Migrations
                 {
                     b.HasOne("Account", "Verzender")
                         .WithMany()
-                        .HasForeignKey("VerzenderId");
+                        .HasForeignKey("VerzenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Verzender");
                 });

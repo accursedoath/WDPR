@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using src.Models;
 
 namespace src.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BerichtApiController : ControllerBase
@@ -26,6 +28,15 @@ namespace src.Controllers
         {
             return await _context.Berichten.ToListAsync();
         }
+
+    [HttpGet("all/{id}")]    //verstuur alle berichten van een specifieke
+        public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id)
+        {
+            _context.Berichten.Include(x => x.Verzender);
+            _context.Berichten.Include(x => x.Verzender.Id);
+            return await  _context.Berichten.Where(x => x.Verzender.Id == _context.Clienten.Single(x => x.Id == id).Id).ToListAsync();
+        }
+
 
         // GET: api/BerichtApi/5
         [HttpGet("{id}")]

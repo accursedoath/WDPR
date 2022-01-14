@@ -15,7 +15,6 @@ connection.on("ReceiveMessage", function (user, message) {
     var lis = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
     document.getElementById("messagesList").appendChild(lis);
-    
     // fetch('https://localhost:5001/Chat')  //dit is essentially een get request
     // .then(response => response.json())
     // .then(data => console.log(data));
@@ -27,6 +26,7 @@ connection.on("ReceiveMessage", function (user, message) {
 });
 
 connection.start().then(function () {
+    fillchat();
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
@@ -41,4 +41,31 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     });
     event.preventDefault();
 });
+
+function fillchat(){
+    var accountid = document.getElementById("accountid").value;
+    fetch('https://localhost:5001/api/BerichtApi/all/' + accountid)  //dit is essentially een get request
+    .then(response => response.json())
+    .then(data => {
+        for(let x = 0; x < data.length; x++){
+            console.log(data[x].text)
+            var lisa = document.createElement("li");
+            var lisbon = document.createElement("li");
+
+            document.getElementById("messagesList").appendChild(lisa);
+
+            
+
+        //     var verzender =  data[x].verzenderid;
+             var bericht = data[x].text
+             lisa.textContent = `${bericht}`;
+        //     var tijd = data[x].Datum
+
+        //     verzenderli.textContent = `${verzender}`;
+            //  textli.textContent = `${bericht}`;
+        //     tijdli.textContent = `${tijd}`; 
+
+        }
+    });
+}
 

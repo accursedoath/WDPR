@@ -243,9 +243,9 @@ namespace src.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    text = table.Column<string>(type: "TEXT", nullable: true),
                     Datum = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    VerzenderId = table.Column<int>(type: "INTEGER", nullable: true),
-                    text = table.Column<string>(type: "TEXT", nullable: true)
+                    VerzenderId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

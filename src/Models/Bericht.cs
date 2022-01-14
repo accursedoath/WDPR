@@ -9,5 +9,6 @@ namespace src.Models
         public DateTime Datum {get; set;} //Tijd in uml (deze nog aanpassen in het uml)
 
         public Account Verzender {get; set;}
+        public int VerzenderId {get; set;}
     }
 }

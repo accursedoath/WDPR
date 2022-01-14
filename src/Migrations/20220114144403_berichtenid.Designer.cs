@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220114104515_Bericht")]
-    partial class Bericht
+    [Migration("20220114144403_berichtenid")]
+    partial class berichtenid
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -299,8 +299,8 @@ namespace src.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("VerzenderId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("VerzenderId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("text")
                         .HasColumnType("TEXT");
@@ -442,9 +442,11 @@ namespace src.Migrations
 
             modelBuilder.Entity("src.Models.Bericht", b =>
                 {
-                    b.HasOne("ApplicatieGebruiker", "Verzender")
+                    b.HasOne("Account", "Verzender")
                         .WithMany()
-                        .HasForeignKey("VerzenderId");
+                        .HasForeignKey("VerzenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Verzender");
                 });

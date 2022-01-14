@@ -2,21 +2,22 @@
 
 namespace src.Migrations
 {
-    public partial class berichtaccount : Migration
+    public partial class berichtenid : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Berichten_AspNetUsers_VerzenderId",
+                name: "FK_Berichten_Account_VerzenderId",
                 table: "Berichten");
 
             migrationBuilder.AlterColumn<int>(
                 name: "VerzenderId",
                 table: "Berichten",
                 type: "INTEGER",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "TEXT",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "INTEGER",
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
@@ -25,7 +26,7 @@ namespace src.Migrations
                 column: "VerzenderId",
                 principalTable: "Account",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -34,20 +35,19 @@ namespace src.Migrations
                 name: "FK_Berichten_Account_VerzenderId",
                 table: "Berichten");
 
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.AlterColumn<int>(
                 name: "VerzenderId",
                 table: "Berichten",
-                type: "TEXT",
+                type: "INTEGER",
                 nullable: true,
                 oldClrType: typeof(int),
-                oldType: "INTEGER",
-                oldNullable: true);
+                oldType: "INTEGER");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Berichten_AspNetUsers_VerzenderId",
+                name: "FK_Berichten_Account_VerzenderId",
                 table: "Berichten",
                 column: "VerzenderId",
-                principalTable: "AspNetUsers",
+                principalTable: "Account",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
