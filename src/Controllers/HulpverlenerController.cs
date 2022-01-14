@@ -8,22 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace src.Controllers
 {
-    public class AanmeldingController : Controller
+    public class HulpverlenerController : Controller
     {
         private readonly DatabaseContext _context;
 
-        public AanmeldingController(DatabaseContext context)
+        public HulpverlenerController(DatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: Aanmelding
+        // GET: Hulpverlener
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Aanmeldingen.ToListAsync());
+            return View(await _context.Hulpverleners.ToListAsync());
         }
 
-        // GET: Aanmelding/Details/5
+        // GET: Hulpverlener/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -31,40 +31,39 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var aanmelding = await _context.Aanmeldingen
-                .FirstOrDefaultAsync(m => m.AanmeldingId == id);
-            if (aanmelding == null)
+            var hulpverlener = await _context.Hulpverleners
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (hulpverlener == null)
             {
                 return NotFound();
             }
 
-            return View(aanmelding);
+            return View(hulpverlener);
         }
 
-        // GET: Aanmelding/Create
-        public async Task<IActionResult> Create()
+        // GET: Hulpverlener/Create
+        public IActionResult Create()
         {
-            ViewData["Hulpverlener"] = await _context.Hulpverleners.ToListAsync();
             return View();
         }
 
-        // POST: Aanmelding/Create
+        // POST: Hulpverlener/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie")] Aanmelding aanmelding)
+        public async Task<IActionResult> Create([Bind("Beschrijving,Id,Voornaam,Achternaam")] Hulpverlener hulpverlener)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aanmelding);
+                _context.Add(hulpverlener);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(aanmelding);
+            return View(hulpverlener);
         }
 
-        // GET: Aanmelding/Edit/5
+        // GET: Hulpverlener/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +71,22 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var aanmelding = await _context.Aanmeldingen.FindAsync(id);
-            if (aanmelding == null)
+            var hulpverlener = await _context.Hulpverleners.FindAsync(id);
+            if (hulpverlener == null)
             {
                 return NotFound();
             }
-            return View(aanmelding);
+            return View(hulpverlener);
         }
 
-        // POST: Aanmelding/Edit/5
+        // POST: Hulpverlener/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie")] Aanmelding aanmelding)
+        public async Task<IActionResult> Edit(int id, [Bind("Beschrijving,Id,Voornaam,Achternaam")] Hulpverlener hulpverlener)
         {
-            if (id != aanmelding.AanmeldingId)
+            if (id != hulpverlener.Id)
             {
                 return NotFound();
             }
@@ -96,12 +95,12 @@ namespace src.Controllers
             {
                 try
                 {
-                    _context.Update(aanmelding);
+                    _context.Update(hulpverlener);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AanmeldingExists(aanmelding.AanmeldingId))
+                    if (!HulpverlenerExists(hulpverlener.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +111,10 @@ namespace src.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(aanmelding);
+            return View(hulpverlener);
         }
 
-        // GET: Aanmelding/Delete/5
+        // GET: Hulpverlener/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +122,30 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var aanmelding = await _context.Aanmeldingen
-                .FirstOrDefaultAsync(m => m.AanmeldingId == id);
-            if (aanmelding == null)
+            var hulpverlener = await _context.Hulpverleners
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (hulpverlener == null)
             {
                 return NotFound();
             }
 
-            return View(aanmelding);
+            return View(hulpverlener);
         }
 
-        // POST: Aanmelding/Delete/5
+        // POST: Hulpverlener/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var aanmelding = await _context.Aanmeldingen.FindAsync(id);
-            _context.Aanmeldingen.Remove(aanmelding);
+            var hulpverlener = await _context.Hulpverleners.FindAsync(id);
+            _context.Hulpverleners.Remove(hulpverlener);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AanmeldingExists(int id)
+        private bool HulpverlenerExists(int id)
         {
-            return _context.Aanmeldingen.Any(e => e.AanmeldingId == id);
+            return _context.Hulpverleners.Any(e => e.Id == id);
         }
     }
 }

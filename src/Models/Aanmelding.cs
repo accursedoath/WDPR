@@ -15,6 +15,8 @@ public class Aanmelding
     public string Stoornis {get; set;}
 
     public string Leeftijdscategorie {get; set;}
+    
+    public Hulpverlener Hulpverlener {get; set;}
 
     
     public Aanmelding( DatabaseContext context, string voornaam, string achternaam, string email, string stoornis, string leeftijdscategorie)
