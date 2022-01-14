@@ -34,20 +34,13 @@ namespace src
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI();
             services.AddDbContext<DatabaseContext>(options =>
-                    options.UseSqlite(Configuration.GetConnectionString("DatabaseContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if(roleManager.Roles.Count() == 0)
-            {
-                await roleManager.CreateAsync(new IdentityRole{Name = "Moderator"});
-                await roleManager.CreateAsync(new IdentityRole{Name = "Hulpverlener"});
-                await roleManager.CreateAsync(new IdentityRole{Name = "Voogd"});
-                await roleManager.CreateAsync(new IdentityRole{Name = "Client"});
-            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
