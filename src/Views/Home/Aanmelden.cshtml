@@ -1,25 +1,62 @@
 @{
     ViewData["Title"] = "Aanmelden";
 }
+<section id="imageWrapper" class="mb-2">
+    <img src="~/img/aanmeldBanner.png" alt="plaatje van orthopedagoog en client" class="rounded mx-auto d-block img-fluid">
+</section>
 
 <section id="signupWrapper">
     <div class="container">
         <div class="row">
             <h1>Heading</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
-        <div class="row text-center">
-            <div class="form-box">
-                <h2>Aanmelden</h2>
+        <div class="row justify-content-center">
+            <div class="form-box col-12">
+                <h2 class="text-center mb-3">Aanmelden</h2>
                 <form>
-                    <label for="naam">Naam:</label>
-                    <input type="text" id="naam" name="naam"><br>
-                    <label for="geboortedatum">Geboortedatum:</label>
-                    <input type="date" id="geboortedatum" name="geboortedatum"><br>
-                    <label for="ouderverzorger">Naam ouder/verzorger:</label>
-                    <input type="text" id="ouderverzorger" name="ouderverzorger"><br>
-                    <label for="aandoening">Aandoening:</label>
-                    <input type="text" id="aandoening" name="aandoening">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="naam">Naam:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="naam" class="form-control" name="naam"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="geboortedatum">Geboortedatum:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="date" id="geboortedatum" class="form-control" name="geboortedatum"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="ouderverzorger">Naam ouder/verzorger:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="ouderverzorger" class="form-control" name="ouderverzorger"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="aandoening">Aandoening:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="aandoening" class="form-control" name="aandoening"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 justify-content-end d-flex">
+                                <input type="submit" id="verzenden" class="btn btn-secondary" name="verzenden" value="Verstuur">
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>   
         </div>
