@@ -2,11 +2,13 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Registreer";
-    var list = new List<SelectListItem> {  new SelectListItem { Text = "Moderator", Value = "1", Selected=true},
-                                    new SelectListItem { Text = "Hulpverlener", Value = "2"},
-                                    new SelectListItem { Text = "Client", Value = "3"},
-                                    new SelectListItem { Text = "Voogd", Value = "4"}
-                                   };
+    var list = new List<SelectListItem> 
+        {  
+        new SelectListItem { Text = "Moderator", Value = "1", Selected=true},
+        new SelectListItem { Text = "Hulpverlener", Value = "2"},
+        new SelectListItem { Text = "Client", Value = "3"},
+        new SelectListItem { Text = "Voogd", Value = "4"}
+        };
 }
 
 <div class="row justify-content-center">

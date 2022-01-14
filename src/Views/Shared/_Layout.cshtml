@@ -33,6 +33,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Orthopedagogen">Orthopedagogen</a>
                         </li>
+                        <partial name="_LoginPartial"></partial>
                     </ul>
                         @* @if(SignInManager.IsSignedIn(User) && User.IsInRole("Moderator"))
                         {
@@ -59,8 +60,6 @@
                             </li>
                         } *@
                     </ul>
-                    <partial name="_LoginPartial"></partial>
-
                 </div>
             </div>
         </nav>
