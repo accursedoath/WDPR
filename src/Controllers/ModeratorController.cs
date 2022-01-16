@@ -23,6 +23,34 @@ namespace src.Controllers
             return View(await _context.Moderator.ToListAsync());
         }
 
+        public async Task<IActionResult> Hulpverlener()
+        {
+            return View(await _context.Hulpverleners.ToListAsync());
+        }
+
+        // GET: Hulpverleners
+        public async Task<IActionResult> Client()
+        {
+            return View(await _context.Clienten.ToListAsync());
+        }
+
+        public IActionResult Blokkeer(int id)
+        {
+           var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+           client.magChatten = false;
+           _context.SaveChanges();
+           // maak melding naar hulpverlener
+           return RedirectToAction("Client");
+        }
+
+        public IActionResult Deblokkeer(int id)
+        {
+           var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+           client.magChatten = true;
+           _context.SaveChanges();
+           return RedirectToAction("Client");
+        }
+
         // GET: Moderator/Details/5
         public async Task<IActionResult> Details(int? id)
         {
