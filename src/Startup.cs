@@ -34,7 +34,7 @@ namespace src
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI();
             services.AddDbContext<DatabaseContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
+                    options.UseSqlite(Configuration.GetConnectionString("DatabaseContext")));
             services.AddSignalR();
         }
 

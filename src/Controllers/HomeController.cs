@@ -23,13 +23,13 @@ namespace src.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //  if(_roleManager.Roles.Count() == 0)
-            // {
-            //     await _roleManager.CreateAsync(new IdentityRole{Name = "Hulpverlener"});
-            //     await _roleManager.CreateAsync(new IdentityRole{Name = "Voogd"});
-            //     await _roleManager.CreateAsync(new IdentityRole{Name = "Moderator"});
-            //     await _roleManager.CreateAsync(new IdentityRole{Name = "Client"});
-            // }
+             if(_roleManager.Roles.Count() == 0)
+            {
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Hulpverlener"});
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Voogd"});
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Moderator"});
+                await _roleManager.CreateAsync(new IdentityRole{Name = "Client"});
+            }
             return View();
         }
 
