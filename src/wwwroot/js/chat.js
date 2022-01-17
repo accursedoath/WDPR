@@ -48,7 +48,7 @@ function fillchat(){
     .then(response => response.json())
     .then(data => {
         for(let x = 0; x < data.length; x++){
-            console.log(data[x].Datum)
+            console.log(data[x])
             
             var verzenderli = document.createElement("li");
             var textli = document.createElement("li");
@@ -58,9 +58,9 @@ function fillchat(){
             document.getElementById("messagesList").appendChild(textli);
             document.getElementById("messagesList").appendChild(tijdli);
 
-            var verzender =  data[x].verzenderid;
+            let verzender =  data[x].verzenderId;
             var bericht = data[x].text
-            var tijd = data[x].Datum
+            var tijd = data[x].datum
 
             verzenderli.textContent = `${verzender}`;
             textli.textContent = `${bericht}`;

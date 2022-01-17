@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace src.Migrations
 {
-    public partial class first : Migration
+    public partial class chats : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -245,7 +245,7 @@ namespace src.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     text = table.Column<string>(type: "TEXT", nullable: true),
                     Datum = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    VerzenderId = table.Column<int>(type: "INTEGER", nullable: true)
+                    VerzenderId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -255,7 +255,7 @@ namespace src.Migrations
                         column: x => x.VerzenderId,
                         principalTable: "Account",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

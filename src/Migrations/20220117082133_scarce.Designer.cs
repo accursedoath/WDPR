@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220114144403_berichtenid")]
-    partial class berichtenid
+    [Migration("20220117082133_scarce")]
+    partial class scarce
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -296,10 +296,22 @@ namespace src.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("Account")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Bericht")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Chat")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Datum")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("VerzenderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("chatId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("text")
@@ -307,9 +319,30 @@ namespace src.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VerzenderId");
+                    b.HasIndex("Account");
+
+                    b.HasIndex("Bericht");
+
+                    b.HasIndex("Chat");
 
                     b.ToTable("Berichten");
+                });
+
+            modelBuilder.Entity("src.Models.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BerichteniD")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("naam")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chat");
                 });
 
             modelBuilder.Entity("Client", b =>
@@ -444,9 +477,17 @@ namespace src.Migrations
                 {
                     b.HasOne("Account", "Verzender")
                         .WithMany()
-                        .HasForeignKey("VerzenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Account");
+
+                    b.HasOne("src.Models.Chat", null)
+                        .WithMany("Berichten")
+                        .HasForeignKey("Bericht");
+
+                    b.HasOne("src.Models.Chat", "chat")
+                        .WithMany()
+                        .HasForeignKey("Chat");
+
+                    b.Navigation("chat");
 
                     b.Navigation("Verzender");
                 });
@@ -490,6 +531,11 @@ namespace src.Migrations
             modelBuilder.Entity("Woonplaats", b =>
                 {
                     b.Navigation("account");
+                });
+
+            modelBuilder.Entity("src.Models.Chat", b =>
+                {
+                    b.Navigation("Berichten");
                 });
 
             modelBuilder.Entity("ApplicatieGebruiker", b =>

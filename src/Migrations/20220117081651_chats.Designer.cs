@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220114141627_first")]
-    partial class first
+    [Migration("20220117081651_chats")]
+    partial class chats
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -299,7 +299,7 @@ namespace src.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("VerzenderId")
+                    b.Property<int>("VerzenderId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("text")
@@ -444,7 +444,9 @@ namespace src.Migrations
                 {
                     b.HasOne("Account", "Verzender")
                         .WithMany()
-                        .HasForeignKey("VerzenderId");
+                        .HasForeignKey("VerzenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Verzender");
                 });
