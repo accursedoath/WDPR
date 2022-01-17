@@ -9,7 +9,6 @@ namespace src.Models
         public string text {get; set;}
         public DateTime Datum {get; set;} //Tijd in uml (deze nog aanpassen in het uml)
         
-        [ForeignKey("Chat")]
         public Chat chat {get; set;}
         public int chatId {get; set;}
 

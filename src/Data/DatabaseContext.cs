@@ -17,4 +17,5 @@ using src.Models;
         public DbSet<Hulpverlener> Hulpverleners { get; set; }
         public DbSet<Client> Clienten { get; set; }
         public DbSet<Aanmelding> Aanmeldingen {get; set;}
+        public DbSet<src.Models.Chat> Chat { get; set; }
     }

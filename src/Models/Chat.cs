@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using SignalRChat.Hubs;
 
 namespace src.Models
 {
@@ -12,5 +13,8 @@ namespace src.Models
         [ForeignKey("Bericht")]
         public List<Bericht> Berichten {get; set;}
         public int BerichteniD {get; set;}
+                
+        [NotMapped]
+        public ChatHub chatHub {get; set;}
     }
 }

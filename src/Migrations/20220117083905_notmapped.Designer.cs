@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220117083905_notmapped")]
+    partial class notmapped
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,6 +302,9 @@ namespace src.Migrations
                     b.Property<int?>("Bericht")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("Chat")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Datum")
                         .HasColumnType("TEXT");
 
@@ -317,6 +322,8 @@ namespace src.Migrations
                     b.HasIndex("Account");
 
                     b.HasIndex("Bericht");
+
+                    b.HasIndex("Chat");
 
                     b.ToTable("Berichten");
                 });
@@ -472,9 +479,13 @@ namespace src.Migrations
                         .WithMany()
                         .HasForeignKey("Account");
 
-                    b.HasOne("src.Models.Chat", "chat")
+                    b.HasOne("src.Models.Chat", null)
                         .WithMany("Berichten")
                         .HasForeignKey("Bericht");
+
+                    b.HasOne("src.Models.Chat", "chat")
+                        .WithMany()
+                        .HasForeignKey("Chat");
 
                     b.Navigation("chat");
 
