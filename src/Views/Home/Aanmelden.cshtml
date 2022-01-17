@@ -1,3 +1,4 @@
+@model Aanmelding
 @{
     ViewData["Title"] = "Aanmelden";
 }
@@ -18,42 +19,67 @@
             <div class="form-box col-12">
                 <h2 class="text-center mb-3">Aanmelden</h2>
                 <form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="naam">Naam:</label>
+                                <label asp-controller="Aanmelding" asp-for="Voornaam" for="Voornaam">Voornaam:</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="naam" class="form-control" name="naam"><br>
+                                <input asp-controller="Aanmelding" asp-for="Voornaam" type="text" id="naam" class="form-control"/><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="geboortedatum">Geboortedatum:</label>
+                                <label asp-controller="Aanmelding" asp-for="Achternaam" for="Achternaam">Achternaam:</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="date" id="geboortedatum" class="form-control" name="geboortedatum"><br>
+                                <input asp-controller="Aanmelding" asp-for="Achternaam" type="text" id="naam" class="form-control"/><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="ouderverzorger">Naam ouder/verzorger:</label>
+                                <label asp-controller="Aanmelding" asp-for="BSN" for="BSN">BSN:</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="ouderverzorger" class="form-control" name="ouderverzorger"><br>
+                                <input asp-controller="Aanmelding" asp-for="BSN" type="text" id="BSN" class="form-control"/><br>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-3">
+                                <label asp-controller="Aanmelding" asp-for="Email" for="Email">Email:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-controller="Aanmelding" asp-for="Email" type="text" id="Email" class="form-control"/><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="aandoening">Aandoening:</label>
+                                <label asp-controller="Aanmelding" asp-for="Leeftijdscategorie">Geboortedatum:</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="aandoening" class="form-control" name="aandoening"><br>
+                                <input asp-controller="Aanmelding" asp-for="Leeftijdscategorie" type="date" id="geboortedatum" class="form-control" name="geboortedatum"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-controller="Aanmelding" asp-for="NaamVoogd">Naam ouder/verzorger:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-controller="Aanmelding" asp-for="NaamVoogd" type="text" id="ouderverzorger" class="form-control" name="ouderverzorger"><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-controller="Aanmelding" asp-for="Stoornis" >Aandoening:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-controller="Aanmelding" asp-for="Stoornis" type="text" id="aandoening" class="form-control" name="aandoening"><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 justify-content-end d-flex">
-                                <input type="submit" id="verzenden" class="btn btn-secondary" name="verzenden" value="Verstuur">
+                                <input type="submit" id="verzenden" class="btn btn-secondary" name="verzenden" value="Create">
                             </div>
                         </div>
                     </div>
