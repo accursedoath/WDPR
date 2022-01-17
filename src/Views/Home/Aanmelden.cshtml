@@ -2,12 +2,6 @@
 
 @{
     ViewData["Title"] = "Aanmelden";
-    var Hulpverleners = ViewData["Hulpverlener"];
-    List<SelectListItem> List = new List<SelectListItem>();
-    foreach(var hulp in (List<Hulpverlener>)Hulpverleners)
-    {
-        List.Add(new SelectListItem() { Text = hulp.Voornaam, Value = hulp.Id.ToString() });
-    }
 }
 
 <section id="imageWrapper" class="mb-2">
@@ -17,7 +11,7 @@
 <section id="signupWrapper">
     <div class="container">
         <div class="row">
-            <h1>Gelukt</h1>
+            <h1>Gelukt</h1><br/>
             <p>Uw aanmelding is verzonden naar de orthopedagoog.</p>
         </div>
     </div>
