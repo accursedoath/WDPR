@@ -54,7 +54,7 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,BSN,Email,Stoornis,Leeftijdscategorie,NaamVoogd,Hulpverlener")] Aanmelding aanmelding, string Hulpverlener)
+        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,BSN,Email,Stoornis,Leeftijdscategorie,NaamVoogd,Hulpverlener,AfspraakDatum")] Aanmelding aanmelding, string Hulpverlener)
         {
             ViewData["Hulpverlener"] = await _context.Hulpverleners.ToListAsync();
             if (ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AanmeldingId,Voornaam,Achternaam,BSN,Email,Stoornis,Leeftijdscategorie,NaamVoogd")] Aanmelding aanmelding, string Hulpverlener)
+        public async Task<IActionResult> Edit(int id, [Bind("AanmeldingId,Voornaam,Achternaam,BSN,Email,Stoornis,Leeftijdscategorie,NaamVoogd,AfspraakDatum")] Aanmelding aanmelding, string Hulpverlener)
         {
             if (id != aanmelding.AanmeldingId)
             {

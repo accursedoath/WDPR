@@ -76,6 +76,15 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
+                                <label asp-for="AfspraakDatum" class="control-label">Datum voor Afspraak:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="AfspraakDatum" type="date" class="form-control" />
+                                <span asp-validation-for="AfspraakDatum" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
                                 <label asp-for="NaamVoogd" class="control-label">Naam ouder/voogd:</label>
                             </div>
                             <div class="col-md-9">

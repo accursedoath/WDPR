@@ -19,6 +19,8 @@ public class Aanmelding
 
     public string Leeftijdscategorie {get; set;}
 
+    public string AfspraakDatum {get; set;}
+
     public string NaamVoogd {get; set;}
 
     public Hulpverlener Hulpverlener {get; set;}
