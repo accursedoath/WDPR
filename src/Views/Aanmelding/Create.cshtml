@@ -1,54 +1,10 @@
 @model Aanmelding
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Aanmelden";
 }
 
-<h1>Create</h1>
-
-<h4>Aanmelding</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-            </div>
-            <div class="form-group">
-               
-               
-            </div>
-            <div class="form-group">
-               
-                
-                
-            </div>
-            <div class="form-group">
-               
-                
-            </div>
-            <div class="form-group">
-                <label asp-for="Stoornis" class="control-label"></label>
-                <input asp-for="Stoornis" class="form-control" />
-                <span asp-validation-for="Stoornis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                
-                <input asp-for="Leeftijdscategorie" class="form-control" />
-                <span asp-validation-for="Leeftijdscategorie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NaamVoogd" class="control-label"></label>
-                <input asp-for="NaamVoogd" class="form-control" />
-                <span asp-validation-for="NaamVoogd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-section id="imageWrapper" class="mb-2">
+<section id="imageWrapper" class="mb-2">
     <img src="~/img/aanmeldBanner.png" alt="plaatje van orthopedagoog en client" class="rounded mx-auto d-block img-fluid">
 </section>
 
@@ -64,7 +20,7 @@ section id="imageWrapper" class="mb-2">
         <div class="row justify-content-center">
             <div class="form-box col-12">
                 <h2 class="text-center mb-3">Aanmelden</h2>
-                <form>
+                <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="container">
                         <div class="row">
@@ -73,7 +29,7 @@ section id="imageWrapper" class="mb-2">
                             </div>
                             <div class="col-md-9">
                                 <input type="text" id="naam" asp-for="Voornaam" class="form-control" />
-                                <span asp-validation-for="Voornaam" class="text-danger"></span>
+                                <span asp-validation-for="Voornaam" class="text-danger"></span><br>
                             </div>
                         </div>
                         <div class="row">
@@ -82,7 +38,7 @@ section id="imageWrapper" class="mb-2">
                             </div>
                             <div class="col-md-9">
                                 <input asp-for="Achternaam" class="form-control" />
-                                <span asp-validation-for="Achternaam" class="text-danger"></span>
+                                <span asp-validation-for="Achternaam" class="text-danger"></span><br>
                             </div>
                         </div>
                         <div class="row">
@@ -91,7 +47,7 @@ section id="imageWrapper" class="mb-2">
                             </div>
                             <div class="col-md-9">
                                 <input asp-for="BSN" class="form-control" />
-                                <span asp-validation-for="BSN" class="text-danger"></span>
+                                <span asp-validation-for="BSN" class="text-danger"></span><br>
                             </div>
                         </div>
                          <div class="row">
@@ -100,7 +56,7 @@ section id="imageWrapper" class="mb-2">
                             </div>
                             <div class="col-md-9">
                                 <input asp-for="Email" class="form-control" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <span asp-validation-for="Email" class="text-danger"></span><br>
                             </div>
                         </div>
                         <div class="row">
@@ -108,23 +64,26 @@ section id="imageWrapper" class="mb-2">
                                 <label asp-for="Leeftijdscategorie" class="control-label">Leeftijdscategorie:</label>
                             </div>
                             <div class="col-md-9">
-                                <input asp-for="Leeftijdscategorie" type="date" id="geboortedatum" class="form-control" name="geboortedatum"><br>
+                                <input asp-for="Leeftijdscategorie" class="form-control" />
+                                <span asp-validation-for="Leeftijdscategorie" class="text-danger"></span><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="NaamVoogd">Naam ouder/verzorger:</label>
+                                <label asp-for="NaamVoogd" class="control-label">Naam ouder/voogd:</label>
                             </div>
                             <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="NaamVoogd" type="text" id="ouderverzorger" class="form-control" name="ouderverzorger"><br>
+                                <input asp-for="NaamVoogd" class="form-control" />
+                                <span asp-validation-for="NaamVoogd" class="text-danger"></span><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="Stoornis" >Aandoening:</label>
+                               <label asp-for="Stoornis" class="control-label"></label>
                             </div>
                             <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="Stoornis" type="text" id="aandoening" class="form-control" name="aandoening"><br>
+                                <input asp-for="Stoornis" class="form-control" />
+                                <span asp-validation-for="Stoornis" class="text-danger"></span><br>
                             </div>
                         </div>
                         <div class="row">

@@ -49,6 +49,8 @@ public class Aanmelding
         Stuurmelding();
     }
 
+    public Aanmelding(){}
+
     public string Stuurmelding()
     {
         return "er is een account aangemaakt"; //idk dit moeten we even bespreken

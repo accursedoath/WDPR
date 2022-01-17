@@ -58,9 +58,9 @@ namespace src.Controllers
             {
                 _context.Add(aanmelding);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View();
             }
-            return View(aanmelding);
+            return View();
         }
 
         // GET: Aanmelding/Edit/5
