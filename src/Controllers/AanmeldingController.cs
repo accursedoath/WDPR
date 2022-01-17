@@ -20,6 +20,7 @@ namespace src.Controllers
         // GET: Aanmelding
         public async Task<IActionResult> Index()
         {
+            _context.Aanmeldingen.Include(s => s.Hulpverlener);
             return View(await _context.Aanmeldingen.ToListAsync());
         }
 
@@ -42,8 +43,9 @@ namespace src.Controllers
         }
 
         // GET: Aanmelding/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["Hulpverlener"] = await _context.Hulpverleners.ToListAsync();
             return View();
         }
 
@@ -52,15 +54,18 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie")] Aanmelding aanmelding)
+        public async Task<IActionResult> Create([Bind("AanmeldingId,Voornaam,Achternaam,BSN,Email,Stoornis,Leeftijdscategorie,NaamVoogd,Hulpverlener,AfspraakDatum")] Aanmelding aanmelding, string Hulpverlener)
         {
+            ViewData["Hulpverlener"] = await _context.Hulpverleners.ToListAsync();
             if (ModelState.IsValid)
             {
+                Hulpverlener hulp = _context.Hulpverleners.Where(h => h.Id == Int32.Parse(Hulpverlener)).SingleOrDefault();
+                aanmelding.Hulpverlener = hulp;
                 _context.Add(aanmelding);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               return RedirectToAction("Aanmelden","Home");
             }
-            return View(aanmelding);
+            return View();
         }
 
         // GET: Aanmelding/Edit/5
@@ -84,7 +89,7 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AanmeldingId,Voornaam,Achternaam,Email,Stoornis,Leeftijdscategorie")] Aanmelding aanmelding)
+        public async Task<IActionResult> Edit(int id, [Bind("AanmeldingId,Voornaam,Achternaam,BSN,Email,Stoornis,Leeftijdscategorie,NaamVoogd,AfspraakDatum")] Aanmelding aanmelding, string Hulpverlener)
         {
             if (id != aanmelding.AanmeldingId)
             {

@@ -1,50 +1,123 @@
 @model Aanmelding
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Aanmelden";
+    var Hulpverleners = ViewData["Hulpverlener"];
+    List<SelectListItem> List = new List<SelectListItem>();
+    foreach(var hulp in (List<Hulpverlener>)Hulpverleners)
+    {
+        List.Add(new SelectListItem() { Text = hulp.Voornaam, Value = hulp.Id.ToString() });
+    }
 }
 
-<h1>Create</h1>
+<section id="imageWrapper" class="mb-2">
+    <img src="~/img/aanmeldBanner.png" alt="plaatje van orthopedagoog en client" class="rounded mx-auto d-block img-fluid">
+</section>
 
-<h4>Aanmelding</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Voornaam" class="control-label"></label>
-                <input asp-for="Voornaam" class="form-control" />
-                <span asp-validation-for="Voornaam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Achternaam" class="control-label"></label>
-                <input asp-for="Achternaam" class="form-control" />
-                <span asp-validation-for="Achternaam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stoornis" class="control-label"></label>
-                <input asp-for="Stoornis" class="form-control" />
-                <span asp-validation-for="Stoornis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Leeftijdscategorie" class="control-label"></label>
-                <input asp-for="Leeftijdscategorie" class="form-control" />
-                <span asp-validation-for="Leeftijdscategorie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<section id="signupWrapper">
+    <div class="container">
+        <div class="row">
+            <h1>Heading</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-box col-12">
+                <h2 class="text-center mb-3">Aanmelden</h2>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Voornaam" class="control-label">Voornaam:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="naam" asp-for="Voornaam" class="form-control" />
+                                <span asp-validation-for="Voornaam" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Achternaam" class="control-label">Achternaam:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Achternaam" class="form-control" />
+                                <span asp-validation-for="Achternaam" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="BSN" class="control-label">BSN:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="BSN" class="form-control" />
+                                <span asp-validation-for="BSN" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-3">
+                                 <label asp-for="Email" class="control-label">Email:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Leeftijdscategorie" class="control-label">Leeftijdscategorie:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Leeftijdscategorie" type="date" class="form-control" />
+                                <span asp-validation-for="Leeftijdscategorie" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="AfspraakDatum" class="control-label">Datum voor Afspraak:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="AfspraakDatum" type="date" class="form-control" />
+                                <span asp-validation-for="AfspraakDatum" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="NaamVoogd" class="control-label">Naam ouder/voogd:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="NaamVoogd" class="form-control" />
+                                <span asp-validation-for="NaamVoogd" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                               <label asp-for="Stoornis" class="control-label">Stoornis:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Stoornis" class="form-control" />
+                                <span asp-validation-for="Stoornis" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Hulpverlener">Hulpverlener</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select asp-for="Hulpverlener" asp-items="@List"></select>
+                                <span asp-validation-for="Hulpverlener" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 justify-content-end d-flex">
+                                <input type="submit" value="Create" class="btn btn-secondary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>   
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</section>

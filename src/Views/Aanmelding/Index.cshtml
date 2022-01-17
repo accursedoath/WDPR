@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.Achternaam)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.BSN)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
@@ -26,6 +29,15 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Leeftijdscategorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AfspraakDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NaamVoogd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hulpverlener)
             </th>
             <th></th>
         </tr>
@@ -40,6 +52,9 @@
                 @Html.DisplayFor(modelItem => item.Achternaam)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.BSN)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
@@ -47,6 +62,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Leeftijdscategorie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AfspraakDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NaamVoogd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HulpverlenerId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AanmeldingId">Edit</a> |
