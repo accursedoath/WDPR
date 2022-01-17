@@ -48,22 +48,23 @@ function fillchat(){
     .then(response => response.json())
     .then(data => {
         for(let x = 0; x < data.length; x++){
-            console.log(data[x].text)
-            var lisa = document.createElement("li");
-            var lisbon = document.createElement("li");
-
-            document.getElementById("messagesList").appendChild(lisa);
-
+            console.log(data[x].Datum)
             
+            var verzenderli = document.createElement("li");
+            var textli = document.createElement("li");
+            var tijdli = document.createElement("li");
 
-        //     var verzender =  data[x].verzenderid;
-             var bericht = data[x].text
-             lisa.textContent = `${bericht}`;
-        //     var tijd = data[x].Datum
+            document.getElementById("messagesList").appendChild(verzenderli);
+            document.getElementById("messagesList").appendChild(textli);
+            document.getElementById("messagesList").appendChild(tijdli);
 
-        //     verzenderli.textContent = `${verzender}`;
-            //  textli.textContent = `${bericht}`;
-        //     tijdli.textContent = `${tijd}`; 
+            var verzender =  data[x].verzenderid;
+            var bericht = data[x].text
+            var tijd = data[x].Datum
+
+            verzenderli.textContent = `${verzender}`;
+            textli.textContent = `${bericht}`;
+            tijdli.textContent = `${tijd}`; 
 
         }
     });
