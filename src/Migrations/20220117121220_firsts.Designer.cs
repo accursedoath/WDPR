@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220117121220_firsts")]
+    partial class firsts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,16 +347,11 @@ namespace src.Migrations
                     b.Property<string>("ApplicatieGebruiker")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("hulpverlenerId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("magChatten")
                         .HasColumnType("INTEGER");
 
                     b.HasIndex("ApplicatieGebruiker")
                         .IsUnique();
-
-                    b.HasIndex("hulpverlenerId");
 
                     b.HasDiscriminator().HasValue("Client");
                 });
@@ -491,14 +488,6 @@ namespace src.Migrations
                     b.HasOne("ApplicatieGebruiker", "User")
                         .WithOne("client")
                         .HasForeignKey("Client", "ApplicatieGebruiker");
-
-                    b.HasOne("Hulpverlener", "hulpverlener")
-                        .WithMany()
-                        .HasForeignKey("hulpverlenerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("hulpverlener");
 
                     b.Navigation("User");
                 });

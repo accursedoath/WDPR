@@ -17,6 +17,8 @@ namespace SignalRChat.Hubs
         }
         public async Task SendMessage(string user, string message, string userId)
         {
+            var test = Context.User;
+            Console.WriteLine(test.Identity.Name);
             _context.Clienten.Include(x => x.User);
             var verzender = _context.Clienten.Single(x => x.User.Id == userId);
             var bericht = new Bericht(){Verzender = verzender, text = message,  Datum = DateTime.Now};
@@ -24,5 +26,6 @@ namespace SignalRChat.Hubs
             await _context.SaveChangesAsync();
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
+
     }
 }
