@@ -48,6 +48,11 @@ namespace src.Controllers
             return View();
         }
 
+        public IActionResult OverOns()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
