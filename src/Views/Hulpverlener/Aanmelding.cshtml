@@ -1,0 +1,74 @@
+@model IEnumerable<Aanmelding>
+
+@{
+    ViewData["Title"] = "Aanmeldingen";
+}
+
+<h1>Aanmeldingen</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Voornaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Achternaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BSN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stoornis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leeftijdscategorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AfspraakDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NaamVoogd)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Achternaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BSN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stoornis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Leeftijdscategorie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AfspraakDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NaamVoogd)
+            </td>
+            <td>
+                <a asp-controller="Aanmelding" asp-action="Edit" asp-route-id="@item.AanmeldingId">Edit</a> |
+                <a asp-controller="Aanmelding" asp-action="Details" asp-route-id="@item.AanmeldingId">Details</a> |
+                <a asp-controller="Aanmelding" asp-action="Delete" asp-route-id="@item.AanmeldingId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
