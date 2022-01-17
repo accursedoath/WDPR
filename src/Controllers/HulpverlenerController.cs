@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +14,28 @@ namespace src.Controllers
     public class HulpverlenerController : Controller
     {
         private readonly DatabaseContext _context;
+         private readonly SignInManager<ApplicatieGebruiker> _signInManager;
+        private readonly UserManager<ApplicatieGebruiker> _userManager;
 
-        public HulpverlenerController(DatabaseContext context)
+        public HulpverlenerController(DatabaseContext context, SignInManager<ApplicatieGebruiker> signInManager, UserManager<ApplicatieGebruiker> userManager)
         {
             _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         // GET: Hulpverlener
         public async Task<IActionResult> Index()
         {
             return View(await _context.Hulpverleners.ToListAsync());
+        }
+
+        [Authorize(Roles = "Hulpverlener")]
+        public async Task<IActionResult> Aanmelding()
+        {
+            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userIdInt = _context.Accounts.FromSqlRaw("SELECT * FROM Accounts WHERE Hulpverlener_ApplicatieGebruiker = {0}", userId).SingleOrDefault().Id;
+            return View(await _context.Aanmeldingen.Where( a => a.HulpverlenerId == userIdInt).ToListAsync());
         }
 
         // GET: Hulpverlener/Details/5
