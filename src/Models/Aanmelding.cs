@@ -22,7 +22,7 @@ public class Aanmelding
     public string NaamVoogd {get; set;}
 
     [ForeignKey("Hulpverlener")]
-    public Hulpverlener hulpverlener {get; set;}
+    public string hulpverlener {get; set;}
 
     
     public Aanmelding( DatabaseContext context, string voornaam, string achternaam, string email, string stoornis, string leeftijdscategorie)

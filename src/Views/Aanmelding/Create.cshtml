@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Aanmelden";
+    var Hulpverleners = ViewData["Hulpverlener"];
+    List<SelectListItem> List = new List<SelectListItem>();
+    foreach(var hulp in (List<Hulpverlener>)Hulpverleners)
+    {
+        List.Add(new SelectListItem() { Text = hulp.Voornaam, Value = hulp.Id.ToString() });
+    }
 }
 
 <section id="imageWrapper" class="mb-2">
@@ -64,7 +70,7 @@
                                 <label asp-for="Leeftijdscategorie" class="control-label">Leeftijdscategorie:</label>
                             </div>
                             <div class="col-md-9">
-                                <input asp-for="Leeftijdscategorie" class="form-control" />
+                                <input asp-for="Leeftijdscategorie" type="date" class="form-control" />
                                 <span asp-validation-for="Leeftijdscategorie" class="text-danger"></span><br>
                             </div>
                         </div>
@@ -79,11 +85,20 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                               <label asp-for="Stoornis" class="control-label"></label>
+                               <label asp-for="Stoornis" class="control-label">Stoornis:</label>
                             </div>
                             <div class="col-md-9">
                                 <input asp-for="Stoornis" class="form-control" />
                                 <span asp-validation-for="Stoornis" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="hulpverlener">Hulpverlener</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select asp-for="hulpverlener" asp-items="@List"></select>
+                                <span asp-validation-for="hulpverlener" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -97,4 +112,3 @@
         </div>
     </div>
 </section>
-

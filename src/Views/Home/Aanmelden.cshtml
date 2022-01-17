@@ -1,7 +1,15 @@
 @model Aanmelding
+
 @{
     ViewData["Title"] = "Aanmelden";
+    var Hulpverleners = ViewData["Hulpverlener"];
+    List<SelectListItem> List = new List<SelectListItem>();
+    foreach(var hulp in (List<Hulpverlener>)Hulpverleners)
+    {
+        List.Add(new SelectListItem() { Text = hulp.Voornaam, Value = hulp.Id.ToString() });
+    }
 }
+
 <section id="imageWrapper" class="mb-2">
     <img src="~/img/aanmeldBanner.png" alt="plaatje van orthopedagoog en client" class="rounded mx-auto d-block img-fluid">
 </section>
@@ -9,82 +17,8 @@
 <section id="signupWrapper">
     <div class="container">
         <div class="row">
-            <h1>Heading</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <div class="row justify-content-center">
-            <div class="form-box col-12">
-                <h2 class="text-center mb-3">Aanmelden</h2>
-                <form>
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="Voornaam" for="Voornaam">Voornaam:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="Voornaam" type="text" id="naam" class="form-control"/><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="Achternaam" for="Achternaam">Achternaam:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="Achternaam" type="text" id="naam" class="form-control"/><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="BSN" for="BSN">BSN:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="BSN" type="text" id="BSN" class="form-control"/><br>
-                            </div>
-                        </div>
-                         <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="Email" for="Email">Email:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="Email" type="text" id="Email" class="form-control"/><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="Leeftijdscategorie">Geboortedatum:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="Leeftijdscategorie" type="date" id="geboortedatum" class="form-control" name="geboortedatum"><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="NaamVoogd">Naam ouder/verzorger:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="NaamVoogd" type="text" id="ouderverzorger" class="form-control" name="ouderverzorger"><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label asp-controller="Aanmelding" asp-for="Stoornis" >Aandoening:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-controller="Aanmelding" asp-for="Stoornis" type="text" id="aandoening" class="form-control" name="aandoening"><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 justify-content-end d-flex">
-                                <input type="submit" id="verzenden" class="btn btn-secondary" name="verzenden" value="Create">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>   
+            <h1>Gelukt</h1>
+            <p>Uw aanmelding is verzonden naar de orthopedagoog.</p>
         </div>
     </div>
 </section>
