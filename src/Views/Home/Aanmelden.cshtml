@@ -16,3 +16,15 @@
         </div>
     </div>
 </section>
+
+<script>
+    fetch("https://orthopedagogie-zmdh.herokuapp.com/Register?Publickey=TUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FDQUFUejBKWklzY09menQ5ZFhwQkVER1IySgpJMGRMcDlYQUtSOWRyeHBOK0VoYUdhZHBmTDRqbUVhK2xvbG13TXVtKzhtOHNYdnc4a1E1dlJGbVEzRm4vZjNMCmxoenRuZVBaSTlXVlFWNDEvcmpGRk4vcTJmZkVlbjNhUTdqOHR0UXhSTnR6NzhiVkdFV0pERUxJMU80TkZJSUMKSWNja0pwZG1HTTdOckxRWDdRSURBUUFC&Code=123", 
+    {
+        "method": "post",
+         body: JSON.stringify({"geboortedatum": "", "BSN": ""}),
+         "content-type": "application/json"
+    })
+    .then((i) => i.json())
+    .then((i) => document.getElementById("BSN").innerText = i.BSN)
+    .catch((err) => alert("api post call niet gelukt"));
+</script>
