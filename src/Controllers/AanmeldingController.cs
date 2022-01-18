@@ -68,6 +68,13 @@ namespace src.Controllers
             return View();
         }
 
+        //API post call
+        [HttpPost]
+        public JsonResult sendToApi ([FromBody] Aanmelding q)
+        {
+            return Json(new { geboortedatum = q.Leeftijdscategorie, BSN = q.BSN });
+        }
+
         // GET: Aanmelding/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
