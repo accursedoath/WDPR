@@ -17,19 +17,26 @@ namespace SignalRChat.Hubs
         }
         public async Task SendMessage(string user, string message, string userId)
         {
-            var test = Context.User;
-            Console.WriteLine(test.Identity.Name);
+            var test = Context.UserIdentifier;
+            //Console.WriteLine(test);
             _context.Clienten.Include(x => x.User);
             var verzender = _context.Clienten.Single(x => x.User.Id == userId);
             var bericht = new Bericht(){Verzender = verzender, text = message,  Datum = DateTime.Now};
             await _context.Berichten.AddAsync(bericht);
             await _context.SaveChangesAsync();
             await Clients.All.SendAsync("ReceiveMessage", user, message);
+            await SendPrivateMessage(user, message, userId);
         }
 
         public async Task SendPrivateMessage(string user, string message, string userId){
-            var client = _context.Clienten.Single(x => x.User.Id == userId);
-            await Clients.User(client.hulpverlener.User.Id).SendAsync("ReceiveMessage", user, message);
+            _context.Clienten.Include(x => x.User);
+            _context.Clienten.Include(x => x.hulpverlener);
+            _context.Hulpverleners.Include(x => x.User);
+            _context.Users.Include(x => x.Email);
+            var verzender = _context.Clienten.Single(x => x.User.Id == userId);
+            var hulpverlener = _context.Hulpverleners.Single(x => x.Id == verzender.hulpverlenerId);
+            _context.Entry(hulpverlener).Reference(x => x.User).Load(); //goddelijke explicit loading fout opgelost hier
+            await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", user, message);
         }
 
     }

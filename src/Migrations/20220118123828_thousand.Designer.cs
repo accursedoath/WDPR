@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220117135717_1000")]
-    partial class _1000
+    [Migration("20220118123828_thousand")]
+    partial class thousand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

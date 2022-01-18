@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace src.Migrations
 {
-    public partial class chats : Migration
+    public partial class thousand : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,20 @@ namespace src.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chat",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    naam = table.Column<string>(type: "TEXT", nullable: true),
+                    BerichteniD = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chat", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,6 +211,7 @@ namespace src.Migrations
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
                     magChatten = table.Column<bool>(type: "INTEGER", nullable: true),
                     ApplicatieGebruiker = table.Column<string>(type: "TEXT", nullable: true),
+                    hulpverlenerId = table.Column<int>(type: "INTEGER", nullable: true),
                     Beschrijving = table.Column<string>(type: "TEXT", nullable: true),
                     Hulpverlener_ApplicatieGebruiker = table.Column<string>(type: "TEXT", nullable: true),
                     Moderator_ApplicatieGebruiker = table.Column<string>(type: "TEXT", nullable: true),
@@ -205,6 +220,12 @@ namespace src.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Account", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Account_Account_hulpverlenerId",
+                        column: x => x.hulpverlenerId,
+                        principalTable: "Account",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Account_AspNetUsers_ApplicatieGebruiker",
                         column: x => x.ApplicatieGebruiker,
@@ -245,17 +266,26 @@ namespace src.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     text = table.Column<string>(type: "TEXT", nullable: true),
                     Datum = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Bericht = table.Column<int>(type: "INTEGER", nullable: true),
+                    chatId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Account = table.Column<int>(type: "INTEGER", nullable: true),
                     VerzenderId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Berichten", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Berichten_Account_VerzenderId",
-                        column: x => x.VerzenderId,
+                        name: "FK_Berichten_Account_Account",
+                        column: x => x.Account,
                         principalTable: "Account",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Berichten_Chat_Bericht",
+                        column: x => x.Bericht,
+                        principalTable: "Chat",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -269,6 +299,11 @@ namespace src.Migrations
                 table: "Account",
                 column: "Hulpverlener_ApplicatieGebruiker",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Account_hulpverlenerId",
+                table: "Account",
+                column: "hulpverlenerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Account_Moderator_ApplicatieGebruiker",
@@ -326,9 +361,14 @@ namespace src.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Berichten_VerzenderId",
+                name: "IX_Berichten_Account",
                 table: "Berichten",
-                column: "VerzenderId");
+                column: "Account");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Berichten_Bericht",
+                table: "Berichten",
+                column: "Bericht");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -359,6 +399,9 @@ namespace src.Migrations
 
             migrationBuilder.DropTable(
                 name: "Account");
+
+            migrationBuilder.DropTable(
+                name: "Chat");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
