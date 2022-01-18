@@ -1,0 +1,41 @@
+@model IEnumerable<Hulpverlener>
+
+@{
+    ViewData["Title"] = "Hulpverleners";
+}
+
+<h1>Hulpverleners</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Voornaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Achternaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Beschrijving)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Achternaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beschrijving)
+            </td>
+            <td>
+                <a asp-action="Clienten" asp-route-id="@item.Id">Clienten</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
