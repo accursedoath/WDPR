@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using src.Models;
 
 namespace src.Areas.Identity.Pages.Account
 {
@@ -100,7 +101,12 @@ namespace src.Areas.Identity.Pages.Account
                         user.hulpverlener = new Hulpverlener(){Voornaam = Input.Voornaam};
                         }
                     if(Input.Functie == "3") {
-                        user.client = new Client(){Voornaam = Input.Voornaam, hulpverlener = _context.Hulpverleners.Single(x => x.Id == Int32.Parse(Input.Hulpverlener))};
+                        var hulpverlener = _context.Hulpverleners.Single(x => x.Id == Int32.Parse(Input.Hulpverlener));
+                        var client = new Client(){Voornaam = Input.Voornaam, hulpverlener = hulpverlener};
+                        user.client = client;
+                        var chat = new Chat() { client = client, hulpverlener = hulpverlener };
+                        _context.Chat.Add(chat);
+                        await _context.SaveChangesAsync();
                         }
                     if(Input.Functie == "4") {
                         user.voogd = new Voogd(){Voornaam = Input.Voornaam};

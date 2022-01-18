@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220118123828_thousand")]
-    partial class thousand
+    [Migration("20220118182421_chatrelationss")]
+    partial class chatrelationss
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -329,13 +329,20 @@ namespace src.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BerichteniD")
+                    b.Property<int?>("clientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("hulpverlenerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("naam")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("clientId");
+
+                    b.HasIndex("hulpverlenerId");
 
                     b.ToTable("Chat");
                 });
@@ -486,6 +493,21 @@ namespace src.Migrations
                     b.Navigation("chat");
 
                     b.Navigation("Verzender");
+                });
+
+            modelBuilder.Entity("src.Models.Chat", b =>
+                {
+                    b.HasOne("Client", "client")
+                        .WithMany()
+                        .HasForeignKey("clientId");
+
+                    b.HasOne("Hulpverlener", "hulpverlener")
+                        .WithMany()
+                        .HasForeignKey("hulpverlenerId");
+
+                    b.Navigation("client");
+
+                    b.Navigation("hulpverlener");
                 });
 
             modelBuilder.Entity("Client", b =>

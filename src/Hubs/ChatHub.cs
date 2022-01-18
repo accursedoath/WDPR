@@ -30,14 +30,21 @@ namespace SignalRChat.Hubs
 
         public async Task SendPrivateMessage(string user, string message, string userId){
             _context.Clienten.Include(x => x.User);
-            _context.Clienten.Include(x => x.hulpverlener);
-            _context.Hulpverleners.Include(x => x.User);
-            _context.Users.Include(x => x.Email);
-            var verzender = _context.Clienten.Single(x => x.User.Id == userId);
-            var hulpverlener = _context.Hulpverleners.Single(x => x.Id == verzender.hulpverlenerId);
-            _context.Entry(hulpverlener).Reference(x => x.User).Load(); //goddelijke explicit loading fout opgelost hier
-            await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", user, message);
+            Console.WriteLine(_context.Clienten.Any(x => x.User.Id == userId));
+            if(_context.Clienten.Any(x => x.User.Id == userId)){
+                _context.Clienten.Include(x => x.hulpverlener);
+                _context.Hulpverleners.Include(x => x.User);
+                _context.Users.Include(x => x.Email);
+                var verzender = _context.Clienten.Single(x => x.User.Id == userId);
+                var hulpverlener = _context.Hulpverleners.Single(x => x.Id == verzender.hulpverlenerId);
+                _context.Entry(hulpverlener).Reference(x => x.User).Load(); //goddelijke explicit loading fout opgelost hier
+                await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", user, message);
+            }
+            else{
+                _context.Hulpverleners.Include(x => x.User);
+                var hulpverlener = _context.Hulpverleners.Single(x => x.User.Id == userId);            
+                //hierzo send message naar client
+                }
         }
-
     }
 }

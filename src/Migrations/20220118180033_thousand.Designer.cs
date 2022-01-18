@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220118180033_thousand")]
+    partial class thousand
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -327,20 +329,13 @@ namespace src.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("clientId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("hulpverlenerId")
+                    b.Property<int>("BerichteniD")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("naam")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("clientId");
-
-                    b.HasIndex("hulpverlenerId");
 
                     b.ToTable("Chat");
                 });
@@ -493,21 +488,6 @@ namespace src.Migrations
                     b.Navigation("Verzender");
                 });
 
-            modelBuilder.Entity("src.Models.Chat", b =>
-                {
-                    b.HasOne("Client", "client")
-                        .WithMany()
-                        .HasForeignKey("clientId");
-
-                    b.HasOne("Hulpverlener", "hulpverlener")
-                        .WithMany()
-                        .HasForeignKey("hulpverlenerId");
-
-                    b.Navigation("client");
-
-                    b.Navigation("hulpverlener");
-                });
-
             modelBuilder.Entity("Client", b =>
                 {
                     b.HasOne("ApplicatieGebruiker", "User")
@@ -515,7 +495,7 @@ namespace src.Migrations
                         .HasForeignKey("Client", "ApplicatieGebruiker");
 
                     b.HasOne("Hulpverlener", "hulpverlener")
-                        .WithMany()
+                        .WithMany("clienten")
                         .HasForeignKey("hulpverlenerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -560,6 +540,11 @@ namespace src.Migrations
             modelBuilder.Entity("src.Models.Chat", b =>
                 {
                     b.Navigation("Berichten");
+                });
+
+            modelBuilder.Entity("Hulpverlener", b =>
+                {
+                    b.Navigation("clienten");
                 });
 
             modelBuilder.Entity("ApplicatieGebruiker", b =>
