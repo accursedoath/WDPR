@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using src.Models;
 
 namespace src.Areas.Identity.Pages.Account
 {
@@ -23,17 +25,20 @@ namespace src.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicatieGebruiker> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly DatabaseContext _context;
 
         public RegisterModel(
             UserManager<ApplicatieGebruiker> userManager,
             SignInManager<ApplicatieGebruiker> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            DatabaseContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -68,12 +73,17 @@ namespace src.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Voornaam")]
             public string Voornaam { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Hulpverlener")]
+            public string Hulpverlener { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ViewData["Hulpverleners"] = await _context.Hulpverleners.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -91,7 +101,12 @@ namespace src.Areas.Identity.Pages.Account
                         user.hulpverlener = new Hulpverlener(){Voornaam = Input.Voornaam};
                         }
                     if(Input.Functie == "3") {
-                        user.client = new Client(){Voornaam = Input.Voornaam};
+                        var hulpverlener = _context.Hulpverleners.Single(x => x.Id == Int32.Parse(Input.Hulpverlener));
+                        var client = new Client(){Voornaam = Input.Voornaam, hulpverlener = hulpverlener};
+                        user.client = client;
+                        var chat = new Chat() { client = client, hulpverlener = hulpverlener };
+                        //_context.Chats.Add(chat);
+                        await _context.SaveChangesAsync();
                         }
                     if(Input.Functie == "4") {
                         user.voogd = new Voogd(){Voornaam = Input.Voornaam};

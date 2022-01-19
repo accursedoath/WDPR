@@ -22,12 +22,5 @@ namespace test
             Assert.Equal(nu, bericht.Datum);
         }
 
-        [Fact]
-        public void Verzender_Check(){
-            var verzender = new Account("David",null,null);       
-            var nu = DateTime.Now;
-            var bericht = new Bericht(){Datum = nu, text = null, Verzender = verzender};
-            Assert.Equal("David", bericht.Verzender.Voornaam);
-        }
     }
 }

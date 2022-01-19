@@ -34,14 +34,19 @@ namespace src.Controllers
         public IActionResult Index()
         {
                 var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ViewBag.uId = userId;
                 var client = _context.Clienten.Any(x => x.User.Id == userId);
                 if(client){
                     _context.Clienten.Include(x => x.User);
-                    ViewBag.UserName = _context.Clienten.Where(x => x.User.Id == userId).FirstOrDefault().Voornaam;
+                    var c1 = _context.Clienten.Where(x => x.User.Id == userId).FirstOrDefault();
+                    ViewBag.UserName = c1.Voornaam;
+                     ViewBag.accountid = c1.Id;
                 }
                 else {
                     _context.Hulpverleners.Include(x => x.User);
-                    ViewBag.UserName = _context.Hulpverleners.Where(x => x.User.Id == userId).FirstOrDefault().Voornaam;
+                    var h1 = _context.Hulpverleners.Where(x => x.User.Id == userId).FirstOrDefault();
+                    ViewBag.UserName = h1.Voornaam;
+                    ViewBag.accountid = h1.Id;
                 }
                 return View();
         }
