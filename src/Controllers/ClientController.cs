@@ -41,6 +41,28 @@ namespace src.Controllers
             return View(client);
         }
 
+        // GET: Client/Woonplaats
+        public IActionResult Woonplaats()
+        {
+            return View();
+        }
+
+        // POST: Client/Woonplaats
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Woonplaats(int id, [Bind("Adres,plaats,Postcode")] Woonplaats woonplaats)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+                client.woonplaats = woonplaats;
+                _context.Update(client);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(woonplaats);
+        }
+
         // GET: Client/Create
         public IActionResult Create()
         {
