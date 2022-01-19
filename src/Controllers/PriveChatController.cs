@@ -12,7 +12,6 @@ using src.Models;
 
 namespace src.Controllers
 {
-    [Authorize(Roles = "Hulpverlener,Client")]
     public class PriveChatController : Controller
     //Als een hulpverlener op een link klikt, dan wordt die link zo ingestelt met asp taggs
     //Op de hulpverlener pagina zie een lijst met links naar prive chats, deze links geven de id mee
@@ -42,22 +41,30 @@ namespace src.Controllers
             return View(clientenchats);
         }
 
-        public IActionResult Chat()
+        public IActionResult Chat(int id)
         {
                 var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 ViewBag.uId = userId;
                 var client = _context.Clienten.Any(x => x.User.Id == userId);
                 if(client){
-                    _context.Clienten.Include(x => x.User);
+                    _context.Chats.Include(x => x.client);
                     var c1 = _context.Clienten.Where(x => x.User.Id == userId).FirstOrDefault();
-                    ViewBag.UserName = c1.Voornaam;
-                    ViewBag.accountid = c1.Id;
+                    _context.Entry(c1).Reference(x => x.hulpverlener).LoadAsync();
+                    ViewBag.Chatnaam = "Hulpverlener " + c1.hulpverlener.Voornaam;
+                    ViewBag.chattid = _context.Chats.FirstOrDefault(x => x.client.Id == c1.Id).Id;;
+                    ViewBag.clientid = 0;
+                    ViewBag.verstuurder = "client";
                 }
                 else {
                     _context.Hulpverleners.Include(x => x.User);
+                    _context.Chats.Include(x => x.hulpverlener);
+                    _context.Chats.Include(x => x.client);
                     var h1 = _context.Hulpverleners.Where(x => x.User.Id == userId).FirstOrDefault();
-                    ViewBag.UserName = h1.Voornaam;
-                    ViewBag.accountid = h1.Id; 
+                    var client2 = _context.Clienten.Find(id);
+                    ViewBag.Chatnaam ="Client " + client2.Voornaam;
+                    ViewBag.clientid = id;
+                    ViewBag.chattid = _context.Chats.Single(x => x.hulpverlener.Id == h1.Id && x.client.Id == client2.Id).Id;
+                    ViewBag.verstuurder = "hulpverlener";
                 }
                 return View();
         }

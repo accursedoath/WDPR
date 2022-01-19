@@ -43,18 +43,18 @@ connection.start().then(function () {
 // });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("userInput").value;
-    var message = document.getElementById("messageInput").value;
-    var userId = document.getElementById("userId").value;
-    connection.invoke("SendPrivateMessage", user, message, userId).catch(function (err) {
+     var message = document.getElementById("messageInput").value;
+    let chatid = document.getElementById("chattid").value;
+    var verstuurder = document.getElementById("verstuurder").value;
+    connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
 
 function fillchat(){
-    var accountid = document.getElementById("accountid").value;
-    fetch('https://localhost:5001/api/BerichtApi/all/' + accountid)  //dit is essentially een get request
+    var chatid = document.getElementById("chattid").value;
+    fetch('https://localhost:5001/api/BerichtApi/all/' + chatid)  //dit is essentially een get request
     .then(response => response.json())
     .then(data => {
         for(let x = 0; x < data.length; x++){
@@ -68,7 +68,7 @@ function fillchat(){
             document.getElementById("messagesList").appendChild(textli);
             document.getElementById("messagesList").appendChild(tijdli);
 
-            let verzender =  data[x].verzenderId;
+            let verzender =  data[x].verzender.voornaam;
             var bericht = data[x].text
             var tijd = data[x].datum
 

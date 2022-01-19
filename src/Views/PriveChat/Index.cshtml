@@ -31,10 +31,7 @@
                 @Html.DisplayFor(modelItem => item.client.Voornaam)
             </td>
             <td>
-                <a asp-action="Chat" asp-route-id="@item.client.Id">Edit</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Chat" asp-route-id="@item.client.Id">Chat</a> |
             </td>
         </tr>
 }

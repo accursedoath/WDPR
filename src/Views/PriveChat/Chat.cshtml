@@ -2,11 +2,30 @@
     <div class="container">
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-4"><input type="hidden" for="User" id="userInput" value=@ViewBag.UserName></div>
-            <div class="col-4"><input type="hidden" for="UserId" id="userId" value=@ViewBag.uId></div>
-            <div class="col-4"><input type="hidden" for="accountid" id="accountid" value=@ViewBag.accountid></div>
-            <div class="col-4"><input type="hidden" for="clientid" id="clientid" value=@ViewBag.clientid></div>
+            <div class="col-4"><input type="text" for="clientid" id="clientid" value=@ViewBag.clientid></div>
+            <div class="col-4"><input type="text" for="chattid" id="chattid" value=@ViewBag.chattid></div>
+            <div class="col-4"><input type="text" for="verstuurder" id="verstuurder" value=@ViewBag.verstuurder></div>
         </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h2>@ViewBag.Chatnaam</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
+        </div>
+
+        
+        <div class="row">
+            <div class="col-12">
+                <hr />
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-2">Message</div>
             <div class="col-4"><input type="text" id="messageInput" /></div>
@@ -17,16 +36,7 @@
                 <input type="button" id="sendButton" value="Send Message" />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <hr />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <ul id="messagesList"></ul>
-        </div>
+
     </div>
     @ViewBag.Account
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
