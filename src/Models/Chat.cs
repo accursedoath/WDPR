@@ -14,5 +14,11 @@ namespace src.Models
         public List<Bericht> Berichten {get; set;}
         public Hulpverlener hulpverlener {get; set;}
         public Client client {get; set;}
+
+        public Chat(){
+            Berichten = new List<Bericht>();
+        }
     }
+
+
 }

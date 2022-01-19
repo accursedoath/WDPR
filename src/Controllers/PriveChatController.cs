@@ -31,7 +31,15 @@ namespace src.Controllers
         // GET: PriveChat
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Chats.ToListAsync());
+            _context.Chats.Include(x => x.client);
+            _context.Hulpverleners.Include(x => x.User);
+            var hulpverlenerIdentityid = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var hulpverlener = _context.Hulpverleners.Single(x => x.User.Id == hulpverlenerIdentityid);
+            var clientenchats = await _context.Chats.Where(x => x.hulpverlener.Id == hulpverlener.Id).ToListAsync();
+            foreach(var x in clientenchats){
+                _context.Entry(x).Reference(x => x.client).Load();
+            }
+            return View(clientenchats);
         }
 
         public IActionResult Chat()
@@ -49,8 +57,7 @@ namespace src.Controllers
                     _context.Hulpverleners.Include(x => x.User);
                     var h1 = _context.Hulpverleners.Where(x => x.User.Id == userId).FirstOrDefault();
                     ViewBag.UserName = h1.Voornaam;
-                    ViewBag.accountid = h1.Id;
-                    //ViewBag.reciever 
+                    ViewBag.accountid = h1.Id; 
                 }
                 return View();
         }

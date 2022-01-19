@@ -36,8 +36,6 @@ namespace src.Controllers
             _context.Berichten.Include(x => x.Verzender.Id);
             return await  _context.Berichten.Where(x => x.Verzender.Id == _context.Clienten.Single(x => x.Id == id).Id).ToListAsync();
         }
-
-
         // GET: api/BerichtApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Bericht>> GetBericht(int id)
