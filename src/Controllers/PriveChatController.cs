@@ -31,7 +31,7 @@ namespace src.Controllers
         // GET: PriveChat
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Chat.ToListAsync());
+            return View(await _context.Chats.ToListAsync());
         }
 
         public IActionResult Chat()
@@ -63,7 +63,7 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var chat = await _context.Chat
+            var chat = await _context.Chats
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (chat == null)
             {
@@ -103,7 +103,7 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var chat = await _context.Chat.FindAsync(id);
+            var chat = await _context.Chats.FindAsync(id);
             if (chat == null)
             {
                 return NotFound();
@@ -154,7 +154,7 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var chat = await _context.Chat
+            var chat = await _context.Chats
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (chat == null)
             {
@@ -169,15 +169,15 @@ namespace src.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var chat = await _context.Chat.FindAsync(id);
-            _context.Chat.Remove(chat);
+            var chat = await _context.Chats.FindAsync(id);
+            _context.Chats.Remove(chat);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ChatExists(int id)
         {
-            return _context.Chat.Any(e => e.Id == id);
+            return _context.Chats.Any(e => e.Id == id);
         }
     }
 }

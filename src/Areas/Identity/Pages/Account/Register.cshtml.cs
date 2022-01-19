@@ -105,7 +105,7 @@ namespace src.Areas.Identity.Pages.Account
                         var client = new Client(){Voornaam = Input.Voornaam, hulpverlener = hulpverlener};
                         user.client = client;
                         var chat = new Chat() { client = client, hulpverlener = hulpverlener };
-                        _context.Chat.Add(chat);
+                        _context.Chats.Add(chat);
                         await _context.SaveChangesAsync();
                         }
                     if(Input.Functie == "4") {
