@@ -36,19 +36,32 @@ namespace src.Controllers
 
         public IActionResult Blokkeer(int id)
         {
-           var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
-           client.magChatten = false;
-           _context.SaveChanges();
-           // maak melding naar hulpverlener
-           return RedirectToAction("Client");
+            var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+            client.magChatten = false;
+            _context.SaveChanges();
+            // maak melding naar hulpverlener
+            return RedirectToAction("Client");
         }
 
         public IActionResult Deblokkeer(int id)
         {
-           var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
-           client.magChatten = true;
-           _context.SaveChanges();
-           return RedirectToAction("Client");
+            var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+            client.magChatten = true;
+            _context.SaveChanges();
+            return RedirectToAction("Client");
+        }
+
+        public IActionResult Clienten(int id)
+        {
+            /*var clienten = _context.Clienten.Where(c => c.HulpverlenerId == id).ToListAsync();
+            _context.Hulpverleners.Include(s => s.User);
+            var userIdInt = _context.Hulpverleners.Where(s => s.User.Id == userId).SingleOrDefault().Id;*/
+            return View(/*clienten*/);
+        }
+
+        public async Task<IActionResult> Melding()
+        {
+            return View(await _context.MisbruikMelding.ToListAsync());
         }
 
         // GET: Moderator/Details/5

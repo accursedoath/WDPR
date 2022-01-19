@@ -20,4 +20,5 @@ using src.Models;
 
         public DbSet<Chat> Chats {get; set;}
         public DbSet<Account> Accounts {get; set;}
+        public DbSet<MisbruikMelding> MisbruikMelding { get; set; }
     }

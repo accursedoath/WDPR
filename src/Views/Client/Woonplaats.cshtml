@@ -1,0 +1,38 @@
+@model Woonplaats
+
+@{
+    ViewData["Title"] = "Woonplaats";
+}
+
+<h1>Woonplaats</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Woonplaats">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group form-check">
+                <label asp-for="Adres" class="control-label">Adres:</label>
+                <input asp-for="Adres" class="form-control" />
+                <span asp-validation-for="Adres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="plaats" class="control-label"></label>
+                <input asp-for="plaats" class="form-control" />
+                <span asp-validation-for="plaats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Postcode" class="control-label"></label>
+                <input asp-for="Postcode" class="form-control" />
+                <span asp-validation-for="Postcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
