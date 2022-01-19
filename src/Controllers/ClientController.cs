@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -50,10 +51,13 @@ namespace src.Controllers
         // POST: Client/Woonplaats
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Woonplaats(int id, [Bind("Adres,plaats,Postcode")] Woonplaats woonplaats)
+        public async Task<IActionResult> Woonplaats([Bind("Adres,plaats,Postcode")] Woonplaats woonplaats)
         {
             if (ModelState.IsValid)
             {
+                var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _context.Clienten.Include(s => s.User);
+                var id = _context.Clienten.Where(s => s.User.Id == userId).SingleOrDefault().Id;
                 var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
                 client.woonplaats = woonplaats;
                 _context.Update(client);
