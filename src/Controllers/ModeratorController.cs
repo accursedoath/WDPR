@@ -53,8 +53,15 @@ namespace src.Controllers
 
         public IActionResult Clienten(int id)
         {
-            //var clienten = _context.Clienten.Where(c => c.HulpverlenerId == id).ToListAsync();
+            /*var clienten = _context.Clienten.Where(c => c.HulpverlenerId == id).ToListAsync();
+            _context.Hulpverleners.Include(s => s.User);
+            var userIdInt = _context.Hulpverleners.Where(s => s.User.Id == userId).SingleOrDefault().Id;*/
             return View(/*clienten*/);
+        }
+
+        public async Task<IActionResult> Melding()
+        {
+            return View(await _context.MisbruikMelding.ToListAsync());
         }
 
         // GET: Moderator/Details/5

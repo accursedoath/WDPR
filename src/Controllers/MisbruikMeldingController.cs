@@ -1,45 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace src.Controllers
 {
-    public class HulpverlenerController : Controller
+    public class MisbruikMeldingController : Controller
     {
         private readonly DatabaseContext _context;
-        private readonly SignInManager<ApplicatieGebruiker> _signInManager;
-        private readonly UserManager<ApplicatieGebruiker> _userManager;
 
-        public HulpverlenerController(DatabaseContext context, SignInManager<ApplicatieGebruiker> signInManager, UserManager<ApplicatieGebruiker> userManager)
+        public MisbruikMeldingController(DatabaseContext context)
         {
             _context = context;
-            _signInManager = signInManager;
-            _userManager = userManager;
         }
 
-        // GET: Hulpverlener
+        // GET: MisbruikMelding
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Hulpverleners.ToListAsync());
+            return View(await _context.MisbruikMelding.ToListAsync());
         }
 
-        [Authorize(Roles = "Hulpverlener")]
-        public async Task<IActionResult> Aanmelding()
-        {
-            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
-            _context.Hulpverleners.Include(s => s.User);
-            var userIdInt = _context.Hulpverleners.Where(s => s.User.Id == userId).SingleOrDefault().Id;
-            return View(await _context.Aanmeldingen.Where( a => a.HulpverlenerId == userIdInt).ToListAsync());
-        }
-
-        // GET: Hulpverlener/Details/5
+        // GET: MisbruikMelding/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,39 +31,39 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var hulpverlener = await _context.Hulpverleners
+            var misbruikMelding = await _context.MisbruikMelding
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (hulpverlener == null)
+            if (misbruikMelding == null)
             {
                 return NotFound();
             }
 
-            return View(hulpverlener);
+            return View(misbruikMelding);
         }
 
-        // GET: Hulpverlener/Create
+        // GET: MisbruikMelding/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Hulpverlener/Create
+        // POST: MisbruikMelding/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Beschrijving,Id,Voornaam,Achternaam")] Hulpverlener hulpverlener)
+        public async Task<IActionResult> Create([Bind("Id,Melding")] MisbruikMelding misbruikMelding)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(hulpverlener);
+                _context.Add(misbruikMelding);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(hulpverlener);
+            return View(misbruikMelding);
         }
 
-        // GET: Hulpverlener/Edit/5
+        // GET: MisbruikMelding/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,22 +71,22 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var hulpverlener = await _context.Hulpverleners.FindAsync(id);
-            if (hulpverlener == null)
+            var misbruikMelding = await _context.MisbruikMelding.FindAsync(id);
+            if (misbruikMelding == null)
             {
                 return NotFound();
             }
-            return View(hulpverlener);
+            return View(misbruikMelding);
         }
 
-        // POST: Hulpverlener/Edit/5
+        // POST: MisbruikMelding/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Beschrijving,Id,Voornaam,Achternaam")] Hulpverlener hulpverlener)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Melding")] MisbruikMelding misbruikMelding)
         {
-            if (id != hulpverlener.Id)
+            if (id != misbruikMelding.Id)
             {
                 return NotFound();
             }
@@ -111,12 +95,12 @@ namespace src.Controllers
             {
                 try
                 {
-                    _context.Update(hulpverlener);
+                    _context.Update(misbruikMelding);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HulpverlenerExists(hulpverlener.Id))
+                    if (!MisbruikMeldingExists(misbruikMelding.Id))
                     {
                         return NotFound();
                     }
@@ -127,10 +111,10 @@ namespace src.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(hulpverlener);
+            return View(misbruikMelding);
         }
 
-        // GET: Hulpverlener/Delete/5
+        // GET: MisbruikMelding/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,30 +122,30 @@ namespace src.Controllers
                 return NotFound();
             }
 
-            var hulpverlener = await _context.Hulpverleners
+            var misbruikMelding = await _context.MisbruikMelding
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (hulpverlener == null)
+            if (misbruikMelding == null)
             {
                 return NotFound();
             }
 
-            return View(hulpverlener);
+            return View(misbruikMelding);
         }
 
-        // POST: Hulpverlener/Delete/5
+        // POST: MisbruikMelding/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hulpverlener = await _context.Hulpverleners.FindAsync(id);
-            _context.Hulpverleners.Remove(hulpverlener);
+            var misbruikMelding = await _context.MisbruikMelding.FindAsync(id);
+            _context.MisbruikMelding.Remove(misbruikMelding);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HulpverlenerExists(int id)
+        private bool MisbruikMeldingExists(int id)
         {
-            return _context.Hulpverleners.Any(e => e.Id == id);
+            return _context.MisbruikMelding.Any(e => e.Id == id);
         }
     }
 }

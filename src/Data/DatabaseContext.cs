@@ -18,4 +18,5 @@ using src.Models;
         public DbSet<Client> Clienten { get; set; }
         public DbSet<Aanmelding> Aanmeldingen {get; set;}
         public DbSet<Account> Accounts {get; set;}
+        public DbSet<MisbruikMelding> MisbruikMelding { get; set; }
     }
