@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +12,12 @@ using src.Models;
 
 namespace src.Controllers
 {
+    [Authorize(Roles = "Hulpverlener,Client")]
     public class PriveChatController : Controller
+    //Als een hulpverlener op een link klikt, dan wordt die link zo ingestelt met asp taggs
+    //Op de hulpverlener pagina zie een lijst met links naar prive chats, deze links geven de id mee
+    //De privechat controller neemt deze parameter tot zich en stuurt deze naar de hub
+    //via de hub wordt de bericht opgeslagen in de desbetreffende chat.
     {
         private readonly DatabaseContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -44,6 +50,7 @@ namespace src.Controllers
                     var h1 = _context.Hulpverleners.Where(x => x.User.Id == userId).FirstOrDefault();
                     ViewBag.UserName = h1.Voornaam;
                     ViewBag.accountid = h1.Id;
+                    //ViewBag.reciever 
                 }
                 return View();
         }
