@@ -29,15 +29,19 @@ namespace src.Controllers
             return await _context.Berichten.ToListAsync();
         }
 
-    [HttpGet("all/{id}")]    //verstuur alle berichten van een specifieke
+    [HttpGet("all/{id}")]    //geef chat id
         public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id)
         {
-            _context.Berichten.Include(x => x.Verzender);
-            _context.Berichten.Include(x => x.Verzender.Id);
-            return await  _context.Berichten.Where(x => x.Verzender.Id == _context.Clienten.Single(x => x.Id == id).Id).ToListAsync();
+            // _context.Berichten.Include(x => x.Verzender);
+            // _context.Berichten.Include(x => x.Verzender.Id);
+            // return await  _context.Berichten.Where(x => x.Verzender.Id == _context.Clienten.Single(x => x.Id == id).Id).ToListAsync();
+            _context.Berichten.Include(x => x.chat);
+            var berichtenlijst = await _context.Berichten.Where(x => x.chatId == id).ToListAsync();
+            foreach(var x in berichtenlijst){
+                await _context.Entry(x).Reference(x => x.Verzender).LoadAsync();
+            }
+            return berichtenlijst;
         }
-
-
         // GET: api/BerichtApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Bericht>> GetBericht(int id)
@@ -48,7 +52,6 @@ namespace src.Controllers
             {
                 return NotFound();
             }
-
             return bericht;
         }
 
