@@ -36,6 +36,27 @@
                             </li>
                              <partial name="_LoginPartial"></partial>
                         }
+                        else if(SignInManager.IsSignedIn(User) && User.IsInRole("Client"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="PriveChat" asp-action="Chat">Chat</a>
+                            </li>
+                             <partial name="_LoginPartial"></partial>
+                        }
+
+                        else if(SignInManager.IsSignedIn(User) && User.IsInRole("Hulpverlener"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="PriveChat" asp-action="Index">Chats</a>
+                            </li>
+                             <partial name="_LoginPartial"></partial>
+                        }
                         else
                         {
                             <li class="nav-item">
