@@ -39,6 +39,11 @@ namespace src.Controllers
             return View(await _context.Aanmeldingen.Where( a => a.HulpverlenerId == userIdInt).ToListAsync());
         }
 
+        public async Task<IActionResult> Melding()
+        {
+            return View(await _context.HulpverlenerMeldingen.ToListAsync());
+        }
+
         // GET: Hulpverlener/Details/5
         public async Task<IActionResult> Details(int? id)
         {
