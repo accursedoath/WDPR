@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using src.Models;
 
 namespace src.Controllers
 {
@@ -37,6 +38,48 @@ namespace src.Controllers
             _context.Hulpverleners.Include(s => s.User);
             var userIdInt = _context.Hulpverleners.Where(s => s.User.Id == userId).SingleOrDefault().Id;
             return View(await _context.Aanmeldingen.Where( a => a.HulpverlenerId == userIdInt).ToListAsync());
+        }
+
+        public async Task<IActionResult> Clienten()
+        {
+            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _context.Hulpverleners.Include(s => s.User);
+            var userIdInt = _context.Hulpverleners.Where(s => s.User.Id == userId).SingleOrDefault().Id;
+            return View(await _context.Clienten.Where(c => c.hulpverlenerId == userIdInt).ToListAsync());
+        }
+
+
+        public async Task<IActionResult> MaakAccount(int id)
+        {
+            var aanmelding = await _context.Aanmeldingen.Where(a => a.AanmeldingId == id).SingleOrDefaultAsync();
+            var clientUser = new ApplicatieGebruiker { UserName = aanmelding.Email, Email =  aanmelding.Email };
+            _context.Entry(aanmelding).Reference(l => l.Hulpverlener).Load();
+            clientUser.client = new Client(){
+                Voornaam = aanmelding.Voornaam, 
+                Achternaam = aanmelding.Achternaam, 
+                hulpverlener = aanmelding.Hulpverlener,
+                hulpverlenerId = aanmelding.HulpverlenerId};
+            var chat = new Chat() { client = clientUser.client, hulpverlener = aanmelding.Hulpverlener };
+            _context.Chats.Add(chat);
+            _context.ApplicatieGebruikers.Add(clientUser);
+            _context.SaveChanges();
+            var resultClient = await _userManager.CreateAsync(clientUser, "Welkom1!");            
+            await _userManager.AddToRoleAsync(clientUser, "Client");
+            
+            // als client een voogd heeft wordt account aangemaakt voor de voogd
+            if(aanmelding.NaamVoogd.Any())
+            {
+                var voogdUser = new ApplicatieGebruiker{UserName = aanmelding.EmailVoogd, Email = aanmelding.EmailVoogd};
+                voogdUser.voogd = new Voogd{Voornaam = aanmelding.NaamVoogd, 
+                    Telefoon = aanmelding.TelefoonVoogd, 
+                    Client = clientUser.client,
+                    ClientId = clientUser.client.Id};
+                _context.ApplicatieGebruikers.Add(voogdUser);
+                var resultVoogd = await _userManager.CreateAsync(voogdUser, "Welkom1!");
+                await _userManager.AddToRoleAsync(voogdUser, "Voogd");
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Clienten");
         }
 
         public async Task<IActionResult> Melding()

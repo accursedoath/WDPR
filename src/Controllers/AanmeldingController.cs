@@ -34,6 +34,7 @@ namespace src.Controllers
 
             var aanmelding = await _context.Aanmeldingen
                 .FirstOrDefaultAsync(m => m.AanmeldingId == id);
+                 _context.Entry(aanmelding).Reference(l => l.Hulpverlener).Load();
             if (aanmelding == null)
             {
                 return NotFound();

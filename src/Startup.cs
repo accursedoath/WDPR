@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using SignalRChat.Hubs;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace src
 {
@@ -28,7 +27,7 @@ namespace src
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews()
-                    .AddNewtonsoftJson();
+                .AddNewtonsoftJson();
             services.AddRazorPages();
             services.AddIdentity<ApplicatieGebruiker, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
