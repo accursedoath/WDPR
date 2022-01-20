@@ -23,6 +23,10 @@ public class Aanmelding
 
     public string NaamVoogd {get; set;}
 
+    public string EmailVoogd {get; set;}
+
+    public string TelefoonVoogd {get; set;}
+
     public Hulpverlener Hulpverlener {get; set;}
 
     public int HulpverlenerId {get; set;}

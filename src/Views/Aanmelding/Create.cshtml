@@ -85,15 +85,6 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <label asp-for="NaamVoogd" class="control-label">Naam ouder/voogd:</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input asp-for="NaamVoogd" class="form-control" />
-                                <span asp-validation-for="NaamVoogd" class="text-danger"></span><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
                                <label asp-for="Stoornis" class="control-label">Stoornis:</label>
                             </div>
                             <div class="col-md-9">
@@ -101,6 +92,48 @@
                                 <span asp-validation-for="Stoornis" class="text-danger"></span><br>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="Onder16">Bent u jonger dan 16 jaar?</label>
+                            </div>
+                            <div class="col-md-9">
+                                <label class="form-check-label">
+                                    <input id="Onder16" class="form-control" onchange='Toggle16(this);' type="checkbox" name="Onder16"/>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="VoogdAanmelding" class="d-none">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="NaamVoogd" class="control-label">Naam ouder/voogd:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input asp-for="NaamVoogd" class="form-control" disabled/>
+                                    <span asp-validation-for="NaamVoogd" class="text-danger"></span><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="EmailVoogd" class="control-label">Email ouder/voogd:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input asp-for="EmailVoogd" class="form-control" disabled/>
+                                    <span asp-validation-for="EmailVoogd" class="text-danger"></span><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="TelefoonVoogd" class="control-label">Telefoonnummer ouder/voogd:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input asp-for="TelefoonVoogd" class="form-control" disabled/>
+                                    <span asp-validation-for="TelefoonVoogd" class="text-danger"></span><br>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-3">
                                 <label asp-for="Hulpverlener">Hulpverlener</label>
@@ -121,3 +154,6 @@
         </div>
     </div>
 </section>
+
+<script src="~/js/aanmeldingCreate.js">
+</script>
