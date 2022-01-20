@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +23,24 @@ namespace src.Controllers
             _context = context;
         }
 
+        [HttpGet("freq/{id}")]    //geef chat id
+        public async Task<ActionResult<List<string>>> GetFrequentie(int id)
+        {
+            _context.Berichten.Include(x => x.chat);
+            var berichtenlijst = await _context.Berichten.Where(x => x.chatId == id).ToListAsync();
+            var tijdLijst = new List<string>();
+            foreach(var x in berichtenlijst){
+                DateTime date = DateTime.ParseExact(x.Datum.ToShortDateString(), "M/dd/yyyy", CultureInfo.InvariantCulture);
+                string formattedDate = date.ToString( "dd/M/yyyy");
+
+                if(!tijdLijst.Contains(formattedDate))
+                {
+                    tijdLijst.Add(formattedDate);
+                }
+            }
+            return tijdLijst;
+        }
+
         // GET: api/BerichtApi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten()
@@ -29,7 +48,7 @@ namespace src.Controllers
             return await _context.Berichten.ToListAsync();
         }
 
-    [HttpGet("all/{id}")]    //geef chat id
+        [HttpGet("all/{id}")]    //geef chat id
         public async Task<ActionResult<IEnumerable<Bericht>>> GetBerichten(int id)
         {
             // _context.Berichten.Include(x => x.Verzender);

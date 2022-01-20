@@ -42,8 +42,9 @@ namespace src.Controllers
         }
 
         // GET: Voogd/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["Clienten"] = await _context.Clienten.ToListAsync();
             return View();
         }
 
@@ -52,8 +53,9 @@ namespace src.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Voornaam,Achternaam")] Voogd voogd)
+        public async Task<IActionResult> Create([Bind("Id,Voornaam,Achternaam,Client")] Voogd voogd)
         {
+            ViewData["Clienten"] = await _context.Clienten.ToListAsync();
             if (ModelState.IsValid)
             {
                 _context.Add(voogd);

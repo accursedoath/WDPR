@@ -27,6 +27,7 @@ connection.on("ReceiveMessage", function (user, message) {
 
 connection.start().then(function () {
     fillchat();
+    showFreq();
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
@@ -75,6 +76,26 @@ function fillchat(){
             verzenderli.textContent = `${verzender}`;
             textli.textContent = `${bericht}`;
             tijdli.textContent = `${tijd}`; 
+
+        }
+    });
+}
+
+function showFreq(){
+    var chatFreq = document.getElementById("chatFreq").value;
+    fetch('https://localhost:5001/api/BerichtApi/freq/' + chatid)  //dit is essentially een get request
+    .then(response => response.json())
+    .then(data => {
+        for(let x = 0; x < data.length; x++){
+            console.log(data[x])
+            
+            var freqDateLi = document.createElement("li");
+
+            document.getElementById("messagesList").appendChild(freqDateLi);
+
+            let freqDate =  data[x].datum;
+
+            verzenderli.textContent = `${freqDate}`;
 
         }
     });
