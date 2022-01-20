@@ -39,15 +39,18 @@ namespace src.Controllers
             var chatId = _context.Chats.Where(c => c.client.Id == id && c.hulpverlener.Id == client.hulpverlenerId).SingleOrDefault().Id;
             var berichtenlijst = await _context.Berichten.Where(x => x.chatId == chatId).ToListAsync();
             var tijdLijst = new List<string>();
-            foreach(var x in berichtenlijst){
-                DateTime date = DateTime.ParseExact(x.Datum.ToShortDateString(), "M/dd/yyyy", CultureInfo.InvariantCulture);
-                string formattedDate = date.ToString( "dd/M/yyyy");
+            if(true //client.Leeftijdscateg)
+            {
+                foreach(var x in berichtenlijst){
+                    DateTime date = DateTime.ParseExact(x.Datum.ToShortDateString(), "M/dd/yyyy", CultureInfo.InvariantCulture);
+                    string formattedDate = date.ToString( "dd/M/yyyy");
 
-                if(!tijdLijst.Contains(formattedDate))
-                {
-                    tijdLijst.Add(formattedDate);
+                    if(!tijdLijst.Contains(formattedDate))
+                    {
+                        tijdLijst.Add(formattedDate);
+                    }
+                    Console.WriteLine(formattedDate);
                 }
-                Console.WriteLine(formattedDate);
             }
             return View(tijdLijst.OrderBy(d => d));
         }

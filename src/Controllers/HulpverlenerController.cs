@@ -62,12 +62,12 @@ namespace src.Controllers
             var chat = new Chat() { client = clientUser.client, hulpverlener = aanmelding.Hulpverlener };
             _context.Chats.Add(chat);
             _context.ApplicatieGebruikers.Add(clientUser);
-            _context.SaveChanges();
-            var resultClient = await _userManager.CreateAsync(clientUser, "Welkom1!");            
+            await _userManager.CreateAsync(clientUser, "Welkom1!");            
             await _userManager.AddToRoleAsync(clientUser, "Client");
+            _context.SaveChangesAsync();
             
             // als client een voogd heeft wordt account aangemaakt voor de voogd
-            if(aanmelding.NaamVoogd.Any())
+            if(aanmelding.NaamVoogd.Any()) // cannot be null
             {
                 var voogdUser = new ApplicatieGebruiker{UserName = aanmelding.EmailVoogd, Email = aanmelding.EmailVoogd};
                 voogdUser.voogd = new Voogd{Voornaam = aanmelding.NaamVoogd, 
@@ -77,7 +77,7 @@ namespace src.Controllers
                 _context.ApplicatieGebruikers.Add(voogdUser);
                 var resultVoogd = await _userManager.CreateAsync(voogdUser, "Welkom1!");
                 await _userManager.AddToRoleAsync(voogdUser, "Voogd");
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
             }
             return RedirectToAction("Clienten");
         }
