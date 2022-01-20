@@ -121,26 +121,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    function send()
-    {
-    var client =
-    {
-        volledigenaam: "Test",
-        IBAN: null,
-        BSN: "116455433",
-        gebdatum: "Saturday, December 27, 2002"
-    };
-
-    fetch("https://orthopedagogie-zmdh.herokuapp.com/clienten?sleutel=166435290", 
-    {
-        "method": "post",
-         body: JSON.stringify(client),
-         headers: {
-            "content-type": "application/json"
-         }
-    })
-    .catch((err) => alert(err));
-    }
-</script>
