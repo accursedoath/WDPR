@@ -14,11 +14,13 @@ namespace src.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly DatabaseContext _context;
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, DatabaseContext context)
         {
             _logger = logger;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()

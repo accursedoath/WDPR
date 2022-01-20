@@ -41,7 +41,13 @@ namespace src.Controllers
 
         public async Task<IActionResult> Melding()
         {
-            return View(await _context.HulpverlenerMeldingen.ToListAsync());
+            _context.HulpverlenerMeldingen.Include(h => h.Client);
+            var lijst = await _context.HulpverlenerMeldingen.ToListAsync();
+            foreach(var x in lijst)
+            {
+                _context.Entry(x).Reference(l => l.Client).Load();
+            }
+            return View(lijst);
         }
 
         // GET: Hulpverlener/Details/5

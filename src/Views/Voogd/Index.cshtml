@@ -18,7 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Achternaam)
             </th>
-            <th></th>
+            <th>
+                Client
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +31,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Achternaam)
+            </td>
+             <td>
+                <a asp-action="ChatFreq" asp-route-id="@item.ClientId">@Html.DisplayFor(modelItem => item.Client.Voornaam)</a>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
