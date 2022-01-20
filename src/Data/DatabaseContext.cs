@@ -19,6 +19,8 @@ using src.Models;
         public DbSet<Aanmelding> Aanmeldingen {get; set;}
 
         public DbSet<Chat> Chats {get; set;}
+        public DbSet<Voogd> Voogd {get; set;}
+        public DbSet<HulpverlenerMelding> HulpverlenerMeldingen {get; set;}
         public DbSet<Account> Accounts {get; set;}
         public DbSet<MisbruikMelding> MisbruikMelding { get; set; }
     }
