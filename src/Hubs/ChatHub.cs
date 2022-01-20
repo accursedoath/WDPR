@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using src.Models;
@@ -11,9 +12,11 @@ namespace SignalRChat.Hubs
     public class ChatHub : Hub
     {
         private readonly DatabaseContext _context;
+        private readonly SignInManager<ApplicatieGebruiker> _signInManager;
 
-        public ChatHub(DatabaseContext context){
+        public ChatHub(DatabaseContext context, SignInManager<ApplicatieGebruiker> signInManager){
             _context = context;
+            _signInManager = signInManager;
         }
         public async Task SendMessage(string user, string message, string userId)
         {
@@ -68,5 +71,45 @@ namespace SignalRChat.Hubs
                 await _context.Berichten.AddAsync(bericht);
                 await _context.SaveChangesAsync();
             }
+            // public async Task gm(string groepnaam, int groepid, string message){
+            public async Task gm(string groepnaam, string groepidn, string message){
+                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message);
+
+                int groepid = Int32.Parse(groepidn);
+                var groep = await _context.groepsChats.FindAsync(groepid);
+                var verzender = await _context.Users.FindAsync(Context.ConnectionId);
+                _context.Clienten.Include(x => x.User);
+                _context.Hulpverleners.Include(x => x.User);
+                Console.WriteLine(groep.Onderwerp);
+                Console.WriteLine(groepnaam);
+
+                Bericht bericht;
+                    Console.WriteLine(_context.Clienten.Any(x => x.User.Id == Context.UserIdentifier));
+                if(_context.Clienten.Any(x => x.User.Id == Context.UserIdentifier)){
+                    var client = await _context.Clienten.FirstOrDefaultAsync(x => x.User.Id == Context.UserIdentifier);
+                    Console.WriteLine(client);
+                    bericht = new Bericht(){Verzender = client, text = message, Datum = DateTime.Now};
+                }
+                else {
+                    var hulpverlener = await _context.Clienten.FirstOrDefaultAsync(x => x.User.Id == Context.UserIdentifier);
+                    bericht = new Bericht(){Verzender = hulpverlener, text = message, Datum = DateTime.Now};
+                }
+                await _context.Entry(groep).Collection(x => x.Berichten).LoadAsync();
+                groep.Berichten.Add(bericht);
+                await _context.SaveChangesAsync();
+                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message);
+            }
+                public async Task RemoveFromGroup(string groupName)
+                {
+                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+                    await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
+                }
+
+                public async Task AddToGroup(string groupName)
+                {
+                    Console.WriteLine(groupName);
+                    await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+                    await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has joined the group {groupName}.");
+                }
     }
 }

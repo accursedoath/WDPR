@@ -26,31 +26,63 @@ connection.on("ReceiveMessage", function (user, message) {
 });
 
 connection.start().then(function () {
-    fillchat();
+    var chattype = document.getElementById("chattype").value;
+    if(chattype == "privechat"){
+        fillchat();
+    }
+    else {}
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
-// document.getElementById("sendButton").addEventListener("click", function (event) {
-//     var user = document.getElementById("userInput").value;
-//     var message = document.getElementById("messageInput").value;
-//     var userId = document.getElementById("userId").value;
-//     connection.invoke("SendMessage", user, message, userId).catch(function (err) {
+
+
+// document.getElementById(uniquebutton).addEventListener("click", function (event) {
+//     var groepsnaam = document.getElementById("groepsnaam").value; //world trigger 
+//     connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
 //         return console.error(err.toString());
 //     });
 //     event.preventDefault();
 // });
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
-     var message = document.getElementById("messageInput").value;
-    let chatid = document.getElementById("chattid").value;
-    var verstuurder = document.getElementById("verstuurder").value;
-    connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
+function sendGroupMessage(){
+    var message = document.getElementById("messageInput").value;
+    var groepsnaam = document.getElementById("groepnaam").value;
+    var groepid = document.getElementById("groepid").value;
+    console.log("Fat neek");
+    console.log(message + "    " + groepsnaam + "     " + groepid);
+    connection.invoke("gm", groepsnaam, groepid, message).catch(function (err) {
         return console.error(err.toString());
     });
-    event.preventDefault();
-});
+}
+
+function sendPm(){
+        var message = document.getElementById("messageInput").value;
+       let chatid = document.getElementById("chattid").value;
+       var verstuurder = document.getElementById("verstuurder").value;
+       connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
+           return console.error(err.toString());
+       });
+}
+
+function JoinGroep($this){
+    var groepsnaam = $this.id;
+    console.log(groepsnaam);
+    connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+// document.getElementById("sendButton").addEventListener("click", function (event) {
+//      var message = document.getElementById("messageInput").value;
+//     let chatid = document.getElementById("chattid").value;
+//     var verstuurder = document.getElementById("verstuurder").value;
+//     connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
+//         return console.error(err.toString());
+//     });
+//     event.preventDefault();
+// });
 
 function fillchat(){
     var chatid = document.getElementById("chattid").value;

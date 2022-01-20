@@ -5,6 +5,7 @@
             <div class="col-4"><input type="hidden" for="clientid" id="clientid" value=@ViewBag.clientid></div>
             <div class="col-4"><input type="hidden" for="chattid" id="chattid" value=@ViewBag.chattid></div>
             <div class="col-4"><input type="hidden" for="verstuurder" id="verstuurder" value=@ViewBag.verstuurder></div>
+            <div class="col-4"><input type="hidden" for="chattype" id="chattype" value=privechat></div>
         </div>
 
         <div class="row">
@@ -33,7 +34,7 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-6">
-                <input type="button" id="sendButton" value="Send Message" />
+                <input type="button" id="sendButton" value="Send Message" onclick="sendPm()"/>
             </div>
         </div>
 

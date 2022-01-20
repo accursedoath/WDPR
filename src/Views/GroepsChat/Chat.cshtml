@@ -1,11 +1,13 @@
 @page
+@model GroepsChat;
+
     <div class="container">
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-4"><input type="hidden" for="User" id="userInput" value=@ViewBag.UserName></div>
-            <div class="col-4"><input type="hidden" for="UserId" id="userId" value=@ViewBag.uId></div>
-            <div class="col-4"><input type="hidden" for="accountid" id="accountid" value=@ViewBag.accountid></div>
-            <div class="col-4"><input type="hidden" for="accountid" id="accountid" value=privechat></div>
+            <div class="col-4"><input type="hidden" for="groepid" id="groepid" value=@ViewBag.groepid></div>
+            <div class="col-4"><input type="hidden" for="chattid" id="chattid" value=0></div>
+            <div class="col-4"><input type="hidden" for="groepnaam" id="groepnaam" value="@ViewBag.gp"></div>
+            <div class="col-4"><input type="hidden" for="chattype" id="chattype" value=groepschat></div>
         </div>
         <div class="row">
             <div class="col-2">Message</div>
@@ -14,7 +16,8 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-6">
-                <input type="button" id="sendButton" value="Send Message" />
+                <input type="button" id="sendButton" value="Send Message" onclick= "sendGroupMessage()" />
+                <input type="button" id="@ViewBag.gp" value="Join Ali" onclick= "JoinGroep(this)" />
             </div>
         </div>
     </div>

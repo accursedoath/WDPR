@@ -23,4 +23,5 @@ using src.Models;
         public DbSet<HulpverlenerMelding> HulpverlenerMeldingen {get; set;}
         public DbSet<Account> Accounts {get; set;}
         public DbSet<MisbruikMelding> MisbruikMelding { get; set; }
+        public DbSet<GroepsChat> groepsChats {get; set;}
     }
