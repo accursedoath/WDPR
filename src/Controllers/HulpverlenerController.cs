@@ -168,5 +168,10 @@ namespace src.Controllers
         {
             return _context.Hulpverleners.Any(e => e.Id == id);
         }
+
+        public IActionResult Dossier()
+        {
+            return View();
+        }
     }
 }

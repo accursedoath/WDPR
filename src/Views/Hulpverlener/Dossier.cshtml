@@ -1,0 +1,30 @@
+@model Hulpverlener
+@{
+    ViewData["Title"] = "Dossier";
+    var id = 123456;
+}
+<div class="container">
+    <div class="row">
+        <h1>Dossier van </h1>
+        <p>
+            Naam: <span id="volledigeNaam"></span><br>
+            BSN: <span id="BSN"></span><br>
+            Geboortedatum: <span id="gebdatum"></span>
+        </p>
+    </div>
+</div>
+
+<script>
+    var naam = document.getElementById("volledigeNaam");
+    var BSN = document.getElementById("BSN");
+    var gebdatum = document.getElementById("gebdatum");
+
+    fetch("https://orthopedagogie-zmdh.herokuapp.com/clienten?sleutel=166435290&clientid=" + @id + "", 
+    {
+        "method": "get",
+        "content-type": "application/json"
+    })
+    .then((i) => i.json())
+    .then((i) => naam.innerText = i.volledigenaam)
+    .catch((err) => alert(err));
+</script>
