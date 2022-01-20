@@ -51,12 +51,10 @@ namespace src.Controllers
             return RedirectToAction("Client");
         }
 
-        public IActionResult Clienten(int id)
+        public async Task<IActionResult> Behandelingen(int id)
         {
-            /*var clienten = _context.Clienten.Where(c => c.HulpverlenerId == id).ToListAsync();
-            _context.Hulpverleners.Include(s => s.User);
-            var userIdInt = _context.Hulpverleners.Where(s => s.User.Id == userId).SingleOrDefault().Id;*/
-            return View(/*clienten*/);
+            var clienten = await _context.Clienten.Where(c => c.hulpverlenerId == id).ToListAsync();
+            return View(clienten);
         }
 
         public async Task<IActionResult> Melding()
