@@ -54,6 +54,7 @@ namespace src.Controllers
                     ViewBag.chattid = _context.Chats.FirstOrDefault(x => x.client.Id == c1.Id).Id;;
                     ViewBag.clientid = 0;
                     ViewBag.verstuurder = "client";
+                    ViewBag.naam = c1.Voornaam;
                 }
                 else {
                     _context.Hulpverleners.Include(x => x.User);
@@ -65,6 +66,7 @@ namespace src.Controllers
                     ViewBag.clientid = id;
                     ViewBag.chattid = _context.Chats.Single(x => x.hulpverlener.Id == h1.Id && x.client.Id == client2.Id).Id;
                     ViewBag.verstuurder = "hulpverlener";
+                    ViewBag.naam = h1.Voornaam;
                 }
                 return View();
         }

@@ -48,8 +48,7 @@ namespace SignalRChat.Hubs
                     await saveBericht(chat, message, true);
 
                     await Groups.AddToGroupAsync(Context.ConnectionId, cid);
-                    await Clients.Group(cid).SendAsync("ReceiveMessage", client.Voornaam, message);
-                    await Clients.Group(cid).SendAsync("ReceiveMessage", DateTime.Now.ToString("ddd dd MMM yyyy"));
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", message, DateTime.Now.ToString("ddd dd MMM yyyy"));
                     // await Clients.Caller.SendAsync("ReceiveMessage", client.Voornaam, message);
                     // await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", client.Voornaam, message);
                 }
@@ -57,8 +56,7 @@ namespace SignalRChat.Hubs
                     await saveBericht(chat, message, false);    //hulpverlener route
                     
                     await Groups.AddToGroupAsync(Context.ConnectionId, cid);
-                    await Clients.Group(cid).SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
-                    await Clients.Group(cid).SendAsync("ReceiveMessage", DateTime.Now.ToString("ddd dd MMM yyyy"));
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", message , DateTime.Now.ToString("ddd dd MMM yyyy"));
                     // await Clients.Caller.SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
                     // await Clients.User(client.User.Id).SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
                 }

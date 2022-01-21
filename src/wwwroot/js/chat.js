@@ -53,24 +53,31 @@ connection.start().then(function () {
 //     event.preventDefault();
 // });
 
-function sendGroupMessage(){
+async function sendGroupMessage(){
     var groepsnaam = document.getElementById("groepnaam").value;
     var message = document.getElementById("messageInput").value;
     var groepid = document.getElementById("groepid").value;
     console.log("Fat neek");
     console.log(message + "    " + groepsnaam + "     " + groepid);
-    connection.invoke("gm", groepsnaam, groepid, message).catch(function (err) {
+
+    applyname();
+    await connection.invoke("gm", groepsnaam, groepid, message).catch(function (err) {
         return console.error(err.toString());
     });
+    applyhr();
+
 }
 
-function sendPm(){
+async function sendPm(){
         var message = document.getElementById("messageInput").value;
        let chatid = document.getElementById("chattid").value;
        var verstuurder = document.getElementById("verstuurder").value;
-       connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
+
+       applyname();
+       await connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
            return console.error(err.toString());
        });
+       applyhr();
 }
 
 // function JoinGroep(groepsnaam){
@@ -98,11 +105,11 @@ function sendPm(){
 //     event.preventDefault();
 // });
 
-function fillchat(chattype){
+async function fillchat(chattype){
 
     if(chattype == "privechat"){
         var chatid = document.getElementById("chattid").value;
-        fetch('https://localhost:5001/api/BerichtApi/all/' + chatid)  //dit is essentially een get request
+       await fetch('https://localhost:5001/api/BerichtApi/all/' + chatid)  //dit is essentially een get request
         .then(response => response.json())
         .then(data => {
             for(let x = 0; x < data.length; x++){
@@ -133,7 +140,7 @@ function fillchat(chattype){
     }
     else {
         var groepid = document.getElementById("groepid").value;
-        fetch('https://localhost:5001/api/BerichtApi/allGroup/' + groepid)  //dit is essentially een get request
+       await fetch('https://localhost:5001/api/BerichtApi/allGroup/' + groepid)  //dit is essentially een get request
         .then(response => response.json())
         .then(data => {
             for(let x = 0; x < data.length; x++){
@@ -143,7 +150,7 @@ function fillchat(chattype){
                 var verzenderli = document.createElement("li");
                 var textli = document.createElement("li");
                 var tijdli = document.createElement("li");
-                var empt = document.createElement("li");
+                var empt = document.createElement("hr");
             
                 document.getElementById("messagesList").appendChild(empt);
                 document.getElementById("messagesList").appendChild(verzenderli);
@@ -153,19 +160,27 @@ function fillchat(chattype){
                 let verzender =  data[x].verzender.voornaam;
                 var bericht = data[x].text
                 var tijd = strinag
-                var ece = "";
+                // var ece = "";
             
                 verzenderli.textContent = `${verzender}`;
                 textli.textContent = `${bericht}`;
                 tijdli.textContent = `${tijd}`;
-                empt.textContent = `${ece}`;
+                // empt.textContent = `${ece}`;
             }
         });
     }
-
+    applyhr();
 }
 
-function sendChat(x){
+function applyname(){
+    var voornaam = document.createElement("li");
+    document.getElementById("messagesList").appendChild(voornaam);
+    var naam = document.getElementById("naam").value;
+    voornaam.textContent = `${naam}`;
+}
 
+function applyhr(){
+    var hr = document.createElement("hr");
+    document.getElementById("messagesList").appendChild(hr);
 }
 

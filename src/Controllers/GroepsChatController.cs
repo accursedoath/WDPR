@@ -90,19 +90,24 @@ namespace src.Controllers
 
         // GET: Chat met iedereen
         public async Task<IActionResult> Chat(int id){
-
-            // var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            // _context.Clienten.Include(x => x.User);
-            // var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
-            
             var groepsChat = await _context.groepsChats
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            _context.Clienten.Include(x => x.User);
+            if(_context.Clienten.Any(x => x.User.Id == userId)){
+            var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
+                ViewBag.naam = client.Voornaam;
+            }
+            else{
+                await _context.Entry(groepsChat).Reference(x => x.hulpverlener).LoadAsync();
+                ViewBag.naam = groepsChat.hulpverlener.Voornaam;
+            }
+            
+
             Console.WriteLine(groepsChat.Onderwerp);
-            // await _context.Entry(groepsChat).Collection(x => x.Deelnemers).LoadAsync();
-            // bool ingroep = groepsChat.Deelnemers.Contains(client);
-            // Console.WriteLine(ingroep);
-            // ViewBag.InGroep = ingroep;
             ViewBag.groepid = id;
             ViewBag.gp = groepsChat.Onderwerp;
             // await _context.Entry(groepsChat).Collection(x => x.Berichten).LoadAsync();
