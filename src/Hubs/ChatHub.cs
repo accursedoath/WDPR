@@ -73,8 +73,7 @@ namespace SignalRChat.Hubs
             }
             // public async Task gm(string groepnaam, int groepid, string message){
             public async Task gm(string groepnaam, string groepidn, string message){
-                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message);
-
+                
                 int groepid = Int32.Parse(groepidn);
                 var groep = await _context.groepsChats.FindAsync(groepid);
                 var verzender = await _context.Users.FindAsync(Context.ConnectionId);

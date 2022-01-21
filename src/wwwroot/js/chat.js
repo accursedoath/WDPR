@@ -26,11 +26,17 @@ connection.on("ReceiveMessage", function (user, message) {
 });
 
 connection.start().then(function () {
+
     var chattype = document.getElementById("chattype").value;
     if(chattype == "privechat"){
         fillchat();
     }
-    else {}
+    else {  //Groepschat route
+        var groepsnaam = document.getElementById("groepnaam").value;
+        connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
@@ -47,8 +53,8 @@ connection.start().then(function () {
 // });
 
 function sendGroupMessage(){
-    var message = document.getElementById("messageInput").value;
     var groepsnaam = document.getElementById("groepnaam").value;
+    var message = document.getElementById("messageInput").value;
     var groepid = document.getElementById("groepid").value;
     console.log("Fat neek");
     console.log(message + "    " + groepsnaam + "     " + groepid);
@@ -66,13 +72,20 @@ function sendPm(){
        });
 }
 
-function JoinGroep($this){
-    var groepsnaam = $this.id;
-    console.log(groepsnaam);
-    connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
-        return console.error(err.toString());
-    });
-}
+// function JoinGroep(groepsnaam){
+//     console.log(groepsnaam);
+//     connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
+//         return console.error(err.toString());
+//     });
+// }
+
+// function JoinGroep($this){
+//     var groepsnaam = $this.id;
+//     console.log(groepsnaam);
+//     connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
+//         return console.error(err.toString());
+//     });
+// }
 
 // document.getElementById("sendButton").addEventListener("click", function (event) {
 //      var message = document.getElementById("messageInput").value;
