@@ -106,7 +106,7 @@ namespace SignalRChat.Hubs
                 await _context.Entry(groep).Collection(x => x.Berichten).LoadAsync();
                 groep.Berichten.Add(bericht);
                 await _context.SaveChangesAsync();
-                await Clients.Group(groepnaam).SendAsync("ReceiveMessage",user ,message);
+                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message, DateTime.Now.ToString("ddd dd MMM yyyy"));
             }
                 public async Task RemoveFromGroup(string groupName)
                 {
