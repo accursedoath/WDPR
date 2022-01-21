@@ -8,6 +8,7 @@ public class Client : Account
 
     [ForeignKey("ApplicatieGebruiker")]
     public virtual ApplicatieGebruiker User {get; set;}     //ef core link naar applicatiegebruiker class van identiy
+    public bool Voogd {get; set;}
 
     public Hulpverlener hulpverlener {get; set;}
     public int hulpverlenerId {get; set;}

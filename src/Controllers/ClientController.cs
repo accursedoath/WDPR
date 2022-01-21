@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,7 @@ namespace src.Controllers
         }
 
         // GET: Client/Woonplaats
+        [Authorize(Roles = "Client")]
         public IActionResult Woonplaats()
         {
             return View();
@@ -50,6 +52,7 @@ namespace src.Controllers
 
         // POST: Client/Woonplaats
         [HttpPost]
+        [Authorize(Roles = "Client")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Woonplaats([Bind("Adres,plaats,Postcode")] Woonplaats woonplaats)
         {
@@ -57,12 +60,11 @@ namespace src.Controllers
             {
                 var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Clienten.Include(s => s.User);
-                var id = _context.Clienten.Where(s => s.User.Id == userId).SingleOrDefault().Id;
-                var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
+                var client = _context.Clienten.Where(s => s.User.Id == userId).SingleOrDefault();
                 client.woonplaats = woonplaats;
                 _context.Update(client);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return View();
             }
             return View(woonplaats);
         }
