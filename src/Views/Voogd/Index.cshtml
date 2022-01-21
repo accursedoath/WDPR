@@ -6,9 +6,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -33,7 +30,7 @@
                 @Html.DisplayFor(modelItem => item.Achternaam)
             </td>
              <td>
-                <a asp-action="ChatFreq" asp-route-id="@item.ClientId">@Html.DisplayFor(modelItem => item.Client.Voornaam)</a>
+                <a asp-action="ChatFreq" asp-route-id="@item.ClientId" aria-label="Zie de frequentie van de privechat van de client">@Html.DisplayFor(modelItem => item.Client.Voornaam)</a>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

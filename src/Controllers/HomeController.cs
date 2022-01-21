@@ -40,12 +40,39 @@ namespace src.Controllers
             return View();
         }
 
-        public IActionResult Orthopedagogen()
+        public IQueryable<Hulpverlener> Zoek(IQueryable<Hulpverlener> lijst, string zoek)
+        { 
+            if(string.IsNullOrEmpty(zoek))
+            {
+                return lijst;  
+            }
+            else
+            {
+                return lijst.Where(s => s.Voornaam.Contains(zoek.ToLower()) || s.Achternaam.Contains(zoek.ToLower()));  
+            }       
+        }
+
+        public IActionResult Orthopedagogen(string zoek)
+        {
+            return View(Zoek(_context.Hulpverleners,zoek));
+        }
+
+        public IActionResult Ricco()
         {
             return View();
         }
 
-        public IActionResult Ricco()
+        public IActionResult Emma()
+        {
+            return View();
+        }
+
+        public IActionResult Anneke()
+        {
+            return View();
+        }
+
+        public IActionResult Harold()
         {
             return View();
         }
