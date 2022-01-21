@@ -282,6 +282,28 @@ namespace src.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "groepsChats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Onderwerp = table.Column<string>(type: "TEXT", nullable: true),
+                    LeeftijdsCategorie = table.Column<string>(type: "TEXT", nullable: true),
+                    hulpverlenerId = table.Column<int>(type: "INTEGER", nullable: true),
+                    eindDatum = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_groepsChats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_groepsChats_Accounts_hulpverlenerId",
+                        column: x => x.hulpverlenerId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HulpverlenerMeldingen",
                 columns: table => new
                 {
@@ -311,7 +333,7 @@ namespace src.Migrations
                     Bericht = table.Column<int>(type: "INTEGER", nullable: true),
                     chatId = table.Column<int>(type: "INTEGER", nullable: false),
                     Account = table.Column<int>(type: "INTEGER", nullable: true),
-                    VerzenderId = table.Column<int>(type: "INTEGER", nullable: false)
+                    GroepsChatId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -328,6 +350,36 @@ namespace src.Migrations
                         principalTable: "Chats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Berichten_groepsChats_GroepsChatId",
+                        column: x => x.GroepsChatId,
+                        principalTable: "groepsChats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClientGroepsChat",
+                columns: table => new
+                {
+                    DeelnemersId = table.Column<int>(type: "INTEGER", nullable: false),
+                    groepChatsId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientGroepsChat", x => new { x.DeelnemersId, x.groepChatsId });
+                    table.ForeignKey(
+                        name: "FK_ClientGroepsChat_Accounts_DeelnemersId",
+                        column: x => x.DeelnemersId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClientGroepsChat_groepsChats_groepChatsId",
+                        column: x => x.groepChatsId,
+                        principalTable: "groepsChats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -438,6 +490,11 @@ namespace src.Migrations
                 column: "Bericht");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Berichten_GroepsChatId",
+                table: "Berichten",
+                column: "GroepsChatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Chats_clientId",
                 table: "Chats",
                 column: "clientId");
@@ -445,6 +502,16 @@ namespace src.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Chats_hulpverlenerId",
                 table: "Chats",
+                column: "hulpverlenerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClientGroepsChat_groepChatsId",
+                table: "ClientGroepsChat",
+                column: "groepChatsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_groepsChats_hulpverlenerId",
+                table: "groepsChats",
                 column: "hulpverlenerId");
 
             migrationBuilder.CreateIndex(
@@ -479,6 +546,9 @@ namespace src.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ClientGroepsChat");
+
+            migrationBuilder.DropTable(
                 name: "HulpverlenerMeldingen");
 
             migrationBuilder.DropTable(
@@ -492,6 +562,9 @@ namespace src.Migrations
 
             migrationBuilder.DropTable(
                 name: "Chats");
+
+            migrationBuilder.DropTable(
+                name: "groepsChats");
 
             migrationBuilder.DropTable(
                 name: "Accounts");

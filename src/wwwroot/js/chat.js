@@ -29,9 +29,10 @@ connection.start().then(function () {
 
     var chattype = document.getElementById("chattype").value;
     if(chattype == "privechat"){
-        fillchat();
+        fillchat(chattype);
     }
     else {  //Groepschat route
+        fillchat("groupchat");
         var groepsnaam = document.getElementById("groepnaam").value;
         connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
             return console.error(err.toString());
@@ -97,31 +98,74 @@ function sendPm(){
 //     event.preventDefault();
 // });
 
-function fillchat(){
-    var chatid = document.getElementById("chattid").value;
-    fetch('https://localhost:5001/api/BerichtApi/all/' + chatid)  //dit is essentially een get request
-    .then(response => response.json())
-    .then(data => {
-        for(let x = 0; x < data.length; x++){
-            console.log(data[x])
+function fillchat(chattype){
+
+    if(chattype == "privechat"){
+        var chatid = document.getElementById("chattid").value;
+        fetch('https://localhost:5001/api/BerichtApi/all/' + chatid)  //dit is essentially een get request
+        .then(response => response.json())
+        .then(data => {
+            for(let x = 0; x < data.length; x++){
+                var exactTime = data[x].datum
+                var strinag = exactTime.substring(11, 16) + "    " + exactTime.substring(0, 9)
             
-            var verzenderli = document.createElement("li");
-            var textli = document.createElement("li");
-            var tijdli = document.createElement("li");
+                var verzenderli = document.createElement("li");
+                var textli = document.createElement("li");
+                var tijdli = document.createElement("li");
+                var empt = document.createElement("hr");
+            
+                document.getElementById("messagesList").appendChild(empt);
+                document.getElementById("messagesList").appendChild(verzenderli);
+                document.getElementById("messagesList").appendChild(textli);
+                document.getElementById("messagesList").appendChild(tijdli);
 
-            document.getElementById("messagesList").appendChild(verzenderli);
-            document.getElementById("messagesList").appendChild(textli);
-            document.getElementById("messagesList").appendChild(tijdli);
+                let verzender =  data[x].verzender.voornaam;
+                var bericht = data[x].text
+                var tijd = strinag
+                //var ece = "";
+            
+                verzenderli.textContent = `${verzender}`;
+                textli.textContent = `${bericht}`;
+                tijdli.textContent = `${tijd}`; 
+                //empt.textContent = `${ece}`;
+            }
+        });
+    }
+    else {
+        var groepid = document.getElementById("groepid").value;
+        fetch('https://localhost:5001/api/BerichtApi/allGroup/' + groepid)  //dit is essentially een get request
+        .then(response => response.json())
+        .then(data => {
+            for(let x = 0; x < data.length; x++){
+                var exactTime = data[x].datum
+                var strinag = exactTime.substring(11, 16) + "    " + exactTime.substring(0, 9)
+            
+                var verzenderli = document.createElement("li");
+                var textli = document.createElement("li");
+                var tijdli = document.createElement("li");
+                var empt = document.createElement("li");
+            
+                document.getElementById("messagesList").appendChild(empt);
+                document.getElementById("messagesList").appendChild(verzenderli);
+                document.getElementById("messagesList").appendChild(textli);
+                document.getElementById("messagesList").appendChild(tijdli);
+            
+                let verzender =  data[x].verzender.voornaam;
+                var bericht = data[x].text
+                var tijd = strinag
+                var ece = "";
+            
+                verzenderli.textContent = `${verzender}`;
+                textli.textContent = `${bericht}`;
+                tijdli.textContent = `${tijd}`;
+                empt.textContent = `${ece}`;
+            }
+        });
+    }
 
-            let verzender =  data[x].verzender.voornaam;
-            var bericht = data[x].text
-            var tijd = data[x].datum
+}
 
-            verzenderli.textContent = `${verzender}`;
-            textli.textContent = `${bericht}`;
-            tijdli.textContent = `${tijd}`; 
+function sendChat(x){
 
-        }
-    });
 }
 

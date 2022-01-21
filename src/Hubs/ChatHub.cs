@@ -46,13 +46,21 @@ namespace SignalRChat.Hubs
                 Console.WriteLine(chat);
                 if(verstuurder == "client"){    //client route
                     await saveBericht(chat, message, true);
-                    await Clients.Caller.SendAsync("ReceiveMessage", client.Voornaam, message);
-                    await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", client.Voornaam, message);
+
+                    await Groups.AddToGroupAsync(Context.ConnectionId, cid);
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", client.Voornaam, message);
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", DateTime.Now.ToString("ddd dd MMM yyyy"));
+                    // await Clients.Caller.SendAsync("ReceiveMessage", client.Voornaam, message);
+                    // await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", client.Voornaam, message);
                 }
                 else {
                     await saveBericht(chat, message, false);    //hulpverlener route
-                    await Clients.Caller.SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
-                    await Clients.User(client.User.Id).SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
+                    
+                    await Groups.AddToGroupAsync(Context.ConnectionId, cid);
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", DateTime.Now.ToString("ddd dd MMM yyyy"));
+                    // await Clients.Caller.SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
+                    // await Clients.User(client.User.Id).SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
                 }
         }
 
@@ -89,7 +97,7 @@ namespace SignalRChat.Hubs
                     Console.WriteLine(await _context.Clienten.SingleAsync(x => x.User.Id == Context.UserIdentifier));
                     user = client.Voornaam;
                     Console.WriteLine("client = " + client);
-                    bericht = new Bericht(){Verzender = client, text = message, Datum = DateTime.Now};
+                    bericht = new Bericht(){Verzender = client, text = message, Datum = DateTime.Now, };
                 }
                 else {
                     var hulpverlener = await _context.Hulpverleners.SingleAsync(x => x.User.Id == Context.UserIdentifier);
@@ -107,7 +115,6 @@ namespace SignalRChat.Hubs
                     await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
                     await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
                 }
-
                 public async Task AddToGroup(string groupName)
                 {
                     Console.WriteLine(groupName);

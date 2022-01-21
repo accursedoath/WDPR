@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace src.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220120101439_groepoe")]
-    partial class groepoe
+    [Migration("20220121110142_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,6 +84,21 @@ namespace src.Migrations
                     b.ToTable("Accounts");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Account");
+                });
+
+            modelBuilder.Entity("ClientGroepsChat", b =>
+                {
+                    b.Property<int>("DeelnemersId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("groepChatsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DeelnemersId", "groepChatsId");
+
+                    b.HasIndex("groepChatsId");
+
+                    b.ToTable("ClientGroepsChat");
                 });
 
             modelBuilder.Entity("GroepsChat", b =>
@@ -382,9 +397,6 @@ namespace src.Migrations
                     b.Property<int?>("GroepsChatId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("VerzenderId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("chatId")
                         .HasColumnType("INTEGER");
 
@@ -433,9 +445,6 @@ namespace src.Migrations
                     b.Property<string>("ApplicatieGebruiker")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("GroepsChatId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("hulpverlenerId")
                         .HasColumnType("INTEGER");
 
@@ -444,8 +453,6 @@ namespace src.Migrations
 
                     b.HasIndex("ApplicatieGebruiker")
                         .IsUnique();
-
-                    b.HasIndex("GroepsChatId");
 
                     b.HasIndex("hulpverlenerId");
 
@@ -522,6 +529,21 @@ namespace src.Migrations
                         .HasForeignKey("Account", "Woonplaats");
 
                     b.Navigation("woonplaats");
+                });
+
+            modelBuilder.Entity("ClientGroepsChat", b =>
+                {
+                    b.HasOne("Client", null)
+                        .WithMany()
+                        .HasForeignKey("DeelnemersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GroepsChat", null)
+                        .WithMany()
+                        .HasForeignKey("groepChatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GroepsChat", b =>
@@ -642,10 +664,6 @@ namespace src.Migrations
                         .WithOne("client")
                         .HasForeignKey("Client", "ApplicatieGebruiker");
 
-                    b.HasOne("GroepsChat", null)
-                        .WithMany("Deelnemers")
-                        .HasForeignKey("GroepsChatId");
-
                     b.HasOne("Hulpverlener", "hulpverlener")
                         .WithMany()
                         .HasForeignKey("hulpverlenerId")
@@ -687,8 +705,6 @@ namespace src.Migrations
             modelBuilder.Entity("GroepsChat", b =>
                 {
                     b.Navigation("Berichten");
-
-                    b.Navigation("Deelnemers");
                 });
 
             modelBuilder.Entity("Woonplaats", b =>

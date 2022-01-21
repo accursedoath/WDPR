@@ -395,9 +395,6 @@ namespace src.Migrations
                     b.Property<int?>("GroepsChatId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("VerzenderId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("chatId")
                         .HasColumnType("INTEGER");
 

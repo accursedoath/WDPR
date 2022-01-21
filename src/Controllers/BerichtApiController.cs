@@ -42,6 +42,20 @@ namespace src.Controllers
             }
             return berichtenlijst;
         }
+
+        [HttpGet("allGroup/{id}")]    //geef groep id
+        public async Task<ActionResult<IEnumerable<Bericht>>> GetGroepBerichten(int id)
+        {
+            _context.groepsChats.Include(x => x.Berichten);
+            var groep = await _context.groepsChats.SingleAsync(x => x.Id == id);
+            await _context.Entry(groep).Collection(x => x.Berichten).LoadAsync();
+            var newlist = groep.Berichten;
+            foreach(var x in newlist){
+                await _context.Entry(x).Reference(x => x.Verzender).LoadAsync();
+                Console.WriteLine(x.Verzender);
+            }
+            return newlist;
+        }
         // GET: api/BerichtApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Bericht>> GetBericht(int id)
