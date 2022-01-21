@@ -39,7 +39,7 @@ namespace src.Controllers
             var chatId = _context.Chats.Where(c => c.client.Id == id && c.hulpverlener.Id == client.hulpverlenerId).SingleOrDefault().Id;
             var berichtenlijst = await _context.Berichten.Where(x => x.chatId == chatId).ToListAsync();
             var tijdLijst = new List<string>();
-            if(true //client.Leeftijdscateg)
+            if(true /*client.Leeftijdscateg*/)
             {
                 foreach(var x in berichtenlijst){
                     DateTime date = DateTime.ParseExact(x.Datum.ToShortDateString(), "M/dd/yyyy", CultureInfo.InvariantCulture);
