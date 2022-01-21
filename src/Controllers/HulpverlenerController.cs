@@ -58,7 +58,9 @@ namespace src.Controllers
                 Voornaam = aanmelding.Voornaam, 
                 Achternaam = aanmelding.Achternaam, 
                 hulpverlener = aanmelding.Hulpverlener,
-                hulpverlenerId = aanmelding.HulpverlenerId};
+                hulpverlenerId = aanmelding.HulpverlenerId,
+                Voogd = false,
+                magChatten = true};
             var chat = new Chat() { client = clientUser.client, hulpverlener = aanmelding.Hulpverlener };
             _context.Chats.Add(chat);
             _context.ApplicatieGebruikers.Add(clientUser);
@@ -75,6 +77,7 @@ namespace src.Controllers
                     Client = clientUser.client,
                     ClientId = clientUser.client.Id};
                 _context.ApplicatieGebruikers.Add(voogdUser);
+                clientUser.client.Voogd = true;
                 var resultVoogd = await _userManager.CreateAsync(voogdUser, "Welkom1!");
                 await _userManager.AddToRoleAsync(voogdUser, "Voogd");
                 await _context.SaveChangesAsync();
