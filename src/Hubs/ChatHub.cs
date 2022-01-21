@@ -79,24 +79,28 @@ namespace SignalRChat.Hubs
                 var verzender = await _context.Users.FindAsync(Context.ConnectionId);
                 _context.Clienten.Include(x => x.User);
                 _context.Hulpverleners.Include(x => x.User);
-                Console.WriteLine(groep.Onderwerp);
-                Console.WriteLine(groepnaam);
 
+                string user;
+                Console.WriteLine("line 84");
                 Bericht bericht;
                     Console.WriteLine(_context.Clienten.Any(x => x.User.Id == Context.UserIdentifier));
-                if(_context.Clienten.Any(x => x.User.Id == Context.UserIdentifier)){
-                    var client = await _context.Clienten.FirstOrDefaultAsync(x => x.User.Id == Context.UserIdentifier);
-                    Console.WriteLine(client);
+                if(_context.Clienten.Any(x => x.User.Id == Context.UserIdentifier)){;
+                    var client = await _context.Clienten.SingleAsync(x => x.User.Id == Context.UserIdentifier);
+                    Console.WriteLine(await _context.Clienten.SingleAsync(x => x.User.Id == Context.UserIdentifier));
+                    user = client.Voornaam;
+                    Console.WriteLine("client = " + client);
                     bericht = new Bericht(){Verzender = client, text = message, Datum = DateTime.Now};
                 }
                 else {
-                    var hulpverlener = await _context.Clienten.FirstOrDefaultAsync(x => x.User.Id == Context.UserIdentifier);
+                    var hulpverlener = await _context.Hulpverleners.SingleAsync(x => x.User.Id == Context.UserIdentifier);
+                    Console.WriteLine("debug hierzo ");
+                    user = hulpverlener.Voornaam;
                     bericht = new Bericht(){Verzender = hulpverlener, text = message, Datum = DateTime.Now};
                 }
                 await _context.Entry(groep).Collection(x => x.Berichten).LoadAsync();
                 groep.Berichten.Add(bericht);
                 await _context.SaveChangesAsync();
-                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message);
+                await Clients.Group(groepnaam).SendAsync("ReceiveMessage",user ,message);
             }
                 public async Task RemoveFromGroup(string groupName)
                 {

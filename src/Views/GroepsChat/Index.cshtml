@@ -37,15 +37,24 @@
                 @Html.DisplayFor(modelItem => item.eindDatum)
             </td>
             <td>
-                <input type="hidden" value="@(item.Onderwerp + item.Id)">
-                <form asp-action="EnterGroepsChat" asp-route-id ="@item.Id">
-                <button type="submit" class="btn btn-primary" id="@item.Onderwerp" onclick="JoinGroep(this)">Join</button>
-                <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
-                </form>
-
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                @{
+                    if(ViewBag.hulpverlener){
+                        <form asp-action="Chat" asp-route-id ="@item.Id">
+                        <button type="submit" class="btn btn-primary" id="@item.Onderwerp">Enter</button>
+                        <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
+                        </form>
+                    }
+                    else {
+                        <input type="hidden" value="@(item.Onderwerp + item.Id)">
+                        <form asp-action="EnterGroepsChat" asp-route-id ="@item.Id">
+                        <button type="submit" class="btn btn-primary" id="@item.Onderwerp">Join</button>
+                        <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
+                        </form>
+                    }
+                }
+                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
             </td>
         </tr>
 }
