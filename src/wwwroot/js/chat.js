@@ -11,21 +11,16 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     // Hier establish je de link tussen cshtml en java, eigenlijk moet hier json gestuurt worden naar een controller
     // Hier moet dan gebruik worden gemaakt van fetch
+
     var li = document.createElement("li");
     var lis = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
     document.getElementById("messagesList").appendChild(lis);
-    // fetch('https://localhost:5001/Chat')  //dit is essentially een get request
-    // .then(response => response.json())
-    // .then(data => console.log(data));
-    // We can assign user-supplied strings to an element's textContent because it
-    // is not interpreted as markup. If you're assigning in any other way, you 
-    // should be aware of possible script injection concerns.
     li.textContent = `${user}`;
     lis.textContent = `${message}`;
 });
 
-connection.start().then(function () {
+connection.start().then(function () {   //start connectie van chat
 
     var chattype = document.getElementById("chattype").value;
     if(chattype == "privechat"){
@@ -43,17 +38,7 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
-
-
-// document.getElementById(uniquebutton).addEventListener("click", function (event) {
-//     var groepsnaam = document.getElementById("groepsnaam").value; //world trigger 
-//     connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
-//         return console.error(err.toString());
-//     });
-//     event.preventDefault();
-// });
-
-async function sendGroupMessage(){
+async function sendGroupMessage(){      //het versturen van een groepsbericht
     var groepsnaam = document.getElementById("groepnaam").value;
     var message = document.getElementById("messageInput").value;
     var groepid = document.getElementById("groepid").value;
@@ -68,7 +53,7 @@ async function sendGroupMessage(){
 
 }
 
-async function sendPm(){
+async function sendPm(){                //het versturen van een prive bericht
         var message = document.getElementById("messageInput").value;
        let chatid = document.getElementById("chattid").value;
        var verstuurder = document.getElementById("verstuurder").value;
@@ -80,34 +65,9 @@ async function sendPm(){
        applyhr();
 }
 
-// function JoinGroep(groepsnaam){
-//     console.log(groepsnaam);
-//     connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
-//         return console.error(err.toString());
-//     });
-// }
+async function fillchat(chattype){      //het laden van eerdere chatberichten S
 
-// function JoinGroep($this){
-//     var groepsnaam = $this.id;
-//     console.log(groepsnaam);
-//     connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
-//         return console.error(err.toString());
-//     });
-// }
-
-// document.getElementById("sendButton").addEventListener("click", function (event) {
-//      var message = document.getElementById("messageInput").value;
-//     let chatid = document.getElementById("chattid").value;
-//     var verstuurder = document.getElementById("verstuurder").value;
-//     connection.invoke("pm", verstuurder, message, chatid).catch(function (err) {
-//         return console.error(err.toString());
-//     });
-//     event.preventDefault();
-// });
-
-async function fillchat(chattype){
-
-    if(chattype == "privechat"){
+    if(chattype == "privechat"){        //Prive chat route
         var chatid = document.getElementById("chattid").value;
        await fetch('https://localhost:5001/api/BerichtApi/all/' + chatid)  //dit is essentially een get request
         .then(response => response.json())
@@ -138,7 +98,7 @@ async function fillchat(chattype){
             }
         });
     }
-    else {
+    else {                                //Hulpverlener chat route
         var groepid = document.getElementById("groepid").value;
        await fetch('https://localhost:5001/api/BerichtApi/allGroup/' + groepid)  //dit is essentially een get request
         .then(response => response.json())
@@ -172,8 +132,11 @@ async function fillchat(chattype){
     applyhr();
 }
 
-function applyname(){
+function applyname(){                           //naam van verstuurde toevoegen met melding
     var voornaam = document.createElement("li");
+    var melding = document.createElement("span");
+    melding.innerHTML = "https://localhost:5001/GroepsChat/Chat/1/Melding"
+    voornaam.appendChild(melding);
     document.getElementById("messagesList").appendChild(voornaam);
     var naam = document.getElementById("naam").value;
     voornaam.textContent = `${naam}`;

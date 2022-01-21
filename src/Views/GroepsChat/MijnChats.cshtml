@@ -6,9 +6,14 @@
 
 <h1>Mijn GroepChats</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@{
+    if(ViewBag.ishulpverlener){
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -38,7 +43,6 @@
             </td>
             <td>
                 <a asp-action="Chat" asp-route-id="@item.Id">Chat</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

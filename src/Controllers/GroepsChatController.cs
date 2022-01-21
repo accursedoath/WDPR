@@ -60,10 +60,12 @@ namespace src.Controllers
             _context.Clienten.Include(x => x.User);
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(_context.Clienten.Any(x => x.User.Id == userId)){
+                ViewBag.ishulpverlener = false;
                 var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
                 return View(await _context.groepsChats.Where(x => x.Deelnemers.Contains(client)).ToListAsync());
             }
             else{
+                ViewBag.ishulpverlener = true;
                 _context.Hulpverleners.Include(x => x.User);
                 var hulpverlener = await _context.Hulpverleners.SingleAsync(x => x.User.Id == userId);
                 return View(await _context.groepsChats.Where(x => x.hulpverlener == hulpverlener).ToListAsync());
