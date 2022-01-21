@@ -11,12 +11,12 @@
         <form asp-action="Woonplaats">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">
-                <label asp-for="Adres" class="control-label">Adres:</label>
+                <label asp-for="Adres" class="control-label"></label>
                 <input asp-for="Adres" class="form-control" />
                 <span asp-validation-for="Adres" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="plaats" class="control-label"></label>
+                <label asp-for="plaats" class="control-label">Plaats</label>
                 <input asp-for="plaats" class="form-control" />
                 <span asp-validation-for="plaats" class="text-danger"></span>
             </div>
