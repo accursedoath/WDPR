@@ -1,3 +1,5 @@
+@model IEnumerable<Hulpverlener>
+
 @{
     ViewData["Title"] = "Orthopedagogen";
 }
@@ -5,57 +7,29 @@
 <section id="opWrapper">
     <div class="container">
         <h1 class="text-center mb-4">Orthopedagogen</h1>
+        <form asp-action="Orthopedagogen" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    Zoek op Naam: <input type="text" name="zoek" value=""/>
+                    <input type="submit" value="Search" class="btn btn-default"/>
+                    <a asp-action="Orthopedagogen">Volledige Lijst</a>
+                </p>
+            </div>
+        </form>
         <div class="row mb-4">
-            <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="~/img/op-1.png" class="card-img-top" alt="Foto van Ricco">
-                    <div class="card-body">
-                        <h5 class="card-title">Ricco</h5>
-                        <cite title="Source Title">Expert op het gebied van dyscalculie</cite><br><br>
-                        <p class="card-text">Mijn naam is Ricco Morija, ik ben geboren in 1980 in Irak. 
-                                             Mijn ouders zijn naar Nederland gekomen om wiskundeles te geven op de universiteit ...</p>
-                        <a asp-area="" asp-controller="Home" asp-action="Ricco" class="btn btn-secondary">Lees meer</a>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-stretch">
+                    <div class="card">
+                        <img src="~/img/@(item.Voornaam).png" class="card-img-top" alt="Foto van @(item.Voornaam)">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Voornaam</h5>
+                            <p class="card-text">@item.Beschrijving</p>
+                            <a asp-area="" asp-controller="Home" asp-action="@item.Voornaam" class="btn btn-secondary" aria-label="Lees meer over deze orthopedagoog">Lees meer</a>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="~/img/op-2.png" class="card-img-top" alt="Foto van Harold">
-                    <div class="card-body">
-                        <h5 class="card-title">Harold</h5>
-                        <cite title="Source Title">Expert op het gebied van angststoornissen</cite><br><br>
-                        <p class="card-text">Mijn naam is Harold Chad, ik ben 33 jaar oud en kom uit Den Haag. 
-                                             Toen ik 20 jaar oud was ben ik gaan wonen in de stad Leiden ...</p>
-                        <a asp-area="" asp-controller="Home" asp-action="Harold" class="btn btn-secondary">Lees meer</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="~/img/op-3.png" class="card-img-top" alt="Foto van Emma">
-                    <div class="card-body">
-                        <h5 class="card-title">Emma</h5>
-                        <cite title="Source Title">Expert op het gebied van ADHD</cite><br><br>
-                        <p class="card-text">Mijn naam is Emma Bauer, ik ben 27 en woon samen met mijn vriend en zoontje van twee in Zoetermeer. 
-                                             Ik houd al heel mijn leven van kinderen dus ik besloot er mijn werk van te maken ...</p>
-                        <a asp-area="" asp-controller="Home" asp-action="Emma" class="btn btn-secondary">Lees meer</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-stretch">
-                <div class="card">
-                    <img src="~/img/op-4.png" class="card-img-top" alt="Foto van Anneke">
-                    <div class="card-body">
-                        <h5 class="card-title">Anneke</h5>
-                        <cite title="Source Title">Expert op het gebied van eetstoornissen</cite><br><br>
-                        <p class="card-text">Ik ben Anneke Bergsma, geboren in 1984 in Gouda en heb 1 oudere broer. 
-                                             Ik ben opgegroeid in Waddinxveen en heb veel gezeild als kind ...</p>
-                        <a asp-area="" asp-controller="Home" asp-action="Anneke" class="btn btn-secondary">Lees meer</a>
-                    </div>
-                </div>
-            </div>
+                </div> 
+            }
         </div>
     </div>
 </section>
