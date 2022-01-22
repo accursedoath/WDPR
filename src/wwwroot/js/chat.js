@@ -11,7 +11,7 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     // Hier establish je de link tussen cshtml en java, eigenlijk moet hier json gestuurt worden naar een controller
     // Hier moet dan gebruik worden gemaakt van fetch
-
+    
     var li = document.createElement("li");
     var lis = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
