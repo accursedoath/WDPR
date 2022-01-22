@@ -37,6 +37,7 @@ namespace src
             services.AddDbContext<DatabaseContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("DatabaseContext")));
             services.AddSignalR();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
