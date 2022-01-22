@@ -46,7 +46,15 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-label="Privechat met jouw orthopedagoog" asp-controller="PriveChat" asp-action="Chat">Chat</a>
-                            </li>                             
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" aria-label="Open zelfhulp groepen" asp-controller="GroepsChat" asp-action="Index">Open Groepen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-label="Mijn zelfhulp groepen" asp-controller="GroepsChat" asp-action="MijnChats">Mijn Zelfhulp Groepen</a>
+                            </li>
+
                             <partial name="_LoginPartial"></partial>
                         }
 
@@ -60,6 +68,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-label="Jou aanmeldingen" asp-controller="Hulpverlener" asp-action="Aanmelding">Aanmelding</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-label="Mijn zelfhulp groepen" asp-controller="GroepsChat" asp-action="Index">Zelfhulp Groepen</a>
                             </li>
                              <partial name="_LoginPartial"></partial>
                         }

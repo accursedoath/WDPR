@@ -80,7 +80,9 @@ namespace src.Controllers
         public async Task<ActionResult<Bericht>> GetBericht(int id)
         {
             var bericht = await _context.Berichten.FindAsync(id);
-
+            await _context.Entry(bericht).Reference(x => x.Verzender).LoadAsync();
+            Console.WriteLine(bericht.Verzender);
+            
             if (bericht == null)
             {
                 return NotFound();

@@ -8,16 +8,25 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("ReceiveMessage", function (user, message, berichtid) {
     // Hier establish je de link tussen cshtml en java, eigenlijk moet hier json gestuurt worden naar een controller
     // Hier moet dan gebruik worden gemaakt van fetch
-    
+
     var li = document.createElement("li");
     var lis = document.createElement("li");
+
     document.getElementById("messagesList").appendChild(li);
     document.getElementById("messagesList").appendChild(lis);
+
     li.textContent = `${user}`;
     lis.textContent = `${message}`;
+
+    var uniqueid = "i"+ berichtid;
+    if(berichtid != "0"){
+        lis.id = uniqueid
+        lis.innerHTML = message + "   " + "<button class = 'btn btn-dark btn-sm' onclick='PostIt(this)' id='"+ uniqueid +"'> Rapporteer</button>"
+    }
+
 });
 
 connection.start().then(function () {   //start connectie van chat
@@ -98,7 +107,7 @@ async function fillchat(chattype){      //het laden van eerdere chatberichten S
             }
         });
     }
-    else {                                //Hulpverlener chat route
+    else {                                //Groeps chat route
         var groepid = document.getElementById("groepid").value;
        await fetch('https://localhost:5001/api/BerichtApi/allGroup/' + groepid)  //dit is essentially een get request
         .then(response => response.json())
@@ -111,6 +120,8 @@ async function fillchat(chattype){      //het laden van eerdere chatberichten S
                 var textli = document.createElement("li");
                 var tijdli = document.createElement("li");
                 var empt = document.createElement("hr");
+
+                
             
                 document.getElementById("messagesList").appendChild(empt);
                 document.getElementById("messagesList").appendChild(verzenderli);
@@ -120,12 +131,12 @@ async function fillchat(chattype){      //het laden van eerdere chatberichten S
                 let verzender =  data[x].verzender.voornaam;
                 var bericht = data[x].text
                 var tijd = strinag
-                // var ece = "";
+                var uniqueid = "b" + data[x].id; 
+                tijdli.innerHTML = tijd + "   " + "<button class = 'btn btn-dark btn-sm' onclick='PostIt(this)' id='"+ uniqueid +"'> Rapporteer</button>"
             
                 verzenderli.textContent = `${verzender}`;
                 textli.textContent = `${bericht}`;
-                tijdli.textContent = `${tijd}`;
-                // empt.textContent = `${ece}`;
+                // tijdli.textContent = `${tijd}`;
             }
         });
     }
@@ -147,3 +158,27 @@ function applyhr(){
     document.getElementById("messagesList").appendChild(hr);
 }
 
+
+async function PostIt($this){    //bericht id nodig voor bericht ophalen, daarna post naar melding api
+    $this.hidden = true;
+    var berichtid = $this.id.substring(1)
+    var groepnaam = document.getElementById("groepnaam");
+    var meldingreden = "anonieme misbruikmelding in groep " + groepnaam;
+            postData('https://localhost:5001/api/MisbruikApi/', {melding : meldingreden, berichtid : berichtid });
+    }
+
+
+   // Post method
+   async function postData(url = '', data = {}) {
+       console.log(data);
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
