@@ -114,10 +114,15 @@ namespace src.Controllers
             if(_context.Clienten.Any(x => x.User.Id == userId)){
             var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
                 ViewBag.naam = client.Voornaam;
+                await _context.Entry(client).ReloadAsync();
+                //Console.WriteLine(client.magChatten);
+                if(client.magChatten) ViewBag.magchatten = "ja";
+                else ViewBag.magchatten = "nee";
             }
             else{
                 await _context.Entry(groepsChat).Reference(x => x.hulpverlener).LoadAsync();
                 ViewBag.naam = groepsChat.hulpverlener.Voornaam;
+                ViewBag.magchatten = "ja";
             }
             
 
