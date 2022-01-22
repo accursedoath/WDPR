@@ -45,6 +45,10 @@ namespace src.Controllers
             return View();
         }
 
+        public IActionResult Introductie()
+        {
+            return View();
+        }
         public IActionResult Klacht()
         {
             return View();
