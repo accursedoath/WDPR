@@ -48,7 +48,7 @@ namespace SignalRChat.Hubs
                     await saveBericht(chat, message, true);
 
                     await Groups.AddToGroupAsync(Context.ConnectionId, cid);
-                    await Clients.Group(cid).SendAsync("ReceiveMessage", message, DateTime.Now.ToString("ddd dd MMM yyyy"));
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", message, DateTime.Now.ToString("ddd dd MMM yyyy"),"0");
                     // await Clients.Caller.SendAsync("ReceiveMessage", client.Voornaam, message);
                     // await Clients.User(hulpverlener.User.Id).SendAsync("ReceiveMessage", client.Voornaam, message);
                 }
@@ -56,7 +56,7 @@ namespace SignalRChat.Hubs
                     await saveBericht(chat, message, false);    //hulpverlener route
                     
                     await Groups.AddToGroupAsync(Context.ConnectionId, cid);
-                    await Clients.Group(cid).SendAsync("ReceiveMessage", message , DateTime.Now.ToString("ddd dd MMM yyyy"));
+                    await Clients.Group(cid).SendAsync("ReceiveMessage", message , DateTime.Now.ToString("ddd dd MMM yyyy"),"0");
                     // await Clients.Caller.SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
                     // await Clients.User(client.User.Id).SendAsync("ReceiveMessage", hulpverlener.Voornaam, message);
                 }
@@ -106,7 +106,7 @@ namespace SignalRChat.Hubs
                 await _context.Entry(groep).Collection(x => x.Berichten).LoadAsync();
                 groep.Berichten.Add(bericht);
                 await _context.SaveChangesAsync();
-                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message, DateTime.Now.ToString("ddd dd MMM yyyy"));
+                await Clients.Group(groepnaam).SendAsync("ReceiveMessage", message, DateTime.Now.ToString("ddd dd MMM yyyy"),bericht.Id);
             }
                 public async Task RemoveFromGroup(string groupName)
                 {
