@@ -1,0 +1,21 @@
+@model Dossier
+
+@{
+    ViewData["Title"] = "Dossier";
+}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>naam</th>
+        <th>Iban</th>
+        <th>Bsn</th>
+        <th>Geb</th>
+    </tr>
+    <tr>
+        <td>@Model.clientid</td>
+        <td>@Model.volledigenaam</td>
+        <td>@Model.IBAN</td>
+        <td>@Model.BSN</td>
+        <td>@Model.gebdatum</td>
+    </tr>
+</table>

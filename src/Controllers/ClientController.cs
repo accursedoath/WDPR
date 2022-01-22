@@ -17,16 +17,42 @@ namespace src.Controllers
     public class ClientController : Controller
     {
         private readonly DatabaseContext _context;
+        public Dossier aanmeldingToCS { get; set;}
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly UserManager<ApplicatieGebruiker> _userManager;
 
-        public ClientController(DatabaseContext context)
+        public ClientController(DatabaseContext context, IHttpClientFactory clientFactory, UserManager<ApplicatieGebruiker> userManager)
         {
             _context = context;
+            _clientFactory = clientFactory;
+            _userManager = userManager;
         }
 
         // GET: Client
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clienten.ToListAsync());
+        }
+
+        public async Task<IActionResult> Dossier()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var clientId = _context.Clienten.Where(c => c.User.Id == userId).SingleOrDefault().Id;
+            string url = "https://orthopedagogie-zmdh.herokuapp.com/clienten?sleutel=147699692&clientid=" + clientId;
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            var client = _clientFactory.CreateClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await client.SendAsync(request);
+            if(response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStreamAsync();
+                aanmeldingToCS = await JsonSerializer.DeserializeAsync<Dossier>(responseStream);
+            }
+            else
+            {
+                aanmeldingToCS = new Dossier();
+            }
+            return View(aanmeldingToCS);
         }
 
         // GET: Client/Details/5
