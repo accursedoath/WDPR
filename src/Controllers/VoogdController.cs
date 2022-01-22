@@ -39,7 +39,11 @@ namespace src.Controllers
             var chatId = _context.Chats.Where(c => c.client.Id == id && c.hulpverlener.Id == client.hulpverlenerId).SingleOrDefault().Id;
             var berichtenlijst = await _context.Berichten.Where(x => x.chatId == chatId).ToListAsync();
             var tijdLijst = new List<string>();
-            if(true /*client.Leeftijdscateg*/)
+            DateTime nowDate = DateTime.ParseExact(DateTime.Now.ToShortDateString(), "M/dd/yyyy", CultureInfo.InvariantCulture);
+            DateTime clientDate = DateTime.ParseExact(client.Leeftijdscategorie, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var age = nowDate.Year - clientDate.Year;
+            Console.WriteLine(age);
+            if(age < 16)
             {
                 foreach(var x in berichtenlijst){
                     DateTime date = DateTime.ParseExact(x.Datum.ToShortDateString(), "M/dd/yyyy", CultureInfo.InvariantCulture);
@@ -51,6 +55,10 @@ namespace src.Controllers
                     }
                     Console.WriteLine(formattedDate);
                 }
+            }
+            else
+            {
+                tijdLijst.Add("U kunt de frequentie van uw kind niet inzien");
             }
             return View(tijdLijst.OrderBy(d => d));
         }
