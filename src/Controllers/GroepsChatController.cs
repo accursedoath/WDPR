@@ -29,33 +29,45 @@ namespace src.Controllers
         }
 
         // GET: GroepsChat 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string onderwerp, string leeftijd)
         {
-            var chatlist = new List<int>();
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _context.Users.FindAsync(userId);
+            ViewBag.onderwerp = onderwerp;
+            ViewBag.leeftijd = leeftijd;
 
             _context.Clienten.Include(x => x.User);
             if(_context.Clienten.Any(x => x.User.Id == userId)){
                 ViewBag.hulpverlener = false;
-                 var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
-                    // var cleanlist = await _context.groepsChats.Where(x => x.Deelnemers.Where(x => x.cl = client.Id))
-                    var cleanlist = await _context.groepsChats.Where(x => x.Deelnemers.Contains(client)).ToListAsync();
-                    var newlist = new List<GroepsChat>();
-                    foreach(var x in await _context.groepsChats.ToListAsync()){
-                        if(!cleanlist.Contains(x)) newlist.Add(x);
-                    }
-                    return View(newlist);
+                var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
+                //var x = Zoek(clientengroepenlijst ,onderwerp, leeftijd);
+                    return View(Zoek(getClientList(client), onderwerp, leeftijd));
                 }
 
             else {
                 _context.Hulpverleners.Include(x => x.User);
                 ViewBag.hulpverlener = true;
-                return View(await _context.groepsChats.Where(x => x.hulpverlener.User.Id == userId).ToListAsync());
+                return View(Zoek(_context.groepsChats.Where(x => x.hulpverlener.User.Id == userId), onderwerp, leeftijd));
             }
             // return View(await _context.groepsChats.ToListAsync()); Miss voor moderator?
         }
+        [HttpPost]
+        public IActionResult ZoekGroep(string onderwerp, string leeftijd){
+            return RedirectToAction("Index", new {onderwerp = onderwerp, leeftijd = leeftijd} );
+        }
 
+        private IQueryable<GroepsChat> getClientList(Client client)
+        {
+            _context.groepsChats.Include(x => x.Deelnemers);
+            var clientenlijst = _context.groepsChats.Where(x => !x.Deelnemers.Contains(client));
+            return clientenlijst;
+        }
+
+        public IQueryable<GroepsChat> Zoek(IQueryable<GroepsChat> clientenlijst, string onderwerp, string leeftijd){
+            if(onderwerp == null && leeftijd == null) return clientenlijst;
+            else if (leeftijd == null) return clientenlijst.Where(x => x.Onderwerp.Contains(onderwerp));
+            else return clientenlijst.Where(x =>x.LeeftijdsCategorie.Contains(leeftijd));
+        }
         public async Task<IActionResult> MijnChats(){  //heel die frontend maken van deze, of we geven mee aan index en gebruiken die frontend
             _context.Clienten.Include(x => x.User);
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -102,10 +114,15 @@ namespace src.Controllers
             if(_context.Clienten.Any(x => x.User.Id == userId)){
             var client = await _context.Clienten.SingleAsync(x => x.User.Id == userId);
                 ViewBag.naam = client.Voornaam;
+                await _context.Entry(client).ReloadAsync();
+                //Console.WriteLine(client.magChatten);
+                if(client.magChatten) ViewBag.magchatten = "ja";
+                else ViewBag.magchatten = "nee";
             }
             else{
                 await _context.Entry(groepsChat).Reference(x => x.hulpverlener).LoadAsync();
                 ViewBag.naam = groepsChat.hulpverlener.Voornaam;
+                ViewBag.magchatten = "ja";
             }
             
 

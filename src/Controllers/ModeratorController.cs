@@ -38,6 +38,7 @@ namespace src.Controllers
         {
             var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
             client.magChatten = false;
+            _context.Update(client);
             _context.HulpverlenerMeldingen.Add(new HulpverlenerMelding(){Client = client});
             _context.SaveChanges();
             return RedirectToAction("Client");
@@ -47,6 +48,7 @@ namespace src.Controllers
         {
             var client = _context.Clienten.Where(c => c.Id == id).SingleOrDefault();
             client.magChatten = true;
+            _context.Update(client);
             _context.SaveChanges();
             return RedirectToAction("Client");
         }

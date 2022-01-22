@@ -42,7 +42,10 @@ connection.start().then(function () {   //start connectie van chat
             return console.error(err.toString());
         });
     }
-    document.getElementById("sendButton").disabled = false;
+
+    if(document.getElementById("magchatten").value == "ja"){
+        document.getElementById("sendButton").disabled = false;
+      }
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -182,3 +185,4 @@ async function PostIt($this){    //bericht id nodig voor bericht ophalen, daarna
     });
     return response.json(); // parses JSON response into native JavaScript objects
   }
+
