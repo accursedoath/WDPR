@@ -40,6 +40,20 @@ namespace src.Controllers
             return View();
         }
 
+        public IActionResult FAQ()
+        {
+            return View();
+        }
+
+        public IActionResult Introductie()
+        {
+            return View();
+        }
+        public IActionResult Klacht()
+        {
+            return View();
+        }
+
         public IQueryable<Hulpverlener> Zoek(IQueryable<Hulpverlener> lijst, string zoek)
         { 
             if(string.IsNullOrEmpty(zoek))
