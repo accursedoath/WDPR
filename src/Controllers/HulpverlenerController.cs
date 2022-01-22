@@ -56,11 +56,12 @@ namespace src.Controllers
             _context.Entry(aanmelding).Reference(l => l.Hulpverlener).Load();
             clientUser.client = new Client(){
                 Voornaam = aanmelding.Voornaam, 
-                Achternaam = aanmelding.Achternaam, 
+                Achternaam = aanmelding.Achternaam,
+                Leeftijdscategorie = aanmelding.Leeftijdscategorie, 
                 hulpverlener = aanmelding.Hulpverlener,
                 hulpverlenerId = aanmelding.HulpverlenerId,
                 Voogd = false,
-                magChatten = true};
+                magChatten = true };
             var chat = new Chat() { client = clientUser.client, hulpverlener = aanmelding.Hulpverlener };
             _context.Chats.Add(chat);
             _context.ApplicatieGebruikers.Add(clientUser);
