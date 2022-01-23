@@ -9,10 +9,4 @@ public class Voogd : Account
     public string Telefoon {get; set;}
     #nullable enable
     public Client? Client {get; set;}
-
-    public int? checkFrequentie()
-    {
-        return null;
-        // Moet nog aanvulling krijgen
-    }
 }
