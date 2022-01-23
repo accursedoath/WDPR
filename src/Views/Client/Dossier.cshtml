@@ -3,19 +3,34 @@
 @{
     ViewData["Title"] = "Dossier";
 }
-<table>
+
+<h1>Mijn dossier</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.volledigenaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IBAN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BSN)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
     <tr>
-        <th>ID</th>
-        <th>naam</th>
-        <th>Iban</th>
-        <th>Bsn</th>
-        <th>Geb</th>
+        <td>
+            @Model.volledigenaam
+        </td>
+        <td>
+            @Model.IBAN
+        </td>
+        <td>
+            @Model.BSN
+        </td>
     </tr>
-    <tr>
-        <td>@Model.clientid</td>
-        <td>@Model.volledigenaam</td>
-        <td>@Model.IBAN</td>
-        <td>@Model.BSN</td>
-        <td>@Model.gebdatum</td>
-    </tr>
+    </tbody>
 </table>
