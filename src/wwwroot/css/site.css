@@ -1,0 +1,97 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+/* imports */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+/* html and body */
+html {
+  margin: 0;
+  min-height: 100%;
+  font-size: 14px;
+}
+body {
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* navbar */
+.navbar {
+  background-color: #517664;
+  color: #fff;
+  padding: 20px 20px !important; 
+}
+
+.navbar a {
+  transition: opacity .25s ease-in-out;
+  color: #fff;
+}
+
+.nav-item:hover {
+  opacity: 0.7;
+}
+
+#logout {
+  color: #fff !important;
+}
+
+a.navbar-brand {
+  transition: opacity .25s ease-in-out;
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a.navbar-brand:hover {
+  opacity: 0.7;
+}
+
+/* Borders */
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer */
+.footer {
+  position: sticky;
+  top: 100%;
+  background-color: #517664;
+  color: #fff;
+}
+
+.footer a {
+  color: #fff;
+}
+
+/* Wrappers */
+#cardsWrapper {
+  padding: 50px 0 50px 0;
+}
+
+/* #imageWrapper {} */
+
+/* #opWrapper {} */
+
+/* #aboutmeWrapper {} */
+
+/* #signupWrapper{} */
+
+.form-box {
+  padding: 20px;
+  background-color: #D6E5E3;
+  border-radius: 10px;
+}

@@ -1,0 +1,50 @@
+@model IEnumerable<GroepsChat>
+
+@{
+    ViewData["Title"] = "MijnChats";
+}
+
+<h1>Mijn GroepChats</h1>
+
+@{
+    if(ViewBag.ishulpverlener){
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Onderwerp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeeftijdsCategorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eindDatum)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Onderwerp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeeftijdsCategorie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.eindDatum)
+            </td>
+            <td>
+                <a asp-action="Chat" asp-route-id="@item.Id">Chat</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,29 @@
+@model IEnumerable<src.Models.Chat>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Prive Chats</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Client
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.client.Voornaam)
+            </td>
+            <td>
+                <a asp-action="Chat" aria-label="Chatten met @item.client.Voornaam" asp-route-id="@item.client.Id">Chatten met @item.client.Voornaam</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

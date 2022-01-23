@@ -1,0 +1,155 @@
+@model Aanmelding
+
+@{
+    ViewData["Title"] = "Aanmelden";
+    var Hulpverleners = ViewData["Hulpverlener"];
+    List<SelectListItem> List = new List<SelectListItem>();
+    foreach(var hulp in (List<Hulpverlener>)Hulpverleners)
+    {
+        List.Add(new SelectListItem() { Text = hulp.Voornaam, Value = hulp.Id.ToString() });
+    }
+}
+
+<section id="imageWrapper" class="mb-2">
+    <img src="~/img/aanmeldBanner.png" alt="plaatje van orthopedagoog en client" class="rounded mx-auto d-block img-fluid">
+</section>
+
+<section id="signupWrapper">
+    <div class="container">
+        <div class="row">
+            <h1>Meld u hier aan.</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-box col-12">
+                <h2 class="text-center mb-3">Aanmelden</h2>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Voornaam" class="control-label">Voornaam:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="naam" asp-for="Voornaam" class="form-control" />
+                                <span asp-validation-for="Voornaam" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Achternaam" class="control-label">Achternaam:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Achternaam" class="form-control" />
+                                <span asp-validation-for="Achternaam" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="BSN" class="control-label">BSN:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="BSN" class="form-control" />
+                                <span asp-validation-for="BSN" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-3">
+                                 <label asp-for="Email" class="control-label">Email:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Leeftijdscategorie" class="control-label">Leeftijdscategorie:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Leeftijdscategorie" type="date" class="form-control" />
+                                <span asp-validation-for="Leeftijdscategorie" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="AfspraakDatum" class="control-label">Datum voor Afspraak:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="AfspraakDatum" type="date" class="form-control" />
+                                <span asp-validation-for="AfspraakDatum" class="text-danger"></span><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                               <label asp-for="Stoornis" class="control-label">Stoornis:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="Stoornis" class="form-control" />
+                                <span asp-validation-for="Stoornis" class="text-danger"></span><br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="Onder16">Bent u jonger dan 16 jaar?</label>
+                            </div>
+                            <div class="col-md-9">
+                                <label class="form-check-label">
+                                    <input id="Onder16" class="form-control" onchange='Toggle16(this);' type="checkbox" name="Onder16"/>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="VoogdAanmelding" class="d-none">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="NaamVoogd" class="control-label">Naam ouder/voogd:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input asp-for="NaamVoogd" class="form-control" disabled/>
+                                    <span asp-validation-for="NaamVoogd" class="text-danger"></span><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="EmailVoogd" class="control-label">Email ouder/voogd:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input asp-for="EmailVoogd" class="form-control" disabled/>
+                                    <span asp-validation-for="EmailVoogd" class="text-danger"></span><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="TelefoonVoogd" class="control-label">Telefoonnummer ouder/voogd:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input asp-for="TelefoonVoogd" class="form-control" disabled/>
+                                    <span asp-validation-for="TelefoonVoogd" class="text-danger"></span><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Hulpverlener">Hulpverlener</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select asp-for="Hulpverlener" asp-items="@List"></select>
+                                <span asp-validation-for="Hulpverlener" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 justify-content-end d-flex">
+                                <input type="submit" onclick="send()" value="Create" aria-label="Aanmelding versturen" class="btn btn-secondary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>   
+        </div>
+    </div>
+</section>
+
+<script src="~/js/aanmeldingCreate.js">
+</script>

@@ -1,0 +1,36 @@
+@model IEnumerable<HulpverlenerMelding>
+
+@{
+    ViewData["Title"] = "Melding";
+}
+
+<h1>Melding</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Client
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Melding)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+             <td>
+                @item.Client.Voornaam
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Melding)
+            </td>
+            <td>
+                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

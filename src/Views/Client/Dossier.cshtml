@@ -1,0 +1,36 @@
+@model Dossier
+
+@{
+    ViewData["Title"] = "Dossier";
+}
+
+<h1>Mijn dossier</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.volledigenaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IBAN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BSN)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            @Model.volledigenaam
+        </td>
+        <td>
+            @Model.IBAN
+        </td>
+        <td>
+            @Model.BSN
+        </td>
+    </tr>
+    </tbody>
+</table>

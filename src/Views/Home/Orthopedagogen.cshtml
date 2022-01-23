@@ -1,0 +1,35 @@
+@model IEnumerable<Hulpverlener>
+
+@{
+    ViewData["Title"] = "Orthopedagogen";
+}
+
+<section id="opWrapper">
+    <div class="container">
+        <h1 class="text-center mb-4">Orthopedagogen</h1>
+        <form asp-action="Orthopedagogen" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    Zoek op Naam: <input type="text" name="zoek" value=""/>
+                    <input type="submit" value="Search" class="btn btn-default"/>
+                    <a asp-action="Orthopedagogen">Volledige Lijst</a>
+                </p>
+            </div>
+        </form>
+        <div class="row mb-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-stretch">
+                    <div class="card">
+                        <img src="~/img/@(item.Voornaam).png" class="card-img-top" alt="Foto van @(item.Voornaam)">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Voornaam</h5>
+                            <p class="card-text">@item.Beschrijving</p>
+                            <a asp-area="" asp-controller="Home" asp-action="@item.Voornaam" class="btn btn-secondary" aria-label="Lees meer over deze orthopedagoog">Lees meer</a>
+                        </div>
+                    </div>
+                </div> 
+            }
+        </div>
+    </div>
+</section>
