@@ -1,87 +1,89 @@
 @model IEnumerable<GroepsChat>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Zelfhulpgroep";
 }
 
-<h1>Zelfhulp groepen</h1>
+<div class="container">
+    <div class="row mb-2">
+        <h1>Zelfhulp groepen</h1>
+        @{
+            if(ViewBag.hulpverlener){
+                <p>
+            <a asp-action="Create" aria-label="Maak een nieuwe zelfhulpgroep">Maak een nieuwe zelfhulpgroep</a>
+            </p>
+            }
+        }
+            <form action="/GroepsChat" method="post">
+                <input type="text" name = "onderwerp" id="onderwerp" label = "Onderwerp" placeholder="Onderwerp" value="@ViewBag.onderwerp">
+                <input type="text" name = "leeftijd" id="leeftijd" label = "Leeftijd" placeholder="Leeftijd" value="@ViewBag.leeftijd">
+                <button type="submit" class="btn btn-secondary">Zoek</button>
+            </form>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Onderwerp)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LeeftijdsCategorie)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.eindDatum)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Onderwerp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeeftijdsCategorie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.eindDatum)
+                    </td>
+                    <td>
+                        @{
+                            if(ViewBag.hulpverlener){
+                                <form asp-action="Chat" asp-route-id ="@item.Id">
+                                <button type="submit" class="btn btn-secondary" id="@item.Onderwerp">Naar chat</button>
+                                <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
+                                </form>
+                            }
+                            else {
+                                <input type="hidden" value="@(item.Onderwerp + item.Id)">
+                                <form asp-action="EnterGroepsChat" asp-route-id ="@item.Id">
+                                <button type="submit" class="btn btn-secondary" id="@item.Onderwerp">Deelnemen</button>
+                                <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
+                                </form>
+                            }
+                        }
+                        @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                    </td>
+                </tr>
+        }
 
-@{
-    if(ViewBag.hulpverlener){
-        <p>
-    <a asp-action="Create">Create New</a>
-    </p>
-    }
-}
+        <script>
+            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+            connection.start();
 
-
-    <form action="/GroepsChat" method="post">
-        <input type="text" name = "onderwerp" id="onderwerp" label = "Onderwerp" placeholder="Onderwerp" value="@ViewBag.onderwerp">
-        <input type="text" name = "leeftijd" id="leeftijd" label = "Leeftijd" placeholder="Leeftijd" value="@ViewBag.leeftijd">
-        <button type="submit" class="btn btn-primary">Zoek</button>
-    </form>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Onderwerp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeeftijdsCategorie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.eindDatum)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Onderwerp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeeftijdsCategorie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.eindDatum)
-            </td>
-            <td>
-                @{
-                    if(ViewBag.hulpverlener){
-                        <form asp-action="Chat" asp-route-id ="@item.Id">
-                        <button type="submit" class="btn btn-primary" id="@item.Onderwerp">Enter</button>
-                        <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
-                        </form>
-                    }
-                    else {
-                        <input type="hidden" value="@(item.Onderwerp + item.Id)">
-                        <form asp-action="EnterGroepsChat" asp-route-id ="@item.Id">
-                        <button type="submit" class="btn btn-primary" id="@item.Onderwerp">Join</button>
-                        <input type="hidden" class = "@item.Id" value="@Html.DisplayFor(modelItem => item.Onderwerp)">
-                        </form>
-                    }
-                }
-                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
-            </td>
-        </tr>
-}
-<script>
-    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-    connection.start();
-
-    function JoinGroep($this){
-    var groepsnaam = $this.id;
-    console.log(groepsnaam);
-    connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
-        return console.error(err.toString());
-    });
-}
-</script>
-    </tbody>
-</table>
+            function JoinGroep($this){
+            var groepsnaam = $this.id;
+            console.log(groepsnaam);
+            connection.invoke("AddToGroup", groepsnaam).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+        </script>
+            </tbody>
+        </table>
+    </div>
+</div>

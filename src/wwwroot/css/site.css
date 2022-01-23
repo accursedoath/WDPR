@@ -41,6 +41,10 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+#logout {
+  color: #fff;
+}
+
 /* Borders */
 .border-top {
   border-top: 1px solid #e5e5e5;
