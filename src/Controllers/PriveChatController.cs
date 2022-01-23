@@ -28,6 +28,7 @@ namespace src.Controllers
         }
 
         // GET: PriveChat
+        [Authorize(Roles ="Client, Hulpverlener")]
         public async Task<IActionResult> Index()
         {
             _context.Chats.Include(x => x.client);
@@ -41,6 +42,7 @@ namespace src.Controllers
             return View(clientenchats);
         }
 
+        [Authorize(Roles ="Client, Hulpverlener")]
         public IActionResult Chat(int id)
         {
                 var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -71,6 +73,7 @@ namespace src.Controllers
                 return View();
         }
 
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         // GET: PriveChat/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -89,6 +92,7 @@ namespace src.Controllers
             return View(chat);
         }
 
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         // GET: PriveChat/Create
         public IActionResult Create()
         {
@@ -98,6 +102,7 @@ namespace src.Controllers
         // POST: PriveChat/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,naam")] Chat chat)
@@ -110,7 +115,7 @@ namespace src.Controllers
             }
             return View(chat);
         }
-
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         // GET: PriveChat/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -130,6 +135,7 @@ namespace src.Controllers
         // POST: PriveChat/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,naam")] Chat chat)
@@ -163,6 +169,7 @@ namespace src.Controllers
         }
 
         // GET: PriveChat/Delete/5
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -181,6 +188,7 @@ namespace src.Controllers
         }
 
         // POST: PriveChat/Delete/5
+        [Authorize(Roles ="Hulpverlener, Moderator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
