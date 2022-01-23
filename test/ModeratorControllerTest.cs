@@ -29,13 +29,13 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new ModeratorController(context);
+            var controller = new Mock<ModeratorController>(context);
             var client = new Client(){Id = 1, magChatten = true};
             context.Clienten.Add(client);
             context.SaveChanges();
 
             // Act
-            var result = controller.Blokkeer(1);
+            var result = controller.Object.Blokkeer(1);
             var clientResult = context.Clienten.Where(c => c.Id == 1).SingleOrDefault().magChatten;
             var meldingResult = context.HulpverlenerMeldingen.Where(m => m.Client == client).SingleOrDefault().Client;
 
@@ -50,13 +50,13 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new ModeratorController(context);
+             var controller = new Mock<ModeratorController>(context);
             var client = new Client(){Id = 1, magChatten = false};
             context.Clienten.Add(client);
             context.SaveChanges();
 
             // Act
-            var result = controller.Deblokkeer(1);
+            var result = controller.Object.Deblokkeer(1);
             var clientResult = context.Clienten.Where(c => c.Id == 1).SingleOrDefault().magChatten;
 
             // Assert
@@ -69,7 +69,7 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new ModeratorController(context);
+             var controller = new Mock<ModeratorController>(context);
             var hulpverlener = new Hulpverlener(){Id = 2, Voornaam = "Ricco"};
             var client = new Client(){Id = 1, magChatten = false, hulpverlener = hulpverlener};
             context.Clienten.Add(client);
@@ -77,7 +77,7 @@ namespace test
             context.SaveChanges();
 
             // Act
-            var result = await controller.Behandelingen(2);
+            var result = await controller.Object.Behandelingen(2);
             var behandelingResult = context.Clienten.Where(c => c.hulpverlenerId == 2).SingleOrDefault();
 
             // Assert
@@ -94,13 +94,13 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new ModeratorController(context);
+             var controller = new Mock<ModeratorController>(context);
             var Melding = new MisbruikMelding(){Id = 3};
             context.MisbruikMelding.Add(Melding);
             context.SaveChanges();
 
             // Act
-            var result = await controller.Melding();
+            var result = await controller.Object.Melding();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -115,13 +115,13 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new ModeratorController(context);
+            var controller = new Mock<ModeratorController>(context);
             var hulpverlener = new Hulpverlener(){Id = 2, Voornaam = "Ricco"};
             context.Hulpverleners.Add(hulpverlener);
             context.SaveChanges();
 
             // Act
-            var result = await controller.Hulpverlener();
+            var result = await controller.Object.Hulpverlener();
             var hulpverleners = context.Hulpverleners.ToList();
 
             // Assert
@@ -138,13 +138,13 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new ModeratorController(context);
+            var controller = new Mock<ModeratorController>(context);
             var client = new Client(){Id = 2, Voornaam = "Ricco"};
             context.Clienten.Add(client);
             context.SaveChanges();
 
             // Act
-            var result = await controller.Client();
+            var result = await controller.Object.Client();
             var clienten = context.Clienten.ToList();
 
             // Assert

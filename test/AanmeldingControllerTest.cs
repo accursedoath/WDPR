@@ -29,7 +29,7 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new AanmeldingController(context);
+            var controller = new Mock<AanmeldingController>(context);
             var hulp = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
             context.Add(hulp);
             context.SaveChanges();
@@ -44,7 +44,7 @@ namespace test
                 AfspraakDatum = "27-02-2022"};
 
             // Act
-            var result = controller.Create(aanmelding, "1");
+            var result = controller.Object.Create(aanmelding, "1");
             var aanmeldingResult = context.Aanmeldingen.Where(c => c.AanmeldingId == 1).SingleOrDefault();
             var aanmeldingHulpResult = context.Aanmeldingen.Where(m => m.Hulpverlener == hulp).SingleOrDefault().Hulpverlener;
 
@@ -59,7 +59,7 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controller = new AanmeldingController(context);
+            var controller = new Mock<AanmeldingController>(context);
             var hulp = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
             context.Add(hulp);
             context.SaveChanges();
@@ -77,7 +77,7 @@ namespace test
                 TelefoonVoogd = "061081231"};
 
             // Act
-            var result = controller.Create(aanmelding, "1");
+            var result = controller.Object.Create(aanmelding, "1");
             var aanmeldingResult = context.Aanmeldingen.Where(c => c.AanmeldingId == 1).SingleOrDefault();
             var aanmeldingHulpResult = context.Aanmeldingen.Where(m => m.Hulpverlener == hulp).SingleOrDefault().Hulpverlener;
 
