@@ -21,7 +21,7 @@
                 @Html.DisplayFor(modelItem => item.client.Voornaam)
             </td>
             <td>
-                <a asp-action="Chat" asp-route-id="@item.client.Id">Chat</a> |
+                <a asp-action="Chat" aria-label="Chatten met @item.client.Voornaam" asp-route-id="@item.client.Id">Chatten met @item.client.Voornaam</a>
             </td>
         </tr>
 }
