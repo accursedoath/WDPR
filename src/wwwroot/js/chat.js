@@ -141,7 +141,7 @@ function applyhr(){                                                             
 async function PostIt($this){                                                        //bericht id nodig voor bericht ophalen, daarna post naar melding api
     $this.hidden = true;
     var berichtid = $this.id.substring(1)
-    var groepnaam = document.getElementById("groepnaam");
+    var groepnaam = document.getElementById("groepnaam").value;
     var meldingreden = "anonieme misbruikmelding in groep " + groepnaam;
             postData('https://localhost:5001/api/MisbruikApi/', {melding : meldingreden, berichtid : berichtid });
     }
