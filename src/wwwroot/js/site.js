@@ -2,3 +2,11 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function fontSizeLg() {
+    document.body.style.fontSize = "x-large";
+}
+
+function fontSizeMd() {
+    document.body.style.fontSize = "medium";
+}
