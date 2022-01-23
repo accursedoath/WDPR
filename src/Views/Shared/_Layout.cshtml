@@ -15,46 +15,46 @@
     <header class="mb-4">
         <nav class="navbar navbar-expand-lg navbar-toggleable-lg">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand" asp-area="" aria-label="Logo van ZMDH" asp-controller="Home" asp-action="Index">
                     <img src="https://logojinni.com/image/logos/slack-463.svg" width="75" height="75" alt="logo">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Navigatie uitklappen">
                     <i class="fa fa-bars"></i>
                 </button>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Homepagina" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" aria-label="Link naar homepagina" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if(SignInManager.IsSignedIn(User) && User.IsInRole("Moderator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="alle hulpverleners" asp-controller="Moderator" asp-action="Hulpverlener">Hulpverleners</a>
+                                <a class="nav-link" aria-label="Link naar alle hulpverleners" asp-controller="Moderator" asp-action="Hulpverlener">Hulpverleners</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="alle clienten" asp-controller="Moderator" asp-action="Client">Clienten</a>
+                                <a class="nav-link" aria-label="Link naar alle clienten" asp-controller="Moderator" asp-action="Client">Clienten</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="chat meldingen" asp-controller="Moderator" asp-action="Melding">Melding</a>
+                                <a class="nav-link" aria-label="Link naar chat meldingen" asp-controller="Moderator" asp-action="Melding">Melding</a>
                             </li>
                              <partial name="_LoginPartial"></partial>
                         }
                         else if(SignInManager.IsSignedIn(User) && User.IsInRole("Client"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Wijzig woonplaats" asp-controller="Client" asp-action="Woonplaats">Woonplaats</a>
+                                <a class="nav-link" aria-label="Link naar wijzig woonplaats" asp-controller="Client" asp-action="Woonplaats">Woonplaats</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Privechat met jouw orthopedagoog" asp-controller="PriveChat" asp-action="Chat">Chat</a>
+                                <a class="nav-link" aria-label="Link naar privechat met jouw orthopedagoog" asp-controller="PriveChat" asp-action="Chat">Chat</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Mijn Dossier" asp-controller="Client" asp-action="Dossier">Mijn Dossier</a>
+                                <a class="nav-link" aria-label="Link naar mijn Dossier" asp-controller="Client" asp-action="Dossier">Mijn Dossier</a>
                             </li>    
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Open zelfhulp groepen" asp-controller="GroepsChat" asp-action="Index">Open Groepen</a>
+                                <a class="nav-link" aria-label="Link naar open zelfhulp groepen" asp-controller="GroepsChat" asp-action="Index">Open Groepen</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Mijn zelfhulp groepen" asp-controller="GroepsChat" asp-action="MijnChats">Mijn Zelfhulp Groepen</a>
+                                <a class="nav-link" aria-label="Link naar mijn zelfhulp groepen" asp-controller="GroepsChat" asp-action="MijnChats">Mijn Zelfhulp Groepen</a>
                             </li>
 
                             <partial name="_LoginPartial"></partial>
@@ -63,47 +63,47 @@
                         else if(SignInManager.IsSignedIn(User) && User.IsInRole("Hulpverlener"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Jou privechats" asp-controller="PriveChat" asp-action="Index">Chats</a>
+                                <a class="nav-link" aria-label="Link naar uw privechats" asp-controller="PriveChat" asp-action="Index">Chats</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"aria-label="Jou clienten" asp-controller="Hulpverlener" asp-action="Clienten">Clienten</a>
+                                <a class="nav-link"aria-label="Link naar uw clienten" asp-controller="Hulpverlener" asp-action="Clienten">Clienten</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Jou aanmeldingen" asp-controller="Hulpverlener" asp-action="Aanmelding">Aanmelding</a>
+                                <a class="nav-link" aria-label="Link naar aanmeldingen op uw naam" asp-controller="Hulpverlener" asp-action="Aanmelding">Aanmelding</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Mijn zelfhulp groepen" asp-controller="GroepsChat" asp-action="Index">Zelfhulp Groepen</a>
+                                <a class="nav-link" aria-label="Link naar mijn zelfhulp groepen" asp-controller="GroepsChat" asp-action="Index">Zelfhulp Groepen</a>
                             </li>
                              <partial name="_LoginPartial"></partial>
                         }
                         else if(SignInManager.IsSignedIn(User) && User.IsInRole("Voogd"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="uw kind" asp-controller="Voogd" asp-action="Index">Client</a>
+                                <a class="nav-link" aria-label="Link naar uw kind" asp-controller="Voogd" asp-action="Index">Client</a>
                             </li>
                              <partial name="_LoginPartial"></partial>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Aanmelden voor een afspraak" asp-controller="Aanmelding" asp-action="Create">Aanmelden</a>
+                                <a class="nav-link" aria-label="Link naar aanmelden voor een afspraak" asp-controller="Aanmelding" asp-action="Create">Aanmelden</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Orthopedagogen bekijken" asp-controller="Home" asp-action="Orthopedagogen">Orthopedagogen</a>
+                                <a class="nav-link" aria-label="Link naar orthopedagogen bekijken" asp-controller="Home" asp-action="Orthopedagogen">Orthopedagogen</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Over ons" asp-controller="Home" asp-action="OverOns">Over ons</a>
+                                <a class="nav-link" aria-label="Link naar over ons" asp-controller="Home" asp-action="OverOns">Over ons</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-label="Veel gestelde vragen" asp-controller="Home" asp-action="FAQ">FAQ</a>
+                                <a class="nav-link" aria-label="Link naar veel gestelde vragen" asp-controller="Home" asp-action="FAQ">FAQ</a>
                             </li>
                             <partial name="_LoginPartial"></partial>
                         }
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Veel gestelde vragen" onclick="fontSizeLg()">Tekst groter</a>
+                            <a href="#" class="nav-link" aria-label="Tekst groter knop" onclick="fontSizeLg()">Tekst groter</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-label="Veel gestelde vragen" onclick="fontSizeMd()">Tekst kleiner</a>
+                            <a href="#" class="nav-link" aria-label="Tekst kleiner knop" onclick="fontSizeMd()">Tekst kleiner</a>
                         </li>
                     </ul>
                 </div>
@@ -121,8 +121,8 @@
                 <div class="col-md-4">
                     <h3>De praktijk</h3>
                     <ul>
-                        <li><a href="tel:+31612345678">+31612345678</a></li>
-                        <li><a href="mailto:praktijk@zmdh.nl">praktijk@zmdh.nl</a></li>
+                        <li><a aria-label="Link om te bellen naar de praktijk" href="tel:+31612345678">+31612345678</a></li>
+                        <li><a aria-label="Link om te mailen naar de praktijk" href="mailto:praktijk@zmdh.nl">praktijk@zmdh.nl</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -137,7 +137,7 @@
                 <div class="col-md-4">
                     <h3>Privacy</h3>
                     <ul>
-                        <li><a asp-action="Privacy">Privacyverklaring</a></li>
+                        <li><a aria-label="Link naar privacyverklaring" asp-controller="Home" asp-action="Privacy">Privacyverklaring</a></li>
                     </ul>
                 </div>
             </div>
