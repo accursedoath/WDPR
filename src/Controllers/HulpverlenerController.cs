@@ -15,13 +15,11 @@ namespace src.Controllers
     public class HulpverlenerController : Controller
     {
         private readonly DatabaseContext _context;
-        private readonly SignInManager<ApplicatieGebruiker> _signInManager;
         private readonly UserManager<ApplicatieGebruiker> _userManager;
 
-        public HulpverlenerController(DatabaseContext context, SignInManager<ApplicatieGebruiker> signInManager, UserManager<ApplicatieGebruiker> userManager)
+        public HulpverlenerController(DatabaseContext context, UserManager<ApplicatieGebruiker> userManager)
         {
             _context = context;
-            _signInManager = signInManager;
             _userManager = userManager;
         }
 

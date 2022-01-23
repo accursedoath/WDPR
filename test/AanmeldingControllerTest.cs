@@ -13,26 +13,31 @@ namespace test
 {
     public class AanmeldingControllerTest
     {
-        public DatabaseContext CreateContext()
-        {
-            DbContextOptionsBuilder<DatabaseContext> builder = new DbContextOptionsBuilder<DatabaseContext>();
-            builder.UseInMemoryDatabase("test");
-            DbContextOptions<DatabaseContext> options = builder.Options;
-            DatabaseContext context = new DatabaseContext(options);
+        private string databaseName;
+        
+        private DatabaseContext GetNewInMemoryDatabase(bool NewDb) {
+            if (NewDb) this.databaseName = Guid.NewGuid().ToString();
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+            .UseInMemoryDatabase(this.databaseName)
+            .Options;
+            return new DatabaseContext(options);
+        }
 
-            return context;
+        //Context
+        private DatabaseContext GetInMemoryDBMetData() {        
+            DatabaseContext context = GetNewInMemoryDatabase(true);
+            context.Add(new Hulpverlener(){Id = 1, Voornaam = "Ricco"});
+            context.SaveChanges();
+            return GetNewInMemoryDatabase(false);
         }
 
         [Fact]
         public void CreateClientTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
+            var context = GetInMemoryDBMetData();
             var controller = new AanmeldingController(context);
             var hulp = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
-            context.Add(hulp);
-            context.SaveChanges();
             var aanmelding = new Aanmelding(){
                 AanmeldingId = 1,
                 Voornaam = "Jan",
@@ -50,19 +55,16 @@ namespace test
 
             // Assert
             Assert.Equal(aanmelding,aanmeldingResult);
-            Assert.Equal(hulp,aanmeldingHulpResult);
+            Assert.Equal(hulp.Id,aanmeldingHulpResult.Id);
         }
 
         [Fact]
         public void CreateClientVoogdTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
+            var context = GetInMemoryDBMetData();
             var controller = new AanmeldingController(context);
             var hulp = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
-            context.Add(hulp);
-            context.SaveChanges();
             var aanmelding = new Aanmelding(){
                 AanmeldingId = 1,
                 Voornaam = "Jan",
@@ -83,7 +85,7 @@ namespace test
 
             // Assert
             Assert.Equal(aanmelding,aanmeldingResult);
-            Assert.Equal(hulp,aanmeldingHulpResult);
+            Assert.Equal(hulp.Id,aanmeldingHulpResult.Id);
 
         }
     }
