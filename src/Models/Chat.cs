@@ -13,7 +13,9 @@ namespace src.Models
         [ForeignKey("Bericht")]
         public List<Bericht> Berichten {get; set;}
         public Hulpverlener hulpverlener {get; set;}
+        public int hulpverlenerId {get; set;}
         public Client client {get; set;}
+        public int clientId {get; set;}
 
         public Chat(){
             Berichten = new List<Bericht>();

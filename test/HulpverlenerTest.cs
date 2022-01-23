@@ -81,9 +81,8 @@ namespace test
             // Arrange
             var context = CreateContext();
             context.Database.EnsureDeleted();
-            var controllerMock = new Mock<HulpverlenerController>(context,GetUsermanager());
-            var user = new ApplicatieGebruiker() { Id = "test", UserName = "test", Email = "test@test.com" , hulpverlener = new Hulpverlener{Id = 1, Voornaam = "Ricco"}};
-            var hulpverlener = new Hulpverlener(){Id = 1, Voornaam = "Ricco", User = user};
+            var controllerMock = new Mock<HulpverlenerController>(context,GetUsermanager());           
+            var hulpverlener = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
             var aanmelding = new Aanmelding(){ 
                 AanmeldingId = 1,
                 Voornaam = "Joep", 
@@ -121,6 +120,7 @@ namespace test
             context.Database.EnsureDeleted();
 
             var controllerMock = new Mock<HulpverlenerController>(context,GetUsermanager());
+            var user = new ApplicatieGebruiker() { Id = "test", UserName = "test", Email = "test@test.com" , hulpverlener = new Hulpverlener{Id = 1, Voornaam = "Ricco"}};
             var hulpverlener = new Hulpverlener(){Id = 1, Voornaam = "Ricco", User =user};
             var aanmelding = new Aanmelding(){ 
                 AanmeldingId = 1,

@@ -14,32 +14,33 @@ namespace test
 {
     public class VoogdControllerTest
     {
-        public DatabaseContext CreateContext()
-        {
-            DbContextOptionsBuilder<DatabaseContext> builder = new DbContextOptionsBuilder<DatabaseContext>();
-            builder.UseInMemoryDatabase("test");
-            DbContextOptions<DatabaseContext> options = builder.Options;
-            DatabaseContext context = new DatabaseContext(options);
+        private string databaseName;
+        
+        private DatabaseContext GetNewInMemoryDatabase(bool NewDb) {
+            if (NewDb) this.databaseName = Guid.NewGuid().ToString();
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+            .UseInMemoryDatabase(this.databaseName)
+            .Options;
+            return new DatabaseContext(options);
+        }
 
-            return context;
+        //Context
+        private DatabaseContext GetInMemoryDBMetData() {        
+            DatabaseContext context = GetNewInMemoryDatabase(true);
+            context.Add(new Client(){Id = 1, Voornaam = "John", Leeftijdscategorie="2007-07-12",magChatten = true, hulpverlenerId = 2});
+            context.Add(new Hulpverlener(){Id = 2, Voornaam = "Ricco"});
+            context.Add(new Chat(){Id = 3, clientId = 1, hulpverlenerId = 2});
+            context.Add(new Bericht(){chatId = 3, text = "Goedenmorgen", Datum = DateTime.Now, VerzenderId = 1});
+            context.SaveChanges();
+            return GetNewInMemoryDatabase(false);
         }
 
         [Fact]
         public async void ChatFreqTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
+            var context = GetInMemoryDBMetData();
             var controller = new VoogdController(context);
-            var hulp = new Hulpverlener(){Id = 2, Voornaam = "Ricco"};
-            var client = new Client(){Id = 1, Voornaam = "John", Leeftijdscategorie="2007-07-12",magChatten = true, hulpverlener = hulp};
-            var chat = new Chat(){Id = 3, client = client, hulpverlener = hulp};
-            var bericht = new Bericht(){chatId = 3, text = "Goedenmorgen", Datum = DateTime.Now, Verzender = client};
-            context.Clienten.Add(client);
-            context.Hulpverleners.Add(hulp);
-            context.Chats.Add(chat);
-            context.Berichten.Add(bericht);
-            context.SaveChanges();
 
             // Act
             var result = await controller.ChatFreq(1);

@@ -13,26 +13,35 @@ namespace test
 {
     public class ModeratorControllerTest
     {
-        public DatabaseContext CreateContext()
-        {
-            DbContextOptionsBuilder<DatabaseContext> builder = new DbContextOptionsBuilder<DatabaseContext>();
-            builder.UseInMemoryDatabase("test");
-            DbContextOptions<DatabaseContext> options = builder.Options;
-            DatabaseContext context = new DatabaseContext(options);
+        private string databaseName;
+        
+        private DatabaseContext GetNewInMemoryDatabase(bool NewDb) {
+            if (NewDb) this.databaseName = Guid.NewGuid().ToString();
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+            .UseInMemoryDatabase(this.databaseName)
+            .Options;
+            return new DatabaseContext(options);
+        }
 
-            return context;
+        //Context
+        private DatabaseContext GetInMemoryDBMetData() {        
+            DatabaseContext context = GetNewInMemoryDatabase(true);
+            context.Add(new Client(){Id = 1, magChatten = true});
+            context.Add(new Client(){Id = 2, magChatten = false});
+            context.Add(new Hulpverlener(){Id = 3, Voornaam = "Ricco"});
+            context.Add(new Client(){Id = 4, magChatten = false, hulpverlenerId = 3});
+            context.Add(new MisbruikMelding(){Id = 3});
+            context.SaveChanges();
+            return GetNewInMemoryDatabase(false);
         }
 
         [Fact]
         public void BlokkeerChatTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
+            var context = GetInMemoryDBMetData();
             var controller = new Mock<ModeratorController>(context);
             var client = new Client(){Id = 1, magChatten = true};
-            context.Clienten.Add(client);
-            context.SaveChanges();
 
             // Act
             var result = controller.Object.Blokkeer(1);
@@ -41,23 +50,19 @@ namespace test
 
             // Assert
             Assert.False(clientResult);
-            Assert.Equal(client,meldingResult);
+            Assert.Equal(client.Id,meldingResult.Id);
         }
 
         [Fact]
         public void DeblokkeerChatTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
-             var controller = new Mock<ModeratorController>(context);
-            var client = new Client(){Id = 1, magChatten = false};
-            context.Clienten.Add(client);
-            context.SaveChanges();
+            var context = GetInMemoryDBMetData();
+            var controller = new ModeratorController(context);
 
             // Act
-            var result = controller.Object.Deblokkeer(1);
-            var clientResult = context.Clienten.Where(c => c.Id == 1).SingleOrDefault().magChatten;
+            var result = controller.Deblokkeer(2);
+            var clientResult = context.Clienten.Where(c => c.Id == 2).SingleOrDefault().magChatten;
 
             // Assert
             Assert.True(clientResult);
@@ -67,21 +72,16 @@ namespace test
         public async void BehandelingenTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
-             var controller = new Mock<ModeratorController>(context);
-            var hulpverlener = new Hulpverlener(){Id = 2, Voornaam = "Ricco"};
-            var client = new Client(){Id = 1, magChatten = false, hulpverlener = hulpverlener};
-            context.Clienten.Add(client);
-            context.Hulpverleners.Add(hulpverlener);
-            context.SaveChanges();
+            var context = GetInMemoryDBMetData();
+            var controller = new ModeratorController(context);
+            var client = new Client(){Id = 4, magChatten = false, hulpverlenerId = 3};
 
             // Act
-            var result = await controller.Object.Behandelingen(2);
-            var behandelingResult = context.Clienten.Where(c => c.hulpverlenerId == 2).SingleOrDefault();
+            var result = await controller.Behandelingen(3);
+            var behandelingResult = context.Clienten.Where(c => c.hulpverlenerId == 3).SingleOrDefault();
 
             // Assert
-            Assert.Equal(client, behandelingResult);
+            Assert.Equal(client.Id, behandelingResult.Id);
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<Client>>(
                 viewResult.ViewData.Model);
@@ -92,15 +92,11 @@ namespace test
         public async void MeldingTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
-             var controller = new Mock<ModeratorController>(context);
-            var Melding = new MisbruikMelding(){Id = 3};
-            context.MisbruikMelding.Add(Melding);
-            context.SaveChanges();
+            var context = GetInMemoryDBMetData();
+            var controller = new ModeratorController(context);
 
             // Act
-            var result = await controller.Object.Melding();
+            var result = await controller.Melding();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -113,15 +109,11 @@ namespace test
         public async void HulpverlenerTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
-            var controller = new Mock<ModeratorController>(context);
-            var hulpverlener = new Hulpverlener(){Id = 2, Voornaam = "Ricco"};
-            context.Hulpverleners.Add(hulpverlener);
-            context.SaveChanges();
+            var context = GetInMemoryDBMetData();
+            var controller = new ModeratorController(context);
 
             // Act
-            var result = await controller.Object.Hulpverlener();
+            var result = await controller.Hulpverlener();
             var hulpverleners = context.Hulpverleners.ToList();
 
             // Assert
@@ -136,22 +128,18 @@ namespace test
         public async void ClientTest()
         {
             // Arrange
-            var context = CreateContext();
-            context.Database.EnsureDeleted();
-            var controller = new Mock<ModeratorController>(context);
-            var client = new Client(){Id = 2, Voornaam = "Ricco"};
-            context.Clienten.Add(client);
-            context.SaveChanges();
+            var context = GetInMemoryDBMetData();
+            var controller = new ModeratorController(context);
 
             // Act
-            var result = await controller.Object.Client();
+            var result = await controller.Client();
             var clienten = context.Clienten.ToList();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<Client>>(
                 viewResult.ViewData.Model);
-            Assert.Equal(1, model.Count());
+            Assert.Equal(3, model.Count());
             Assert.Equal(clienten, model);
         }
     }

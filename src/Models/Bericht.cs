@@ -14,6 +14,7 @@ namespace src.Models
 
         [ForeignKey("Account")]
         public Account Verzender {get; set;}
+        public int VerzenderId {get; set;}
 
     }
 }
