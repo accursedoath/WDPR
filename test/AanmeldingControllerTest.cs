@@ -31,6 +31,7 @@ namespace test
             context.Database.EnsureDeleted();
             var controller = new AanmeldingController(context);
             var hulp = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
+            context.Add(hulp);
             context.SaveChanges();
             var aanmelding = new Aanmelding(){
                 AanmeldingId = 1,
@@ -45,7 +46,7 @@ namespace test
             // Act
             var result = controller.Create(aanmelding, "1");
             var aanmeldingResult = context.Aanmeldingen.Where(c => c.AanmeldingId == 1).SingleOrDefault();
-            var aanmeldingHulpResult = context.Aanmeldingen.Where(m => m.HulpverlenerId == hulp.Id).SingleOrDefault().Hulpverlener;
+            var aanmeldingHulpResult = context.Aanmeldingen.Where(m => m.Hulpverlener == hulp).SingleOrDefault().Hulpverlener;
 
             // Assert
             Assert.Equal(aanmelding,aanmeldingResult);
@@ -60,6 +61,7 @@ namespace test
             context.Database.EnsureDeleted();
             var controller = new AanmeldingController(context);
             var hulp = new Hulpverlener(){Id = 1, Voornaam = "Ricco"};
+            context.Add(hulp);
             context.SaveChanges();
             var aanmelding = new Aanmelding(){
                 AanmeldingId = 1,
@@ -77,7 +79,7 @@ namespace test
             // Act
             var result = controller.Create(aanmelding, "1");
             var aanmeldingResult = context.Aanmeldingen.Where(c => c.AanmeldingId == 1).SingleOrDefault();
-            var aanmeldingHulpResult = context.Aanmeldingen.Where(m => m.HulpverlenerId == hulp.Id).SingleOrDefault().Hulpverlener;
+            var aanmeldingHulpResult = context.Aanmeldingen.Where(m => m.Hulpverlener == hulp).SingleOrDefault().Hulpverlener;
 
             // Assert
             Assert.Equal(aanmelding,aanmeldingResult);
